@@ -1,5 +1,41 @@
 import { _ } from 'lodash';
 
+Meteor.publishComposite('updates.one', function(updateId) {
+  check(updateId, String);
+
+  this.unblock();
+
+  return {
+      find: function() {
+          var updateCursor = Updates.find({_id: updateId}, {limit: 1});
+
+          var update = updateCursor.fetch().pop();
+          if (!update) return;
+
+          var partup = Partups.guardedFind(this.userId, {_id: update.partup_id}, {limit:1}).fetch().pop();
+          if (!partup) return;
+
+          return updateCursor;
+      },
+      children: [
+        {find: Meteor.users.findUserForUpdate, children: [
+          {find: Images.findForUser}
+        ]},
+        {find: Images.findForUpdate},
+        {find: Images.findForUpdateComments},
+        {find: Files.findForUpdate},
+        {find: Activities.findForUpdate},
+        {find: Contributions.findForUpdate, children: [
+            {find: Activities.findForContribution},
+            {find: Ratings.findForContribution, children: [
+                {find: Meteor.users.findForRating, children: [
+                    {find: Images.findForUser}
+                ]}
+            ]}
+        ]}
+      ]
+  };
+});
 
 Meteor.publish('updates.single', function(updateId, partupId) {
   check(updateId, String);
