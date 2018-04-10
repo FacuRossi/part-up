@@ -10,6 +10,12 @@ import { get, each } from 'lodash';
 Template.Update.onCreated(function() {
   // Stored seperately to avoid being called every second (time ticks)
   this.updated_at = get(this.data.update, 'updated_at');
+
+  const upperId = get(this.data.update, 'upper_id');
+  const user = Meteor.users.findOne(upperId);
+  if (upperId && !user) {
+    this.subscribe('users.one', upperId);
+  }
 });
 
 Template.Update.helpers({
@@ -79,7 +85,8 @@ Template.Update.helpers({
           : Router.path('partup-update', { slug: partup.slug, update_id: update._id });
       },
       upperImageId() {
-        return Meteor.users.findSinglePublicProfile(update.upper_id).fetch().pop().profile.image
+        const user = Meteor.users.findSinglePublicProfile(update.upper_id).fetch().pop();
+        return get(user, 'profile.image');
       },
       templateName() {
         if (update.type === 'partups_activities_invited') {
