@@ -11,10 +11,15 @@ Template.Update.onCreated(function() {
   // Stored seperately to avoid being called every second (time ticks)
   this.updated_at = get(this.data.update, 'updated_at');
 
+  this.updateUpper = new ReactiveVar();
+
   const upperId = get(this.data.update, 'upper_id');
-  const user = Meteor.users.findOne(upperId);
-  if (upperId && !user) {
-    this.subscribe('users.one', upperId);
+  if (upperId) {
+    Meteor.call('users.one', upperId, (error, result) => {
+      if (result) {
+        this.updateUpper.set(result);
+      }
+    });
   }
 });
 
@@ -36,6 +41,7 @@ Template.Update.helpers({
     const templateInstance = Template.instance();
     const update = this.update;
     const partup = Partups.findOne(get(update, 'partup_id'));
+    const upper = templateInstance.updateUpper.get();
 
     if (!update || !partup) {
       return {};
@@ -43,11 +49,15 @@ Template.Update.helpers({
 
     return {
       title() {
+        if (!upper) {
+          return;
+        }
+
         const titleKey = `update-type-${update.type}-title`;
         const params = {};
 
         if (update.upper_id) {
-          params.name = User(Meteor.users.findOne(update.upper_id)).getFirstname();
+          params.name = User(upper).getFirstname();
         } else if (update.system) {
           params.name = 'Part-up';
         }
@@ -85,8 +95,7 @@ Template.Update.helpers({
           : Router.path('partup-update', { slug: partup.slug, update_id: update._id });
       },
       upperImageId() {
-        const user = Meteor.users.findSinglePublicProfile(update.upper_id).fetch().pop();
-        return get(user, 'profile.image');
+        return get(upper, 'profile.image');
       },
       templateName() {
         if (update.type === 'partups_activities_invited') {
