@@ -298,6 +298,7 @@ Meteor.publishComposite('chats.by_id', function(chatId, chatMessagesOptions) {
 
 Meteor.publishComposite('chats.by_id.for_web', function(chatId, chatMessagesOptions) {
     this.unblock();
+    if (!chatId) return; // Return if no chat specified in the URL
     check(chatId, String);
     chatMessagesOptions = chatMessagesOptions || {};
     check(chatMessagesOptions, {
