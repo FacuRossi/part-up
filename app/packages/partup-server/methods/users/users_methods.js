@@ -1,3 +1,5 @@
+import { get } from 'lodash';
+
 Meteor.methods({
     /**
      * Update a user
@@ -420,5 +422,17 @@ Meteor.methods({
     'users.one'(userId) {
       check(userId, String);
       return Meteor.users.findSinglePublicProfile(userId).fetch().pop();
-    }
+    },
+
+    'users.createIntercomHash'(userId) {
+      check(userId, String);
+
+      const intercomSecret = Meteor.isDevelopment ?
+        get(JSON.parse(process.env.METEOR_SETTINGS), 'intercom.secret') :
+        get(Meteor, 'settings.intercom.secret');
+
+      if (intercomSecret) {
+        return Npm.require('crypto').createHmac('sha256', new Buffer(intercomSecret, 'utf8')).update(userId).digest('hex');
+      }
+    },
 });

@@ -149,30 +149,42 @@ Meteor.startup(function() {
     /*************************************************************/
     IntercomSettings.userInfo = function(user, info) {
         if (user) {
-            var networks = Networks.find({
+          Meteor.call('users.createIntercomHash', user._id, (error, result) => {
+            if (error) {
+              Intercom('shutdown');
+            } else if (result) {
+              user.intercomHash = info.user_hash = result;
+
+              var networks = Networks.find({
                 uppers: user._id
-            });
-            var networksString = networks.map(function(network) {
-                return network.slug;
-            }).join(',');
-            info['email'] = User(user).getEmail();
-            info['name'] = user.profile.name;
-            info['firstname'] = user.profile.firstname;
-            info['language'] = user.profile.settings.locale;
-            info['phonenumber'] = user.profile.phonenumber;
-            info['gender'] = user.profile.gender;
-            info['location'] = user.profile.location ? user.profile.location.city : undefined;
-            info['participation_score'] = user.participation_score;
-            info['completeness'] = user.completeness;
+              });
+              var networksString = networks.map(function(network) {
+                  return network.slug;
+              }).join(',');
+              info['email'] = User(user).getEmail();
+              info['name'] = user.profile.name;
+              info['firstname'] = user.profile.firstname;
+              info['language'] = user.profile.settings.locale;
+              info['phonenumber'] = user.profile.phonenumber;
+              info['gender'] = user.profile.gender;
+              info['location'] = user.profile.location ? user.profile.location.city : undefined;
+              info['participation_score'] = user.participation_score;
+              info['completeness'] = user.completeness;
 
-            info['tribes'] = networksString;
+              info['tribes'] = networksString;
 
-            info['count_partups_partner'] = user.upperOf ? user.upperOf.length : 0;
-            info['count_partups_supporter'] = user.supporterOf ? user.supporterOf.length : 0;
-            info['count_partups_created'] = Partups.find({
-                creator_id: user._id
-            }).count();
-            info['count_tribes_joined'] = networks.count();
+              info['count_partups_partner'] = user.upperOf ? user.upperOf.length : 0;
+              info['count_partups_supporter'] = user.supporterOf ? user.supporterOf.length : 0;
+              info['count_partups_created'] = Partups.find({
+                  creator_id: user._id
+              }).count();
+              info['count_tribes_joined'] = networks.count();
+
+              Intercom('update', info);
+            }
+          });
+
+          return false;
         }
     };
 
@@ -196,4 +208,32 @@ Meteor.startup(function() {
         })
       }
     });
+
+
+
+    // // Intercom identity verification
+    // const intercomBaseSettings = {
+    //   app_id: 'yags4egj',
+    // };
+    // Accounts.onLogin(function() {
+    //   if (Intercom) {
+    //     const user = Meteor.user();
+    //     const userEmail = get(user.emails[0], 'address');
+    //     if (userEmail) {
+    //       Meteor.call('users.getOrCreateIntercomHash', user._id, (error, result) => {
+    //         window.intercomSettings = Object.assign(intercomBaseSettings, {
+    //           email: userEmail,
+    //           user_hash: result,
+    //         });
+    //         Intercom('update', IntercomSettings.userInfo(user, window.intercomSettings));
+    //       });
+    //     }
+    //   }
+    // });
+    // Accounts.onLogout(function() {
+    //   if (Intercom) {
+    //     window.intercomSettings = intercomBaseSettings;
+    //     Intercom('update', window.intercomBaseSettings);
+    //   }
+    // });
 });
