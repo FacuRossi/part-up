@@ -10,7 +10,7 @@ var _Model2 = require('./lib/Model');
 
 var _Model3 = _interopRequireDefault(_Model2);
 
-var _partUpJsHelpers = require('part-up-js-helpers');
+var _index = require('../js-helpers/lib/index');
 
 var _ImageModel = require('./ImageModel');
 
@@ -55,7 +55,7 @@ var NetworkModel = function (_Model) {
     }, {
         key: 'getWebsiteUrl',
         value: function getWebsiteUrl() {
-            var pathname = (0, _partUpJsHelpers.getWebsitePathFor)('network', { slug: this.slug });
+            var pathname = (0, _index.getWebsitePathFor)('network', { slug: this.slug });
             return NetworkModel.settings.makeAbsoluteUrl({ pathname: pathname });
         }
     }]);

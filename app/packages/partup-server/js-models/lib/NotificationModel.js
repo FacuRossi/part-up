@@ -10,7 +10,7 @@ var _Model2 = require('./lib/Model');
 
 var _Model3 = _interopRequireDefault(_Model2);
 
-var _partUpJsHelpers = require('part-up-js-helpers');
+var _index = require('../js-helpers/lib/index');
 
 var _powercheck = require('powercheck');
 
@@ -304,7 +304,7 @@ var NotificationModel = function (_Model) {
             _powercheck2.default.throw(nowDate, Date);
 
             var metaText = [];
-            metaText.push(_partUpJsHelpers.formatDate.relativeWithThreshold(this.created_at, nowDate));
+            metaText.push(_index.formatDate.relativeWithThreshold(this.created_at, nowDate));
 
             var notifications = {
                 'partups_networks_accepted': function partups_networks_accepted() {
@@ -417,7 +417,7 @@ var NotificationModel = function (_Model) {
         value: function getWebsiteUrl() {
             var _this6 = this;
 
-            var p = _partUpJsHelpers.getWebsitePathFor;
+            var p = _index.getWebsitePathFor;
             var routes = {
                 network: function network() {
                     return p('network', { slug: _this6.type_data.network.slug });

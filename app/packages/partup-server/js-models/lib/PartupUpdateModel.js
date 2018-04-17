@@ -22,7 +22,7 @@ var _powercheck = require('powercheck');
 
 var _powercheck2 = _interopRequireDefault(_powercheck);
 
-var _partUpJsHelpers = require('part-up-js-helpers');
+var _index = require('../js-helpers/lib/index');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -75,7 +75,7 @@ var PartupUpdateModel = function (_Model) {
             _powercheck2.default.throw(partup, _PartupModel2.default);
 
             return t('update-metatext', {
-                time: _partUpJsHelpers.formatDate.relativeWithThreshold(this.updated_at, nowDate),
+                time: _index.formatDate.relativeWithThreshold(this.updated_at, nowDate),
                 location: partup.name
             });
         }

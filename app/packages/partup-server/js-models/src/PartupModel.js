@@ -1,7 +1,7 @@
 'use strict';
 
 import Model from './lib/Model';
-import { getWebsitePathFor } from 'part-up-js-helpers';
+import { getWebsitePathFor } from '../js-helpers/lib/index';
 import { find } from 'mout/array';
 import { get } from 'mout/object';
 import ImageModel from './ImageModel';

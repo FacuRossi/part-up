@@ -10,7 +10,7 @@ var _Model2 = require('./lib/Model');
 
 var _Model3 = _interopRequireDefault(_Model2);
 
-var _partUpJsHelpers = require('part-up-js-helpers');
+var _index = require('../js-helpers/lib/index');
 
 var _array = require('mout/array');
 
@@ -60,7 +60,7 @@ var PartupModel = function (_Model) {
         key: 'getWebsiteUrl',
         value: function getWebsiteUrl() {
             return PartupModel.settings.makeAbsoluteUrl({
-                pathname: (0, _partUpJsHelpers.getWebsitePathFor)('partup', { slug: this.slug })
+                pathname: (0, _index.getWebsitePathFor)('partup', { slug: this.slug })
             });
         }
 

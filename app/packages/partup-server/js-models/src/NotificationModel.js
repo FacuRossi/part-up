@@ -1,7 +1,7 @@
 'use strict';
 
 import Model from './lib/Model';
-import { getWebsitePathFor, formatDate } from 'part-up-js-helpers';
+import { getWebsitePathFor, formatDate } from '../js-helpers/lib/index';
 import check from 'powercheck';
 import { get } from 'mout/object';
 import ImageModel from './ImageModel';
