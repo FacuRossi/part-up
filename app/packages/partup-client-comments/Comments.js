@@ -243,17 +243,8 @@ Template.Comments.helpers({
         return newComments.length;
     },
     imageForComment: function() {
-        var commentImage = Images.findOne(this.creator.image);
-        if (commentImage) {
-            return this.creator.image;
-        } else {
-            commentUser = Meteor.users.findOne(this.creator._id);
-            if (commentUser) {
-                return commentUser.profile.image;
-            } else {
-                return '';
-            }
-        }
+        commentUser = Meteor.users.findOne(this.creator._id);
+        return commentUser ? commentUser.profile.image : '';
     },
     isUserComment: function() {
         return this.creator._id === Meteor.userId() ? 'data-comment' : '';
