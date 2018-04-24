@@ -262,5 +262,6 @@ Npm.depends({
     'pkginfo': '0.4.0',
     'cycle': '1.0.3',
     'stack-trace': '0.0.9',
-    "powercheck": "1.0.3"
+    "powercheck": "1.0.3",
+    "mout": "1.0.0",
 });
