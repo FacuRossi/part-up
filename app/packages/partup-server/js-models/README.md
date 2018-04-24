@@ -33,3 +33,4 @@ This function mutates `MyModel` comprehensively. It
 - extends MyModel with all collection prototype functions like `find()` and `findOne()`.
 - transforms every collection document with an instance of MyModel.
 - provides a query builder at `.query()`. See QUERYBUILDER.md for its API documentation.
+
