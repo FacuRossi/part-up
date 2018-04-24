@@ -529,7 +529,7 @@ Meteor.methods({
             throw new Meteor.Error(500, 'user_could_not_be_deleted');
         }
     },
-  
+
     'users.one'(userId) {
       check(userId, String);
       return Meteor.users.findSinglePublicProfile(userId).fetch().pop();
