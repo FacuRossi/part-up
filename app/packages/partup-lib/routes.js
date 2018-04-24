@@ -140,6 +140,13 @@ Router.route('/profile/:_id', {
             resultsReady: this.params.query.results_ready || false,
         };
     },
+    onRun: function() {
+        const u = Meteor.users.findOne(this.params._id)
+        if (!u || u.deactivatedAt || u.deletedAt) {
+            Router.pageNotFound();
+        }
+        this.next()
+    },
     onBeforeAction: function() {
         // when `?results_ready=true` this call must be made
         let resultsReady = this.params.query.results_ready || false;

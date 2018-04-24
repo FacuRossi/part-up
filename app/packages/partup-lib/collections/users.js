@@ -108,7 +108,10 @@ Meteor.users.findMultiplePublicProfiles = function(userIds, options, parameters)
     var textSearch = parameters.textSearch || undefined;
 
     var selector = {_id: {$in: userIds}};
-    if (parameters.onlyActive) selector.deactivatedAt = {$exists: false};
+    
+    // Filter out deactivated & deleted users
+    selector.deactivatedAt = {$exists: false};
+    selector.deletedAt = {$exists: false};
 
     options.fields = getPublicUserFields();
 
@@ -164,7 +167,8 @@ Meteor.users.findMultipleNetworkAdminProfiles = function(userIds) {
 
     var selector = {
         _id: {$in: userIds},
-        deactivatedAt: {$exists: false}
+        deactivatedAt: {$exists: false},
+        deletedAt: {$exists: false}
     };
     var options = {
         fields: getPublicNetworkAdminFields()
@@ -335,7 +339,10 @@ Meteor.users.findActiveUsers = function(selector, options) {
     selector = selector || {};
     options = options || {};
 
+    // Filter out deactivated & deleted users
     selector.deactivatedAt = {$exists: false};
+    selector.deletedAt = {$exists: false};
+
     options.fields = getPublicUserFields();
     return Meteor.users.find(selector, options);
 };
