@@ -415,5 +415,10 @@ Meteor.methods({
             user.emails.unshift(primary[0]);
             Meteor.users.update(user._id, {$set: {emails: user.emails}});
         }
+    },
+
+    'users.one'(userId) {
+      check(userId, String);
+      return Meteor.users.findSinglePublicProfile(userId).fetch().pop();
     }
 });
