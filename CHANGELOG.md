@@ -1,3 +1,8 @@
+<a name="4.0.4"></a>
+## [4.0.4](https://github.com/part-up/part-up/compare/4.0.3...4.0.4) (2018-04-09)
+
+
+
 <a name="4.0.3"></a>
 ## [4.0.3](https://github.com/part-up/part-up/compare/4.0.2...4.0.3) (2018-03-27)
 
