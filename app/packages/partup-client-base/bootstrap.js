@@ -208,32 +208,4 @@ Meteor.startup(function() {
         })
       }
     });
-
-
-
-    // // Intercom identity verification
-    // const intercomBaseSettings = {
-    //   app_id: 'yags4egj',
-    // };
-    // Accounts.onLogin(function() {
-    //   if (Intercom) {
-    //     const user = Meteor.user();
-    //     const userEmail = get(user.emails[0], 'address');
-    //     if (userEmail) {
-    //       Meteor.call('users.getOrCreateIntercomHash', user._id, (error, result) => {
-    //         window.intercomSettings = Object.assign(intercomBaseSettings, {
-    //           email: userEmail,
-    //           user_hash: result,
-    //         });
-    //         Intercom('update', IntercomSettings.userInfo(user, window.intercomSettings));
-    //       });
-    //     }
-    //   }
-    // });
-    // Accounts.onLogout(function() {
-    //   if (Intercom) {
-    //     window.intercomSettings = intercomBaseSettings;
-    //     Intercom('update', window.intercomBaseSettings);
-    //   }
-    // });
 });
