@@ -1,6 +1,6 @@
 'use strict';
 
-var NotificationModel = Npm.require('part-up-js-models').NotificationModel;
+import { NotificationModel } from '../js-models/lib/index';
 
 var d = Debug('services:notifications');
 

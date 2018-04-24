@@ -259,8 +259,9 @@ Npm.depends({
     'apn': '1.7.5',
     'moment': '2.13.0',
     'node-metainspector': '1.3.0',
-    'part-up-js-models': 'git://github.com/part-up/js-models.git#1.1.3',
     'pkginfo': '0.4.0',
     'cycle': '1.0.3',
-    'stack-trace': '0.0.9'
+    'stack-trace': '0.0.9',
+    "powercheck": "1.0.3",
+    "mout": "1.0.0",
 });

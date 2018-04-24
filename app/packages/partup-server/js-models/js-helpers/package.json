@@ -1,0 +1,30 @@
+{
+  "name": "part-up-js-helpers",
+  "description": "Partup Helpers",
+  "version": "1.0.4",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/part-up/js-helpers.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/part-up/js-helpers/issues"
+  },
+  "scripts": {
+    "compile": "babel --presets es2015 --plugins add-module-exports src --out-dir lib",
+    "prepublish": "npm run compile"
+  },
+  "homepage": "https://github.com/part-up/js-helpers#readme",
+  "dependencies": {
+    "lodash": "^4.12.0",
+    "moment": "^2.13.0",
+    "mout": "^1.0.0",
+    "powercheck": "^1.0.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.9.0"
+  }
+}

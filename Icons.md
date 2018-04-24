@@ -1,6 +1,6 @@
 ### Adding an icon
 1. `cd app/`
-2. `meteor add partup-iconfont-generator`
+2. `meteor add partup-iconfont-generator` (requires an update)
 3. Add the new icon SVG to the */client/icons* folder, **dot not use this folder for anything else than the iconfont icons**
 4. Name the icon svg file properly (upload icon should be named `upload.svg`, not `icon_upload.svg`, don't use a prefix like `icon_` for consistency)
 5. Wait for `[iconfont] generating`

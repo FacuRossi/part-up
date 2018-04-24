@@ -51,6 +51,8 @@ RUN \
 
 COPY ./app /tmp/app
 
+ENV TOOL_NODE_FLAGS="--max-old-space-size=4096"
+
 RUN \
     # Build app
     cd /home/meteor/app && \
