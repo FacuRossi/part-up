@@ -1,6 +1,7 @@
 .pu-wysiwyg {
     padding: 0;
     overflow: hidden;
+    white-space: normal;
 
     &-textarea {
         display: none;

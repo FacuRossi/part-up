@@ -888,7 +888,7 @@ jQuery.trumbowyg = {
                     // Wrap groups of inline elements in paragraphs (recursive)
                     var wrapInlinesInParagraphsFrom = function ($from) {
                         if ($from.length !== 0) {
-                            var $finalParagraph = $from.nextUntil(blockElementsSelector).andSelf()
+                            var $finalParagraph = $from.nextUntil(blockElementsSelector).addBack()
                                 .wrapAll('<p/>').parent();
 
                             $finalParagraph.next('br').remove();
