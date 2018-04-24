@@ -1,9 +1,16 @@
 <template name="app_network_joinbutton">
+
     {{# if network.hasMember currentUser._id }}
-        <a class="pu-button pu-button-icon" href="{{ pathFor route='network-invite' slug=network.slug }}">
-            <i class="picon-person-plus picon-large"></i>
-            {{_ 'pages-app-network-uppers-invite_button'}}
-        </a>
+        <!-- If start page -->
+        {{# if start }}
+            <a href="{{ pathFor route='network-detail' slug=network.slug }}" class="pu-button-2">{{_ 'pages-app-network-start-button-gototribe'}}</a>
+        <!-- Everywhere else  -->
+        {{ else }}
+            <a class="pu-button pu-button-icon" href="{{ pathFor route='network-invite' slug=network.slug }}">
+                <i class="picon-person-plus picon-large"></i>
+                {{_ 'pages-app-network-uppers-invite_button'}}
+            </a>
+        {{/ if}}
     {{ else }}
         {{# if network.canUpperJoin currentUser._id }}
             {{# if network.isUpperInvitePending currentUserId }}
@@ -32,11 +39,17 @@
                         {{_ 'pages-app-network-actions-button-accept'}}
                     </a>
                 {{ else }}
-                    <a href="#" class="pu-button" data-request-invite>
-                        {{_ 'pages-app-network-actions-button-request_access' }} {{ network.name }}
-                    </a>
+                    {{# if joinToggle }}
+                        <a href="{{ pathFor route='network-detail' slug=network.slug }}" class="pu-button-2">{{_ 'pages-app-network-start-button-gototribe'}}</a>
+                    {{ else }}
+                        <a href="#" class="pu-button" data-request-invite>
+                            {{_ 'pages-app-network-actions-button-request_access' }} {{ network.name }}
+                        </a>
+                    {{/ if}}
                 {{/if}}
             {{/ if }}
         {{/ if}}
     {{/ if}}
+
+    
 </template>

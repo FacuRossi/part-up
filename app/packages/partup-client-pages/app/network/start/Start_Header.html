@@ -29,7 +29,7 @@
             {{#if data.network.archived_at}}
                 <a href="#" class="pu-button pu-button-gray pu-button-disabled">{{_ 'pages-app-network-start-button-gototribe-disabled'}}</a>
             {{else}}
-                {{> Start_JoinButton }}
+                {{> Start_JoinButton network=data.network }}
             {{/if}}
         </header>
         <div class="pu-tribebackground {{#if state.fadeIn}}pu-tribebackground-fadein{{/if}}" style="{{#if data.network.background_image}}{{#with data.network.background_image }}background-image:url('{{ partupImageUrl id=. store='1200x520'}}');{{/with }}{{/if}}"></div>

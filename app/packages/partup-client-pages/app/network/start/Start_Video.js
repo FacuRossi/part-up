@@ -1,6 +1,7 @@
 Template.Start_Video.helpers({
     data(...args) {
         const { networkSlug: slug } = this;
+        const network = Networks.findOne({slug})
         const {
             name: tribename,
             content: {
@@ -9,8 +10,10 @@ Template.Start_Video.helpers({
                 why_title,
                 why_body
             } = {},
-        } = Networks.findOne({slug});
+        } = network;
+
         return {
+            network,
             video_url: () => video_url || TAPi18n.__('pages-app-network-landing-intro-video-fallback'),
             video_placeholder: () => {
                 const image = Images.findOne({_id: video_placeholder_image});

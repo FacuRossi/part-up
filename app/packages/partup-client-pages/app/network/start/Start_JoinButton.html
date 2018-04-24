@@ -1,7 +1,3 @@
 <template name="Start_JoinButton">
-    {{#if data.network.hasMember currentUserId}}
-        <a href="{{ pathFor route='network-detail' slug=data.network.slug }}" class="pu-button-2">{{_ 'pages-app-network-start-button-gototribe'}}</a>
-    {{else}}
-        {{> app_network_joinbutton network=data.network }}
-    {{/if}}
+    {{> app_network_joinbutton network=network start=true }}
 </template>
