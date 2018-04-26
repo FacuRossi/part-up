@@ -59,7 +59,7 @@ RUN \
     cp -R /tmp/app /home/meteor && \
     chown meteor:meteor --recursive . && \
     gosu meteor /home/meteor/.meteor/meteor npm install && \
-    gosu meteor /home/meteor/.meteor/meteor build --server-only --allow-incompatible-update --directory /home/meteor/app_build && \
+    gosu meteor /home/meteor/.meteor/meteor build --server-only --directory /home/meteor/app_build && \
     cd /home/meteor/app_build/bundle/programs/server/ && \
     gosu meteor npm install && \
     mv /home/meteor/app_build/bundle /app && \
