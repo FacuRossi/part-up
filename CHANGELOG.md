@@ -1,3 +1,26 @@
+<a name="4.1.0"></a>
+# [4.1.0](https://github.com/part-up/part-up/compare/4.0.4...4.1.0) (2018-04-24)
+
+
+### Bug Fixes
+
+* **chats:** Fixed match error when no chatId is present ([b2a82a0](https://github.com/part-up/part-up/commit/b2a82a0))
+* **client:** Always get update upper from method ([e0f0594](https://github.com/part-up/part-up/commit/e0f0594))
+* **comments:** A profile image was reference by the image id stored in the comment itself, this chan ([9d05f34](https://github.com/part-up/part-up/commit/9d05f34)), closes [#1553](https://github.com/part-up/part-up/issues/1553)
+* **homepage:** Fixed the size of the homepage header ([6a3c7b0](https://github.com/part-up/part-up/commit/6a3c7b0)), closes [#1603](https://github.com/part-up/part-up/issues/1603)
+* **packages:** Include partup-js-models in project ([bf9dc8e](https://github.com/part-up/part-up/commit/bf9dc8e))
+* **partup:** Always show update detail ([24c2065](https://github.com/part-up/part-up/commit/24c2065))
+* **style:** Now importing font-weight 600 for Open Sans ([3a83d46](https://github.com/part-up/part-up/commit/3a83d46))
+* **tribesettings:** Changed the plugin for wysiwyg editor to support newer jquery plugins ([1040874](https://github.com/part-up/part-up/commit/1040874))
+* **tribestartpage:** When accepting an invite the go-button is rendered on the tribe front-page ([639eb9e](https://github.com/part-up/part-up/commit/639eb9e))
+
+
+### Features
+
+* **intercom:** Add identity verification ([bc2e560](https://github.com/part-up/part-up/commit/bc2e560))
+
+
+
 <a name="4.0.4"></a>
 ## [4.0.4](https://github.com/part-up/part-up/compare/4.0.3...4.0.4) (2018-04-09)
 
