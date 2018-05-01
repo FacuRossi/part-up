@@ -30,6 +30,11 @@ Partup.server.services.emails = {
             if (deactivatedAt) return; // user is deactivated, bailing out
         }
 
+        // check if user's email is verified, else send a reminder instead
+        if (!User(existingUser).hasVerifiedEmail(options.toAddress)) {
+          return Accounts.sendVerificationEmail(existingUser._id, options.toAddress);
+        }
+
         Meteor.defer(function() {
             options = options || {};
             var emailSettings = {};

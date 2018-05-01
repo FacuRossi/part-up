@@ -8,9 +8,13 @@
 
         <h2 class="pu-title pu-title-modal">{{{_ 'pages-modal-register-signup-becomethexthupper' totalNumberOfUppers }}}</h2>
         <p>{{_ 'pages-modal-register-signup-fillindetailsaccount'}}</p>
+        <p class="pu-sub-terms" data-tos>
+          <input name="tos" class="tos-checkbox" type="checkbox" >
+          <label for="tos">{{{_ 'pages-modal-register-signup-form-terms'}}}</label>
+        </p>
         <ul class="pu-list pu-list-horizontal pu-list-buttons">
             <li>
-                <button class="pu-button pu-button-facebook needsclick {{# if facebookLoading }}pu-state-loading pu-state-disabled{{/ if }}" data-signupfacebook>
+                <button class="pu-button pu-button-facebook needsclick {{#unless agreedToTos }}pu-state-action-required{{/unless}} {{# if facebookLoading }}pu-state-loading pu-state-disabled{{/ if }}" data-signupfacebook>
                     <span>
                         <i class="picon-facebook"></i>
                         {{_ 'pages-modal-register-signup-signupfacebook'}}
@@ -19,7 +23,7 @@
                 </button>
             </li>
             <li>
-                <button class="pu-button pu-button-linkedin needsclick {{# if linkedinLoading }}pu-state-loading pu-state-disabled{{/ if }}" data-signuplinkedin>
+                <button class="pu-button pu-button-linkedin needsclick {{#unless agreedToTos }}pu-state-action-required{{/unless}} {{# if linkedinLoading }}pu-state-loading pu-state-disabled{{/ if }}" data-signuplinkedin>
                     <span>
                         <i class="picon-linkedin"></i>
                         {{_ 'pages-modal-register-signup-signuplinkedin'}}
@@ -76,13 +80,9 @@
                 </label>
             </fieldset>
 
-            <p class="pu-sub-terms">
-                {{{_ 'pages-modal-register-signup-form-terms' }}}
-            </p>
-
             <!-- Submit -->
             <footer>
-                <button type="submit" class="pu-button {{# if submitting }}pu-state-loading pu-state-disabled{{/ if }}">
+                <button type="submit" class="pu-button {{#unless agreedToTos }}pu-state-action-required{{/unless }} {{# if submitting }}pu-state-loading pu-state-disabled{{/ if }}">
                     <span>{{_ 'pages-modal-register-signup-form-submit' }}</span>
                     {{> Spinner color='inverted' type='small' }}
                 </button>

@@ -113,7 +113,7 @@ Accounts.onCreateUser(function(options, user) {
         };
 
         imageUrl = liData.pictureUrl;
-        user.emails.push({address: liData.emailAddress, verified: true});
+        user.emails.push({address: liData.emailAddress, verified: false});
     }
 
     if (fbData) {
@@ -135,7 +135,7 @@ Accounts.onCreateUser(function(options, user) {
         };
 
         imageUrl = 'https://graph.facebook.com/' + fbData.id + '/picture?width=750';
-        user.emails.push({address: fbData.email, verified: true});
+        user.emails.push({address: fbData.email, verified: false});
     }
 
     try {
@@ -185,12 +185,11 @@ Accounts.validateNewUser(function(user) {
 
     var liData = mout.object.get(user, 'services.linkedin');
     var fbData = mout.object.get(user, 'services.facebook');
-    if (!liData && !fbData) {
-        Meteor.setTimeout(function() {
-            d('User registered with username and password, sending verification email');
-            Accounts.sendVerificationEmail(user._id);
-        }, 5000);
-    }
+
+    Meteor.setTimeout(function() {
+      d(`User '${user._id}' registered, sending verification email to ${emailAddress}`);
+      Accounts.sendVerificationEmail(user._id, emailAddress);
+    }, 5000);
 
     Event.emit('users.inserted', user);
 
