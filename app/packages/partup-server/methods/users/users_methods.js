@@ -515,10 +515,6 @@ Meteor.methods({
                 flags: []
             }});
 
-            Meteor.users.update(user._id, {$set: {
-                deletedAt: new Date()
-            }});
-
             Event.emit('users.deleted', user._id);
 
             return {
