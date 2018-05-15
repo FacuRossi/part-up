@@ -1,3 +1,13 @@
+<a name="4.1.1"></a>
+## [4.1.1](https://github.com/part-up/part-up/compare/4.1.0...4.1.1) (2018-04-26)
+
+
+### Bug Fixes
+
+* **build:** Remove incompatible updates ([80d6462](https://github.com/part-up/part-up/commit/80d6462))
+
+
+
 <a name="4.1.0"></a>
 # [4.1.0](https://github.com/part-up/part-up/compare/4.0.4...4.1.0) (2018-04-24)
 
