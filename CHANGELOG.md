@@ -1,3 +1,18 @@
+<a name="4.2.0"></a>
+# [4.2.0](https://github.com/part-up/part-up/compare/4.1.1...4.2.0) (2018-05-15)
+
+
+### Bug Fixes
+
+* **build:** Exact node version ([ebaa3b6](https://github.com/part-up/part-up/commit/ebaa3b6))
+
+
+### Features
+
+* **signup:** Double opt-in signup ([85e18a0](https://github.com/part-up/part-up/commit/85e18a0))
+
+
+
 <a name="4.1.1"></a>
 ## [4.1.1](https://github.com/part-up/part-up/compare/4.1.0...4.1.1) (2018-04-26)
 
