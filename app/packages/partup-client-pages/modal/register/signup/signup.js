@@ -27,8 +27,31 @@ Template.modal_register_signup.onCreated(function() {
     facebookLoading.set(false);
     linkedinLoading.set(false);
 
-    template.userCount = new ReactiveVar();
+    this.agreedToTos = new ReactiveVar(false, (oldVal, newVal) => {
+      const node = this.find('.pu-sub-terms');
 
+      if (newVal) {
+        // console.log('ohnoes?', node.classList);
+        node.classList.remove('pu-sub-terms-invalid');
+      }
+    });
+    this.checkTos = () => {
+      const node = this.find('.pu-sub-terms');
+      const curVal = this.agreedToTos.curValue;
+
+      if (!curVal) {
+        Partup.client.notify.error(TAPi18n.__('must-agree-tos'));
+
+        const invalidClass = 'pu-sub-terms-invalid';
+        if (!node.classList.contains(invalidClass)) {
+          node.classList.add(invalidClass);
+        }
+      }
+
+      return curVal;
+    }
+
+    template.userCount = new ReactiveVar();
     HTTP.get('/users/count', function(error, response) {
         if (error || !response || !mout.lang.isString(response.content)) { return; }
 
@@ -62,6 +85,9 @@ Template.modal_register_signup.helpers({
     },
     prefillEmail: function() {
         return Template.instance().data.prefillEmail;
+    },
+    agreedToTos() {
+      return Template.instance().agreedToTos.get();
     }
 });
 
@@ -69,8 +95,18 @@ Template.modal_register_signup.helpers({
 /* Widget events */
 /*************************************************************/
 Template.modal_register_signup.events({
-    'click [data-signupfacebook]': function(event) {
+  'click [data-tos]'(event, templateInstance) {
+    const checked = templateInstance.agreedToTos.curValue;
+    const checkboxNode = templateInstance.find('.tos-checkbox');
+    checkboxNode.checked = !checked;
+    templateInstance.agreedToTos.set(checkboxNode.checked);
+  },
+    'click [data-signupfacebook]': function(event, templateInstance) {
         event.preventDefault();
+
+        if (!templateInstance.checkTos()) {
+          return;
+        }
 
         facebookLoading.set(true);
         Meteor.loginWithFacebook({
@@ -104,8 +140,12 @@ Template.modal_register_signup.events({
             Router.go('register-details');
         });
     },
-    'click [data-signuplinkedin]': function(event) {
+    'click [data-signuplinkedin]': function(event, templateInstance) {
         event.preventDefault();
+
+        if (!templateInstance.checkTos()) {
+          return;
+        }
 
         linkedinLoading.set(true);
         Meteor.loginWithLinkedin({
@@ -156,6 +196,10 @@ Template.modal_register_signup.events({
 AutoForm.hooks({
     'pages-modal-register-signupForm': {
         onSubmit: function(insertDoc, updateDoc, currentDoc) {
+          if (this.template.parent().checkTos()) {
+            return false;
+          }
+
             submitting.set(true);
             var self = this;
             var submittedDoc = insertDoc;
