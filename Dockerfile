@@ -2,7 +2,7 @@ FROM node:8.8.1
 
 EXPOSE 3000
 
-CMD /app/main.js
+CMD ["node", "/app/main.js"]
 
 ENV GOSU_VERSION=1.10
 
