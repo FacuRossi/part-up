@@ -12,12 +12,35 @@
     }
 
     .pu-sub-terms {
-        margin-top: 20px;
-        font-size: 14px;
-        color: #999;
+        padding: 10px 5px 10px 5px;
+        margin: 10px 0px 0px 0px;
+        font-size: 16px;
+        color: $color-text;
+        @include user-select(none);
+        cursor: pointer;
+        border: 2px solid transparent;
 
-        a {
-            color: #999;
+        input {
+          margin: 5;
+          vertical-align: middle;
+          display: inline-block;
+          cursor: pointer;
+        }
+
+        label {
+          vertical-align: middle;
+          cursor: pointer;
+
+          a {
+              color: $color-text;
+              text-decoration: underline;
+          }
+        }
+
+        &-invalid {
+          border: 1.5px solid $color-red;
+          border-radius: 5px;
+          transition: border 0.5s linear;
         }
     }
 }

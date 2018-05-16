@@ -1,8 +1,8 @@
-FROM node:8.11.1-slim
+FROM node:8.11.1
 
 EXPOSE 3000
 
-CMD /app/wrapper.js
+CMD ["node", "/app/main.js"]
 
 ENV GOSU_VERSION=1.10
 
@@ -64,7 +64,6 @@ RUN \
     gosu meteor npm install && \
     mv /home/meteor/app_build/bundle /app && \
     cd /app && \
-    gosu meteor npm install newrelic @newrelic/native-metrics @risingstack/trace && \
     \
     # Cleanup
     apt-get remove --purge -y ${BUILD_DEPS} && \
@@ -75,8 +74,6 @@ RUN \
     rm -R /home/meteor/app_build && \
     rm -R /tmp/* && \
     rm /home/meteor/install_meteor.sh
-
-COPY wrapper.js /app/wrapper.js
 
 VOLUME /tmp /var/tmp
 
