@@ -1,3 +1,15 @@
+<a name="4.2.3"></a>
+## [4.2.3](https://github.com/part-up/part-up/compare/4.2.2...4.2.3) (2018-05-18)
+
+
+### Bug Fixes
+
+* **git:** Remove .git from models directory ([5188bd1](https://github.com/part-up/part-up/commit/5188bd1))
+* **import:** Rename models to js-models ([4f2eced](https://github.com/part-up/part-up/commit/4f2eced))
+* **models:** Integrate partup models in repo ([41dca45](https://github.com/part-up/part-up/commit/41dca45))
+
+
+
 <a name="4.2.2"></a>
 ## [4.2.2](https://github.com/part-up/part-up/compare/4.2.1...4.2.2) (2018-05-15)
 
