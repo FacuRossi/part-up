@@ -4,7 +4,7 @@ import Model from './lib/Model';
 import UserModel from './UserModel';
 import PartupModel from './PartupModel';
 import check from 'powercheck';
-import { formatDate } from '../js-helpers/lib/index';
+import { formatDate } from './helpers';
 
 export default class PartupUpdateModel extends Model {
     static getUserForComment(comment) {

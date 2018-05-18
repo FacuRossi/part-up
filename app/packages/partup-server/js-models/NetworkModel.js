@@ -1,7 +1,7 @@
 'use strict';
 
 import Model from './lib/Model';
-import { getWebsitePathFor } from '../js-helpers/lib/index';
+import { getWebsitePathFor } from './helpers';
 import ImageModel from './ImageModel';
 
 export default class NetworkModel extends Model {
