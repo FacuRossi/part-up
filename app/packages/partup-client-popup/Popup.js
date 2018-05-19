@@ -86,7 +86,7 @@ Template.Popup.events({
     'click [data-overlay-dismiss]': function closePopup(event, template) {
         template.scrollIndex.set(0);
         var $dismissButton = jQuery(event.target).find('[data-dismiss]');
-        if (event.target !== event.currentTarget || $dismissButton.size() > 0) {
+        if (event.target !== event.currentTarget || $dismissButton.length > 0) {
             return;
         }
 
