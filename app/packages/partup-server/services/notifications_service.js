@@ -1,6 +1,6 @@
 'use strict';
 
-import { NotificationModel } from '../js-models';
+import NotificationModel from '../js-models/NotificationModel';
 
 var d = Debug('services:notifications');
 
