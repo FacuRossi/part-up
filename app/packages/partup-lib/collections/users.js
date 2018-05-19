@@ -3,7 +3,7 @@
  * @name Users
  */
 
-import { get } from 'lodash';
+import { get, find } from 'lodash';
 
 //N.B.: Meteor.users is already defined by meteor
 
