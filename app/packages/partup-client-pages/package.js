@@ -36,6 +36,7 @@ Package.onUse(function(api) {
 
             'app/404/partup/partup.html',
             'app/404/partup/closed.html',
+            'app/404/partup/closed.js',
             'app/404/partup/not-allowed.html',
 
             'app/404/network/network.html',
