@@ -28,7 +28,6 @@ Partup.server.services.profile_completeness = {
             'website',
             'skype',
             'tiles',
-            'meurs'
         ];
         var providedValues = 0;
 
@@ -41,7 +40,6 @@ Partup.server.services.profile_completeness = {
 
             // Handle the special cases
             if (key === 'location' && !value.city) return;
-            if (key === 'meurs' && (!value.fetched_results || value.results.length < 1)) return;
 
             // Valid stuff, add to score count
             providedValues++;

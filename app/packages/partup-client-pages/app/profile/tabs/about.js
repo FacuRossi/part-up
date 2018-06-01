@@ -28,13 +28,10 @@ Template.app_profile_about.onCreated(function() {
             var user = Meteor.users.findOne({_id: profileId});
             var displayTiles = [];
 
-            var meurs = user.profile.meurs || false;
-
             var profileIsCurrentUser = !!(Meteor.userId() === profileId);
-            var profileHasResults = !!(meurs && meurs.results && meurs.results.length && meurs.fetched_results);
             var profilehasMediaTiles = !!(tiles && tiles.length);
 
-            if (!profileHasResults && profileIsCurrentUser) {
+            if (profileIsCurrentUser) {
                 displayTiles = displayTiles.concat([{
                     type: 'result',
                     profileId,
@@ -45,14 +42,6 @@ Template.app_profile_about.onCreated(function() {
                 displayTiles = displayTiles.concat([{
                     type: 'image',
                     placeholder: true,
-                }]);
-            }
-
-            if (profileHasResults) {
-                displayTiles = displayTiles.concat([{
-                    type: 'result',
-                    results: meurs,
-                    profileId,
                 }]);
             }
 

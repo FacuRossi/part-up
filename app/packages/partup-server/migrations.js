@@ -1,13 +1,13 @@
 /**
  * Testing Migrations locally
- * 
+ *
  * Make sure the fixture data is set-up the way it should be before the migrations ran.
  * The migrations will run before the database is populated with the fixture data so,
  * start meteor shell via the terminal 'cd app && meteor shell'
  * type 'Migrations.migrateTo('<version>,rerun')' to re-run the migration.
  * Check your local database for the results meteor exposes it on localhost:3001
  * You can use robomongo to access and test it.
- * 
+ *
  */
 
 Migrations.config({
@@ -1099,5 +1099,17 @@ Migrations.add({
         //...
     }
 })
+
+/* To be executed on a later stage */
+// Migrations.add({
+//   version: 43,
+//   name: 'Remove meurs data from user documents',
+//   up: function() {
+//     Meteor.users.update({}, { $unset: { 'profile.meurs': ''}}, { multi: true });
+//   },
+//   down: function() {
+//     // ...
+//   }
+// });
 
 // DO NOT ADD Migrations.migrateTo() here!!! This is controlled by the ENV_VAR 'MIGRATE'

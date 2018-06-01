@@ -45,14 +45,6 @@
         }
     }
 
-    .pu-resulttile {
-        width: 100%;
-
-        &:first-child {
-            margin-bottom: 20px;
-        }
-    }
-
     footer {
         position: relative;
         z-index: 1;
@@ -126,20 +118,6 @@
     }
 
     @media screen and (min-width: 600px) {
-        .pu-resulttile {
-            min-width: 48%;
-            min-width: calc(50% - 11px);
-            max-width: calc(50% - 11px);
-
-            &:first-child {
-                margin-right: 11px;
-            }
-
-            &:last-child {
-                margin-left: 11px;
-            }
-        }
-
         &-results {
             &:after,
             &:before {
