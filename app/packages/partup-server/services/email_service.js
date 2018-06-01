@@ -31,7 +31,7 @@ Partup.server.services.emails = {
         }
 
         // check if user's email is verified, else send a reminder instead
-        if (!User(existingUser).hasVerifiedEmail(options.toAddress)) {
+        if (existingUser && !User(existingUser).hasVerifiedEmail(options.toAddress)) {
           return Accounts.sendVerificationEmail(existingUser._id, options.toAddress);
         }
 

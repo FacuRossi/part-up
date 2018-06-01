@@ -431,9 +431,21 @@ Router.route('/partups/:slug', {
     data() {
       return {
         partupId: Partup.client.strings.partupSlugToId(this.params.slug),
+        accessToken: this.params.query.token,
       }
     },
-    async onRun() {
+    onBeforeAction() {
+      let { partupId, accessToken } = this.data();
+
+      // The access token is used for invites by email in non-public partups
+      if (partupId && accessToken) {
+        Session.set('partup_access_token', accessToken);
+        Session.set('partup_access_token_for_partup', partupId);
+      }
+
+      this.next();
+    },
+    async action() {
       if (!Meteor.userId()) {
         return this.redirect('partup-start', { slug: this.params.slug });
       }
@@ -446,17 +458,9 @@ Router.route('/partups/:slug', {
             resolve(result.landing_page);
           });
       });
+
       this.redirect(`/partups/${this.params.slug}/${landingpage}`);
     },
-    // // Should this be set for all partup pages?
-    // onBeforeAction() {
-      // let partupId = this.data().partupId;
-      // let accessToken = this.data().accessToken;
-      // if (partupId && accessToken) {
-      //     Session.set('partup_access_token', accessToken);
-      //     Session.set('partup_access_token_for_partup', partupId);
-      // }
-    // },
 });
 
 Router.route('/partups/:slug/start', {
@@ -492,10 +496,6 @@ Router.route('/partups/:slug/conversations', {
         renderIconText: !User(Meteor.user()).isPartnerOrSupporterInPartup(partupId),
     };
   },
-  // onRun() {
-  //     Meteor.call('partups.analytics.click', this.data().partupId);
-  //     this.next();
-  // },
 });
 
 Router.route('/partups/:slug/updates/:update_id', {
