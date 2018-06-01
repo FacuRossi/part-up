@@ -226,6 +226,21 @@ Router.route('/profile/:_id/settings/general', {
     },
 });
 
+Router.route('/profile/:_id/settings/advanced', {
+    name: 'profile-settings-advanced',
+    where: 'client',
+    yieldRegions: {
+        modal: { to: 'main' },
+        modal_profile_settings: { to: 'modal' },
+        modal_profile_settings_advanced: { to: 'modal_profile_settings' },
+    },
+    data: function() {
+        return {
+            profileId: this.params._id,
+        };
+    },
+});
+
 Router.route('/profile/:_id/settings/email', {
     name: 'profile-settings-email',
     where: 'client',

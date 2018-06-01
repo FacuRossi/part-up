@@ -28,6 +28,7 @@
     "base-errors-user_could_not_be_found": "Sorry, we couldn't find this user.",
     "base-errors-user_could_not_be_deactivated": "The user could not be deactivated.",
     "base-errors-user_could_not_be_reactivated": "The user could not be reactivated.",
+    "base-errors-user_could_not_be_deleted": "The user could not be deleted.",
 
     // Tags
     "base-errors-tags_could_not_be_autocompleted": "We could not autocomplete the tags.",

@@ -78,7 +78,7 @@ if (Meteor.isServer) {
  * @return {Mongo.Cursor}
  */
 Meteor.users.findSinglePrivateProfile = function(userId) {
-    return Meteor.users.find({_id: userId}, {fields: getPrivateUserFields()});
+    return Meteor.users.find({_id: userId, deletedAt: {$exists: false}}, {fields: getPrivateUserFields()});
 };
 
 /**
@@ -89,7 +89,7 @@ Meteor.users.findSinglePrivateProfile = function(userId) {
  * @return {Mongo.Cursor}
  */
 Meteor.users.findSinglePublicProfile = function(userId) {
-    return Meteor.users.find({_id: userId}, {fields: getPublicUserFields()});
+    return Meteor.users.find({_id: userId, deletedAt: {$exists: false}}, {fields: getPublicUserFields()});
 };
 
 /**
@@ -107,7 +107,8 @@ Meteor.users.findMultiplePublicProfiles = function(userIds, options, parameters)
     parameters = parameters || {};
     var textSearch = parameters.textSearch || undefined;
 
-    var selector = {_id: {$in: userIds}};
+    // Don't show deleted users
+    var selector = {_id: {$in: userIds}, deletedAt: {$exists: false}};
     if (parameters.onlyActive) selector.deactivatedAt = {$exists: false};
 
     options.fields = getPublicUserFields();
@@ -164,7 +165,8 @@ Meteor.users.findMultipleNetworkAdminProfiles = function(userIds) {
 
     var selector = {
         _id: {$in: userIds},
-        deactivatedAt: {$exists: false}
+        deactivatedAt: {$exists: false},
+        deletedAt: {$exists: false},
     };
     var options = {
         fields: getPublicNetworkAdminFields()
@@ -201,7 +203,7 @@ Meteor.users.findUppersForNetwork = function(network, options, parameters) {
 Meteor.users.findUppersForNetworkDiscover = function(network) {
     var uppers = network.most_active_uppers || [];
     // Only return ID and image ID
-    return Meteor.users.find({_id: {$in: uppers}}, {fields: {'_id': 1, 'profile.image': 1}});
+    return Meteor.users.find({_id: {$in: uppers}, deletedAt: {$exists: false}}, {fields: {'_id': 1, 'profile.image': 1}});
 };
 
 /**
@@ -336,6 +338,7 @@ Meteor.users.findActiveUsers = function(selector, options) {
     options = options || {};
 
     selector.deactivatedAt = {$exists: false};
+    selector.deletedAt = {$exists: false};
     options.fields = getPublicUserFields();
     return Meteor.users.find(selector, options);
 };
@@ -417,6 +420,9 @@ User = function(user) {
 
             var name = user.profile.name || user.name;
             if (!name) return;
+
+            // If its a deleted user, show the full Deleted User
+            if (name === "Deleted User") return name
 
             if (name.match(/.*\s.*/)) {
                 return name.split(' ')[0];

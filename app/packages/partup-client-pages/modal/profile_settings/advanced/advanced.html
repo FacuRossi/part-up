@@ -1,0 +1,11 @@
+<template name="modal_profile_settings_advanced">
+    <div class="pu-composition pu-composition-defaultmodal">
+        <h2 class="pu-title pu-title-modal">{{_ 'modal-profilesettings-advanced-title'}}</h2>
+        <p>{{_ 'modal-profilesettings-advanced-text-explanation'}}</p>
+
+        <button class="pu-button {{# if submitting }}pu-state-loading pu-state-disabled{{/ if }}" data-delete-account>
+            {{_ 'modal-profilesettings-advanced-delete-account' }}
+            {{> Spinner color='inverted' type='small' }}
+        </button>
+    </div>
+</template>

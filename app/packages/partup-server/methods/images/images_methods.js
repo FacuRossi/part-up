@@ -53,7 +53,7 @@ Meteor.methods({
 
         if (Meteor.user()) {
             _.each(ids, (id) => {
-                Partup.server.images.remove(id);
+                Partup.server.services.images.remove(id);
                 Images.remove(id);
             });
             return {

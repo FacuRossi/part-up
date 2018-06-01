@@ -27,6 +27,7 @@
     "base-errors-user_could_not_be_found": "De gebruiker kan helaas niet worden gevonden.",
     "base-errors-user_could_not_be_deactivated": "De gebruiker kan niet worden gedeactiveerd.",
     "base-errors-user_could_not_be_reactivated": "De gebruiker kan niet worden heractiveerd.",
+    "base-errors-user_could_not_be_deleted": "De gebruiker kon niet worden verwijderd.",
 
     // Tags
     "base-errors-tags_could_not_be_autocompleted": "Het is niet gelukt de tags te autocompleten.",
