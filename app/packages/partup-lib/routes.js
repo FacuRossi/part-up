@@ -140,12 +140,6 @@ Router.route('/profile/:_id', {
             resultsReady: this.params.query.results_ready || false,
         };
     },
-    onBeforeAction: function() {
-        // when `?results_ready=true` this call must be made
-        let resultsReady = this.params.query.results_ready || false;
-        if (resultsReady) Meteor.call('meurs.get_results', this.params._id);
-        this.next();
-    },
 });
 
 Router.route('/profile/:_id/partner', {

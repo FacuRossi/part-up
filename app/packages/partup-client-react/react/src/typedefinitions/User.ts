@@ -43,20 +43,5 @@ export interface Profile {
     phonenumber?: string;
     website?: string;
     skype?: string;
-    meurs: {
-        portal: string;
-        nl_id: string;
-        en_id: string;
-        program_session_id: number;
-        fetched_results: boolean;
-        results: Array<{
-            code: number;
-            name: string;
-            score: number;
-            zscore: number;
-            dscore: number;
-            highIndex: number;
-        }>;
-    };
     tiles: Array<string>;
 }

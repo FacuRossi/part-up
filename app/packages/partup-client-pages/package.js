@@ -153,12 +153,6 @@ Package.onUse(function(api) {
             'app/profile/partials/profile/media.html',
             'app/profile/partials/profile/media.js',
 
-            // App: profile meurs tiles
-            'app/profile/partials/meurs/placeholder.html',
-            'app/profile/partials/meurs/placeholder.js',
-            'app/profile/partials/meurs/results.html',
-            'app/profile/partials/meurs/results.js',
-
             // App: profile popups
             'app/profile/partials/popups/info.html',
             'app/profile/partials/popups/info.js',

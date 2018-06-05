@@ -28,8 +28,6 @@ var getPublicUserFields = function() {
         'profile.tags': 1,
         'profile.twitter_url': 1,
         'profile.website': 1,
-        'profile.meurs.results': 1,
-        'profile.meurs.fetched_results': 1,
         'profile.tiles': 1,
         'status.online': 1,
         'partups': 1,
@@ -656,8 +654,6 @@ User = function(user) {
             var currentUserId = Meteor.userId();
 
             if (user._id === currentUserId) return true;
-
-            if (user.profile.meurs && user.profile.meurs.results && user.profile.meurs.fetched_results) return true;
 
             if (user.profile.tiles && user.profile.tiles.length > 0) return true;
 
