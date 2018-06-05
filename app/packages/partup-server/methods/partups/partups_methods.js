@@ -786,11 +786,11 @@ Meteor.methods({
 
         if (!user || !partup.hasUpper(user._id)) throw new Meteor.Error(401, 'unauthorized');
 
-       try {
+        try {
            partup.makePartnerSupporter(user._id);
-       } catch (error) {
+        } catch (error) {
            Log.error(error);
            throw new Meteor.Error(400, 'partner_could_not_be_made_supporter');
-       }
+        }
     }
 });

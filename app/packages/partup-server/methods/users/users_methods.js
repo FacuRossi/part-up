@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import _ from 'lodash'
 
 Meteor.methods({
     /**
@@ -419,6 +419,117 @@ Meteor.methods({
         }
     },
 
+    'users.delete': function() {
+
+        var user = Meteor.user();
+
+        if (!user) {
+            throw new Meteor.Error(401, 'unauthorized');
+        }
+
+        try {
+
+            // Remove all partnerships & and become a supporter
+            _.get(user, 'upperOf', []).forEach((partupId) => {
+                partup = Partups.findOne({_id: partupId})
+                // If the user is the only partner, archive first
+                if (_.isEqual(partup.uppers, [user.id])) {
+                    Meteor.call('partups.archive', partupId)
+                }
+                Meteor.call('partups.unpartner', partupId, function (err, res) {
+                    Meteor.call('partups.supporters.remove', partupId)
+                })
+            })
+
+            // Remove supporter from partup
+            _.get(user, 'supporterOf', []).forEach((partupId) => {
+                Meteor.call('partups.supporters.remove', partupId)
+            })
+
+            // Remove from tribes
+            _.get(user, 'networks', []).forEach((networkId) => {
+                network = Networks.findOne({_id: networkId})
+                // If the user is the only member, archive first
+                if (_.isEqual(_.get(network, 'uppers', []), [user.id])) {
+                    try {
+                        Meteor.call('networks.make_admin', 'EBnHxX2WYy6LicBPg')
+
+                        Meteor.call('networks.remove_upper', network.slug, user._id)
+                    } catch (e) {
+                        Meteor.call('networks.archive', network.slug)
+                    }
+                } else {
+                    if (network.isAdmin(user._id)) {
+                        Meteor.call('networks.remove_upper', network.slug, user._id)
+                    } else {
+                        Meteor.call('networks.leave', networkId)
+                    }
+                }
+            })
+
+            // Delete images
+            const imagesForDeletion = []
+
+            // Profile images
+            const profileImage = _.get(user, 'profile.image')
+            if (profileImage) {
+                imagesForDeletion.push(profileImage)
+            }
+
+            // Find any tiles associated with a user and delete them
+            // But keep a record for images that need to deleted
+            Tiles.find({upper_id: user.id}).forEach((tile) => {
+                if (tile.image_id) {
+                    imagesForDeletion.push(tile.image_id)
+                }
+                Meteor.call('tiles.remove', tile._id)
+            })
+
+            if (imagesForDeletion.length > 0) {
+                Meteor.call('images.remove_many', imagesForDeletion)
+            }
+
+            // Empty out the profile
+            fieldsForDeletion = {
+                'image': undefined,
+                'description': "",
+                'tags': [],
+                'facebook_url': "",
+                'twitter_url': "",
+                'instagram_url': "",
+                'linkedin_url': "",
+                'phonenumber': "",
+                'website': "",
+                'skype': "",
+                'name': "Deleted User"
+            }
+            var userDeletedFields = Partup.transformers.profile.fromFormProfileSettings(fieldsForDeletion);
+
+            // Merge the old profile so empty fields do not get overwritten
+            Meteor.users.update(user._id, {$set: {
+                profile: userDeletedFields.profile,
+                emails: [],
+                registered_emails: [],
+                services: {},
+                logins: [],
+                flags: []
+            }});
+
+            Meteor.users.update(user._id, {$set: {
+                deletedAt: new Date()
+            }});
+
+            Event.emit('users.deleted', user._id);
+
+            return {
+                _id: user._id
+            }
+        } catch (error) {
+            Log.error(error);
+            throw new Meteor.Error(500, 'user_could_not_be_deleted');
+        }
+    },
+  
     'users.one'(userId) {
       check(userId, String);
       return Meteor.users.findSinglePublicProfile(userId).fetch().pop();
@@ -428,11 +539,12 @@ Meteor.methods({
       check(userId, String);
 
       const intercomSecret = Meteor.isDevelopment ?
-        get(JSON.parse(process.env.METEOR_SETTINGS), 'intercom.secret') :
-        get(Meteor, 'settings.intercom.secret');
+        _.get(JSON.parse(process.env.METEOR_SETTINGS), 'intercom.secret') :
+        _.get(Meteor, 'settings.intercom.secret');
 
       if (intercomSecret) {
         return Npm.require('crypto').createHmac('sha256', new Buffer(intercomSecret, 'utf8')).update(userId).digest('hex');
       }
     },
+
 });

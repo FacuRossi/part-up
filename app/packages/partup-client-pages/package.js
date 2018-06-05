@@ -248,6 +248,8 @@ Package.onUse(function(api) {
             'modal/profile_settings/notifications/unsubscribe_all.js',
             'modal/profile_settings/notifications/unsubscribe_one.html',
             'modal/profile_settings/notifications/unsubscribe_one.js',
+            'modal/profile_settings/advanced/advanced.html',
+            'modal/profile_settings/advanced/advanced.js',
 
             // Modal
             'modal/modal.html',

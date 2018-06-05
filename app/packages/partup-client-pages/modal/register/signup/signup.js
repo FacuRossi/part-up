@@ -31,7 +31,6 @@ Template.modal_register_signup.onCreated(function() {
       const node = this.find('.pu-sub-terms');
 
       if (newVal) {
-        // console.log('ohnoes?', node.classList);
         node.classList.remove('pu-sub-terms-invalid');
       }
     });
@@ -196,7 +195,7 @@ Template.modal_register_signup.events({
 AutoForm.hooks({
     'pages-modal-register-signupForm': {
         onSubmit: function(insertDoc, updateDoc, currentDoc) {
-          if (this.template.parent().checkTos()) {
+          if (!this.template.parent().checkTos()) {
             return false;
           }
 
