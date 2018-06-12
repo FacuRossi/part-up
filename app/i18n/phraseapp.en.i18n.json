@@ -494,7 +494,7 @@
   "modal-profilesettings-advanced-delete-success": "Account deleted",
   "modal-profilesettings-advanced-delete-title": "Delete account",
   "modal-profilesettings-advanced-impersonation-description": "Allow an admin to impersonate you for 30 minutes",
-  "modal-profilesettings-advanced-impersonation-label": "Allow impersonation",
+  "modal-profilesettings-advanced-impersonation-label": "Allow impersonation of your account",
   "modal-profilesettings-advanced-impersonation-title": "Impersonation",
   "modal-profilesettings-advanced-text-explanation": "Below you will find more advanced options for your account",
   "modal-profilesettings-advanced-title": "Advanced Account Settings",
