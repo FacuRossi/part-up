@@ -1,19 +1,28 @@
 Template.HoverContainer_upper.onCreated(function() {
-    var userId = this.data;
-    this.subscribe('users.one', userId);
+  const template = this;
+  template.loading = new ReactiveVar(true);
+  template.subscribe('users.one', template.data, {
+    onReady() {
+      template.loading.set(false);
+    }
+  });
 });
 
 Template.HoverContainer_upper.helpers({
-    user: function() {
-        var userId = Template.instance().data;
-        var user = Meteor.users.findOne(userId) || null;
-        if (!user) return;
+    user() {
+      var userId = Template.instance().data;
+      var user = Meteor.users.findSingleActivePublicProfile(userId).fetch().pop();
 
-        var image = Images.findOne(user.profile.image);
-        if (!image) return;
+      if (!user) return;
 
-        Partup.client.embed.user(user, [image]);
+      var image = Images.findOne(user.profile.image);
+      if (!image) return;
 
-        return user;
+      Partup.client.embed.user(user, [image]);
+
+      return user;
+    },
+    loading() {
+      return Template.instance().loading.get();
     }
 });

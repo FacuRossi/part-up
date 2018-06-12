@@ -92,6 +92,17 @@ Meteor.users.findSinglePublicProfile = function(userId) {
 };
 
 /**
+ * Find a user and expose it's public fields if not deleted or deactivated
+ *
+ * @memberOf Meteor.users
+ * @param {String} userId
+ * @return {Mongo.Cursor}
+ */
+Meteor.users.findSingleActivePublicProfile = function(userId) {
+    return Meteor.users.find({_id: userId, deactivatedAt: {$exists: false}, deletedAt: {$exists: false}}, {fields: getPublicUserFields()});
+};
+
+/**
  * Find users and expose their public fields
  *
  * @memberOf Meteor.users

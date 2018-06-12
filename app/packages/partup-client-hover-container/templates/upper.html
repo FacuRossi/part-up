@@ -1,7 +1,11 @@
 <template name="HoverContainer_upper">
-    {{# if user }}
-        {{> UpperTile user=user hover=true }}
+  {{#if loading }}
+    {{> Spinner }}
+  {{ else }}
+    {{#if user }}
+      {{> UpperTile user=user hover=true }}
     {{ else }}
-        {{> Spinner }}
-    {{/ if }}
+      <p style="margin-bottom:-10px;">{{_ 'pages-app-notfound-profile-title'}}</p>
+    {{/if }}
+  {{/if }}
 </template>
