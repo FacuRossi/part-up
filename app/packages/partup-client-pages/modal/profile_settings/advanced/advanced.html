@@ -3,9 +3,21 @@
         <h2 class="pu-title pu-title-modal">{{_ 'modal-profilesettings-advanced-title'}}</h2>
         <p>{{_ 'modal-profilesettings-advanced-text-explanation'}}</p>
 
-        <button class="pu-button {{# if submitting }}pu-state-loading pu-state-disabled{{/ if }}" data-delete-account>
-            {{_ 'modal-profilesettings-advanced-delete-account' }}
-            {{> Spinner color='inverted' type='small' }}
-        </button>
+
+        <section class="pu-section">
+          <h4 class="pu-section-title">{{_ 'impersonation-title'}}</h4>
+          <p class="pu-section-description">{{_ 'impersonation-description'}}</p>
+          <p class="pu-impersonation" data-allow-impersonation>
+            <input type="checkbox" name="impersonation" class="impersonate-checkbox">
+            <label for="impersonation">{{_ 'impersonation-label'}}</label>
+          </p>
+        </section>
+
+        <section class="pu-section">
+          <button class="pu-button {{# if submitting }}pu-state-loading pu-state-disabled{{/ if }}" data-delete-account>
+              {{_ 'modal-profilesettings-advanced-delete-account' }}
+              {{> Spinner color='inverted' type='small' }}
+          </button>
+        </section>
     </div>
 </template>
