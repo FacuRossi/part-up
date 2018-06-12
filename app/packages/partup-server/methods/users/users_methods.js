@@ -208,14 +208,41 @@ Meteor.methods({
     */
     'users.admin_impersonate': function(userId) {
         check(userId, String);
-        var currentUser = Meteor.users.findOne(this.userId);
-        if (!User(currentUser).isAdmin()) {
-            return;
-        }
 
-        var impersonateUser = Meteor.users.findOne(userId);
-        if (!impersonateUser) throw new Meteor.Error(404, 'user_could_not_be_found');
-        this.setUserId(userId);
+        const currentUser = Meteor.users.findOne(this.userId);
+
+        if (User(currentUser).isAdmin()) {
+          const impersonateUser = Meteor.users.findOne(userId);
+
+          if (impersonateUser) {
+            const { impersonation } = Partup.helpers;
+
+            const date = impersonation.getLastDate(impersonateUser);
+            if (date) {
+              const timeLeft = impersonation.timeLeft(date);
+
+              if (timeLeft > 0) {
+                Meteor.setTimeout(() => {
+                  this.setUserId(currentUser._id);
+                }, timeLeft);
+
+                this.setUserId(impersonateUser._id);
+              }
+              return timeLeft;
+            } else {
+              throw new Meteor.Error(0, 'impersonation_not_activated');
+            }
+          } else {
+            throw new Meteor.Error(404, 'user_could_not_be_found');
+          }
+        }
+    },
+
+    'users.allow_impersonation'() {
+      const user = Meteor.users.findOne(this.userId);
+      if (user) {
+        Meteor.users.update(user._id, { $push: { impersonation: new Date() } });
+      }
     },
 
     /**
@@ -515,10 +542,6 @@ Meteor.methods({
                 flags: []
             }});
 
-            Meteor.users.update(user._id, {$set: {
-                deletedAt: new Date()
-            }});
-
             Event.emit('users.deleted', user._id);
 
             return {
@@ -529,7 +552,7 @@ Meteor.methods({
             throw new Meteor.Error(500, 'user_could_not_be_deleted');
         }
     },
-  
+
     'users.one'(userId) {
       check(userId, String);
       return Meteor.users.findSinglePublicProfile(userId).fetch().pop();

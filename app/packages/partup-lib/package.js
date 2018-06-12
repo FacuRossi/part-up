@@ -101,6 +101,7 @@ Package.onUse(function(api) {
         'transformers/swarm.js',
         'transformers/contentblock.js',
         'transformers/lane.js',
+        'helpers/impersonation.js',
         'helpers/parselocale.js',
         'helpers/mentions.js',
         'helpers/normalize.js',

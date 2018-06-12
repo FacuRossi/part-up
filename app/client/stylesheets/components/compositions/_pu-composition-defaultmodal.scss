@@ -4,6 +4,37 @@
         margin-bottom: 20px;
     }
 
+    .pu-section {
+      margin: 10px 0px;
+      padding: 10px;
+      border: 1.5px solid $color-border-light;
+      border-radius: 3px;
+
+      &-title {
+        font-size: 1.1rem;
+      }
+      &-description {
+        font-size: 1rem;
+        padding: 3px 0px;
+      }
+    }
+
+    .pu-impersonation {
+      cursor: pointer;
+      display: inline-block;
+
+      input {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 3px 3px 3px 0px;
+        cursor: inherit;
+      }
+      label {
+        vertical-align: middle;
+        cursor: inherit;
+      }
+    }
+
     .pu-form {
         margin-top: 40px - 8px;
     }

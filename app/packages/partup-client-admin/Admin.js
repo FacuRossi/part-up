@@ -100,16 +100,24 @@ Template.Admin.events({
         });
     },
     'click [data-impersonate-user]': function(event, template) {
-        event.preventDefault();
-        var userId = this._id;
-        Meteor.call('users.admin_impersonate', userId, function(error) {
-            if (error) {
-                Partup.client.notify.error(TAPi18n.__(error));
-                return;
-            }
-            Meteor.connection.setUserId(userId);
-            Intent.go({route: 'home'});
-        });
+      event.preventDefault();
+      var userId = this._id;
+      Meteor.call('users.admin_impersonate', userId, function(error, timeLeft) {
+        if (error) {
+          Partup.client.notify.error(TAPi18n.__(error.reason));
+          return;
+        }
+        if (timeLeft > 0) {
+          Meteor.setTimeout(() => {
+            Meteor.connection.setUserId(Meteor.userId());
+          }, timeLeft);
+
+          Meteor.connection.setUserId(userId);
+          Intent.go({route: 'home'});
+        } else {
+          Partup.client.notify.error(TAPi18n.__(`impersonation-error-not-active`));
+        }
+      });
     },
     'click [data-reactivate-user]': function(event, template) {
         event.preventDefault();
