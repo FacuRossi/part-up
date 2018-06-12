@@ -11,7 +11,7 @@ Template.HoverContainer_upper.onCreated(function() {
 Template.HoverContainer_upper.helpers({
     user() {
       var userId = Template.instance().data;
-      var user = (Meteor.users.findSinglePublicProfile(userId).fetch() || []).pop();
+      var user = Meteor.users.findSingleActivePublicProfile(userId).fetch().pop();
 
       if (!user) return;
 
