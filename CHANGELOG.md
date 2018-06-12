@@ -1,3 +1,16 @@
+<a name="4.2.5"></a>
+## [4.2.5](https://github.com/part-up/part-up/compare/4.2.4...4.2.5) (2018-05-19)
+
+
+### Bug Fixes
+
+* **import:** Fix otificationModel import ([31af065](https://github.com/part-up/part-up/commit/31af065))
+* **jquery:** Change .size() to .length for jQuery 3.x.x ([94288b0](https://github.com/part-up/part-up/commit/94288b0))
+* **lodash:** Add lodash import ([e3609d1](https://github.com/part-up/part-up/commit/e3609d1))
+* **login:** Update packages for linkedin oauth flow ([2f80cc6](https://github.com/part-up/part-up/commit/2f80cc6))
+
+
+
 <a name="4.2.4"></a>
 ## [4.2.4](https://github.com/part-up/part-up/compare/4.2.3...4.2.4) (2018-05-18)
 
@@ -32,6 +45,7 @@
 ### Bug Fixes
 
 * **build:** Exact node version ([ebaa3b6](https://github.com/part-up/part-up/commit/ebaa3b6))
+* **profile-settings:** Removed phone & skype input from profile settings ([43a0c7f](https://github.com/part-up/part-up/commit/43a0c7f)), closes [#1645](https://github.com/part-up/part-up/issues/1645)
 
 
 ### Features
