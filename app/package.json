@@ -13,7 +13,7 @@
     "node": "0.10.36"
   },
   "dependencies": {
-    "@babel/runtime": "^7.0.0-beta.47",
+    "@babel/runtime": "^7.0.0-beta.49",
     "HTMLString": "^1.0.7",
     "autolinker": "^1.6.0",
     "autosize": "^4.0.0",
@@ -25,7 +25,7 @@
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",
     "marked": "^0.3.9",
-    "meteor-node-stubs": "~0.2.11",
+    "meteor-node-stubs": "^0.4.1",
     "pluralize": "^4.0.0",
     "powercheck": "^1.0.3",
     "prop-types": "^15.6.0",

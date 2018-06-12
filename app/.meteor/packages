@@ -5,7 +5,7 @@
 # but you can also edit it by hand.
 3stack:accounts-logout-hook
 accounts-facebook@1.3.1
-accounts-password@1.5.0
+accounts-password@1.5.1
 aldeed:autoform-bs-datepicker
 aldeed:autoform@5.1.2
 aldeed:simple-schema
@@ -13,25 +13,25 @@ aldeed:template-extension
 anonyfox:scrape
 anti:fake
 browser-policy@1.1.0
-check@1.3.0
+check@1.3.1
 chrismbeckett:toastr
 cwaring:modernizr
 deepwell:bootstrap-datepicker2
 djedi:sanitize-html
 dsyko:meteor-node-csv
-ecmascript@0.10.6              # Enable ECMAScript2015+ syntax in app code
+ecmascript@0.11.0              # Enable ECMAScript2015+ syntax in app code
 ejson@1.1.0
-es5-shim@4.7.0                # ECMAScript 5 compatibility for older browsers.
+es5-shim@4.8.0                # ECMAScript 5 compatibility for older browsers.
 francocatena:status
-http@1.4.0
+http@1.4.1
 iron:router
 jquery@1.11.10
 lifely:mout
 lifelynl:focuspoint
 lifelynl:intent
-logging@1.1.19
+logging@1.1.20
 matb33:collection-hooks
-meteor-base@1.3.0
+meteor-base@1.4.0
 meteorhacks:picker
 meteorhacks:ssr
 meteorhacks:subs-manager
@@ -39,7 +39,7 @@ meteorhacks:unblock
 mizzao:user-status
 mobile-experience@1.0.5
 momentjs:moment
-mongo@1.4.2
+mongo@1.5.0
 mrt:jquery-mousewheel
 #msavin:mongol
 okgrow:analytics
@@ -106,7 +106,7 @@ spacebars
 stevezhu:lodash@3.10.1
 tap:i18n
 tmeasday:publish-counts@0.7.1
-tracker@1.1.3
+tracker@1.2.0
 zimme:active-route
 partup-client-admin-partups
 blaze-html-templates
@@ -115,14 +115,14 @@ partup-client-network-settings-partups
 partup-client-admin-sectors
 partup-client-boardview
 partup-client-oauth
-standard-minifier-css@1.4.0
-standard-minifier-js@2.3.1
+standard-minifier-css@1.4.1
+standard-minifier-js@2.3.4
 shell-server@0.3.1
 facebook-config-ui@1.0.1
 fourseven:scss
 sergeyt:typeahead@0.11.1_8
 partup-client-network-settings-landing
-dynamic-import@0.3.0
+dynamic-import@0.4.0
 partup-client-imagesystem
 partup-client-react
 meteorhacks:aggregate
@@ -132,3 +132,4 @@ partup-client-forms
 yogiben:autoform-tags@=0.1.3
 verso:intercom
 pauli:accounts-linkedin@3.1.0
+underscore

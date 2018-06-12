@@ -8,6 +8,10 @@ import { get } from 'lodash';
  */
 Meteor.startup(function() {
 
+    if (Meteor.autorun !== typeof 'function') {
+        Meteor.autorun = Tracker.autorun;
+    }
+
     // Disable automatic reloading
     Reload._onMigrate(function(retry) {
         Session.set('puWantsToReload', true);
