@@ -1,3 +1,29 @@
+<a name="4.3.0"></a>
+# [4.3.0](https://github.com/part-up/part-up/compare/4.2.5...4.3.0) (2018-06-12)
+
+
+### Bug Fixes
+
+* **hovercard:** Hovercard fixes to not show deleted or deactivated users ([266a5ef](https://github.com/part-up/part-up/commit/266a5ef))
+* **hovercard:** Safeguard user finds in hovercards ([4988e94](https://github.com/part-up/part-up/commit/4988e94))
+* **invite:** Set access token for user without account ([f724757](https://github.com/part-up/part-up/commit/f724757))
+* **meteor:** Manually set Meteor.autorun ([2f804f0](https://github.com/part-up/part-up/commit/2f804f0))
+* **scores:** Adjust calculation of user participation score ([78a2e6c](https://github.com/part-up/part-up/commit/78a2e6c))
+* **signup:** Reversed agreed to ToS check ([924b7b5](https://github.com/part-up/part-up/commit/924b7b5))
+* **upload:** replace plupload class by function ([d9738d8](https://github.com/part-up/part-up/commit/d9738d8))
+
+
+### Features
+
+* **client:** Add register and login button to partup closed page ([39dba64](https://github.com/part-up/part-up/commit/39dba64)), closes [#1658](https://github.com/part-up/part-up/issues/1658)
+* **impersonation:** Ask for permission for impersonation ([6f235d4](https://github.com/part-up/part-up/commit/6f235d4))
+* **meurs:** Remove meurs strength finder ([3bb00bb](https://github.com/part-up/part-up/commit/3bb00bb))
+* **profile-settings:** The front-end now has an advanced tab in profile settings with a delete acco ([d79c99f](https://github.com/part-up/part-up/commit/d79c99f)), closes [#1636](https://github.com/part-up/part-up/issues/1636)
+* **users:** Added a meteor method for deleting a user ([cd77b92](https://github.com/part-up/part-up/commit/cd77b92)), closes [#1636](https://github.com/part-up/part-up/issues/1636)
+* **users:** Allow users to delete their account ([c0a7955](https://github.com/part-up/part-up/commit/c0a7955))
+
+
+
 <a name="4.2.5"></a>
 ## [4.2.5](https://github.com/part-up/part-up/compare/4.2.4...4.2.5) (2018-05-19)
 
