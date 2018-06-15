@@ -61,7 +61,7 @@ We export all pages as a single package **_partup-client-pages_**. A page can co
 
 #### Widgets
 
-A widget only provides functionality to fulfill a single responsibility. They contain all the functionality required and don't depend on logic of on any other part of the application. Widgets may manage their own state in a limited way, where they should recieve as much data as possible from the page they live in. Widgets are stand-alone packages. The scss file should only contain component composition rules.
+A widget only provides functionality to fulfill a single responsibility. They contain all the functionality required and don't depend on logic of on any other part of the application. Widgets may manage their own state in a limited way, where they should receive as much data as possible from the page they live in. Widgets are stand-alone packages. The scss file should only contain component composition rules.
 
 #### Small components
 
