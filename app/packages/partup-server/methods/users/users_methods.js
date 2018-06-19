@@ -455,7 +455,7 @@ Meteor.methods({
         }
 
         try {
-
+            
             // Remove all partnerships & and become a supporter
             _.get(user, 'upperOf', []).forEach((partupId) => {
                 partup = Partups.findOne({_id: partupId})
@@ -494,6 +494,8 @@ Meteor.methods({
                 }
             })
 
+
+
             // Delete images
             const imagesForDeletion = []
 
@@ -512,13 +514,9 @@ Meteor.methods({
                 Meteor.call('tiles.remove', tile._id)
             })
 
-            if (imagesForDeletion.length > 0) {
-                Meteor.call('images.remove_many', imagesForDeletion)
-            }
-
             // Empty out the profile
             fieldsForDeletion = {
-                'image': undefined,
+                'image': 'system', // Sets the profile image to system
                 'description': "",
                 'tags': [],
                 'facebook_url': "",
@@ -541,6 +539,17 @@ Meteor.methods({
                 logins: [],
                 flags: []
             }});
+
+            Meteor.users.update(user._id, {$set: {
+                deletedAt: new Date()
+            }});
+
+            // Delete notifications
+            Notifications.deleteForCreator(user)
+
+            if (imagesForDeletion.length > 0) {
+                Meteor.call('images.remove_many', imagesForDeletion)
+            }
 
             Event.emit('users.deleted', user._id);
 
