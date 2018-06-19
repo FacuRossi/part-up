@@ -1,3 +1,5 @@
+import 'trumbowyg';
+
 Template.Wysiwyg.onCreated(function() {
     var template = this;
     template.placeholder = new ReactiveVar('');
