@@ -1,292 +1,840 @@
+/**
+ * pu-wysiwyg v2.10.0 - A lightweight WYSIWYG editor
+ * Default stylesheet for pu-wysiwyg editor
+ * ------------------------
+ * @link http://alex-d.github.io/pu-wysiwyg
+ * @license MIT
+ * @author Alexandre Demode (Alex-D)
+ *         Twitter : @AlexandreDemode
+ *         Website : alex-d.fr
+ */
+
+ $light-color: #ecf0f1 !default;
+ $dark-color: #222 !default;
+
+ $modal-submit-color: #2ecc71 !default;
+ $modal-reset-color: #EEE !default;
+
+ $transition-duration: 150ms !default;
+ $slow-transition-duration: 300ms !default;
+
+ #trumbowyg-icons {
+     overflow: hidden;
+     visibility: hidden;
+     height: 0;
+     width: 0;
+
+     svg {
+         height: 0;
+         width: 0;
+     }
+ }
+
+ .pu-wysiwyg-box {
+     *,
+     *::before,
+     *::after {
+         box-sizing: border-box;
+     }
+
+     svg {
+         width: 17px;
+         height: 100%;
+         fill: $dark-color;
+     }
+ }
+
+ .pu-wysiwyg-box,
+ .pu-wysiwyg-editor {
+     display: block;
+     position: relative;
+     border: 2px solid #EEE;
+     width: 100%;
+     min-height: 300px;
+     margin: 17px auto;
+ }
+
+ .pu-wysiwyg-box .pu-wysiwyg-editor {
+     margin: 0 auto;
+ }
+
+ .pu-wysiwyg-box.pu-wysiwyg-fullscreen {
+     background: #FEFEFE;
+     border: none !important;
+ }
+
+ .pu-wysiwyg-editor,
+ .pu-wysiwyg-textarea {
+     position: relative;
+     box-sizing: border-box;
+     padding: 20px;
+     min-height: 300px;
+     width: 100%;
+     border-style: none;
+     resize: none;
+     outline: none;
+     overflow: auto;
+
+     &.pu-wysiwyg-autogrow-on-enter {
+         transition: height $slow-transition-duration ease-out;
+     }
+ }
+
+ .pu-wysiwyg-box-blur .pu-wysiwyg-editor {
+     *,
+     &::before {
+         color: transparent !important;
+         text-shadow: 0 0 7px #333;
+
+         @media screen and (min-width: 0 \0) {
+             color: rgba(200, 200, 200, 0.6) !important;
+         }
+         @supports (-ms-accelerator:true) {
+             color: rgba(200, 200, 200, 0.6) !important;
+         }
+     }
+     img,
+     hr {
+         opacity: 0.2;
+     }
+ }
+
+ .pu-wysiwyg-textarea {
+     position: relative;
+     display: block;
+     overflow: auto;
+     border: none;
+     font-size: 14px;
+     font-family: "Inconsolata", "Consolas", "Courier", "Courier New", sans-serif;
+     line-height: 18px;
+ }
+
+ .pu-wysiwyg-box.pu-wysiwyg-editor-visible {
+     .pu-wysiwyg-textarea {
+         height: 1px !important;
+         width: 25%;
+         min-height: 0 !important;
+         padding: 0 !important;
+         background: none;
+         opacity: 0 !important;
+     }
+ }
+
+ .pu-wysiwyg-box.pu-wysiwyg-editor-hidden {
+     .pu-wysiwyg-textarea {
+         display: block;
+     }
+     .pu-wysiwyg-editor {
+         display: none;
+     }
+ }
+
+ .pu-wysiwyg-box.pu-wysiwyg-disabled {
+     .pu-wysiwyg-textarea {
+         opacity: 0.8;
+         background: none;
+     }
+ }
+
+ .pu-wysiwyg-editor[contenteditable=true]:empty:not(:focus)::before {
+     content: attr(placeholder);
+     color: #999;
+     pointer-events: none;
+ }
+
+ .pu-wysiwyg-button-pane {
+     width: 100%;
+     min-height: 36px;
+     background: $light-color;
+     border-bottom: 2px solid  #EEE;//darken($light-color, 7%);
+     margin: 0;
+     padding: 0 5px;
+     position: relative;
+     list-style-type: none;
+     line-height: 10px;
+     backface-visibility: hidden;
+     z-index: 11;
+
+     &::after {
+         content: " ";
+         display: block;
+         position: absolute;
+         top: 36px;
+         left: 0;
+         right: 0;
+         width: 100%;
+         height: 1px;
+         background: darken($light-color, 7%);
+     }
+
+     .pu-wysiwyg-button-group {
+         display: inline-block;
+
+         .pu-wysiwyg-fullscreen-button svg {
+             color: transparent;
+         }
+
+         &::after {
+             content: " ";
+             display: inline-block;
+             width: 1px;
+             background: darken($light-color, 7%);
+             margin: 0 5px;
+             height: 35px;
+             vertical-align: top;
+         }
+
+         &:last-child::after {
+             content: none;
+         }
+     }
+
+     button {
+         display: inline-block;
+         position: relative;
+         width: 35px;
+         height: 35px;
+         padding: 1px 6px !important;
+         margin-bottom: 1px;
+         overflow: hidden;
+         border: none;
+         cursor: pointer;
+         background: none;
+         vertical-align: middle;
+         transition: background-color $transition-duration, opacity $transition-duration;
+
+         &.pu-wysiwyg-textual-button {
+             width: auto;
+             line-height: 35px;
+             user-select: none;
+         }
+     }
+
+     &.pu-wysiwyg-disable button:not(.pu-wysiwyg-not-disable):not(.pu-wysiwyg-active),
+     button.pu-wysiwyg-disable,
+     .pu-wysiwyg-disabled & button:not(.pu-wysiwyg-not-disable):not(.pu-wysiwyg-viewHTML-button) {
+         opacity: 0.2;
+         cursor: default;
+     }
+     &.pu-wysiwyg-disable,
+     .pu-wysiwyg-disabled & {
+         .pu-wysiwyg-button-group::before {
+             background: darken($light-color, 3%);
+         }
+     }
+
+     button:not(.pu-wysiwyg-disable):hover,
+     button:not(.pu-wysiwyg-disable):focus,
+     button.pu-wysiwyg-active {
+         background-color: #FFF;
+         outline: none;
+     }
+
+     .pu-wysiwyg-open-dropdown {
+         &::after {
+             display: block;
+             content: " ";
+             position: absolute;
+             top: 25px;
+             right: 3px;
+             height: 0;
+             width: 0;
+             border: 3px solid transparent;
+             border-top-color: #555;
+         }
+
+         &.pu-wysiwyg-textual-button {
+             padding-left: 10px !important;
+             padding-right: 18px !important;
+
+             &::after {
+                 top: 17px;
+                 right: 7px;
+             }
+         }
+     }
+
+     .pu-wysiwyg-right {
+         float: right;
+     }
+ }
+
+ .pu-wysiwyg-dropdown {
+     width: 200px;
+     border: 1px solid $light-color;
+     padding: 5px 0;
+     border-top: none;
+     background: #FFF;
+     margin-left: -1px;
+     box-shadow: rgba(0, 0, 0, .1) 0 2px 3px;
+     z-index: 12;
+
+     button {
+         display: block;
+         width: 100%;
+         height: 35px;
+         line-height: 35px;
+         text-decoration: none;
+         background: #FFF;
+         padding: 0 10px;
+         color: #333 !important;
+         border: none;
+         cursor: pointer;
+         text-align: left;
+         font-size: 15px;
+         transition: all $transition-duration;
+
+         &:hover,
+         &:focus {
+             background: $light-color;
+         }
+
+         svg {
+             float: left;
+             margin-right: 14px;
+         }
+     }
+ }
+
+ /* Modal box */
+ .pu-wysiwyg-modal {
+     position: absolute;
+     top: 0;
+     left: 50%;
+     transform: translateX(-50%);
+     max-width: 520px;
+     width: 100%;
+     height: 350px;
+     z-index: 12;
+     overflow: hidden;
+     backface-visibility: hidden;
+ }
+
+ .pu-wysiwyg-modal-box {
+     position: absolute;
+     top: 0;
+     left: 50%;
+     transform: translateX(-50%);
+     max-width: 500px;
+     width: calc(100% - 20px);
+     padding-bottom: 45px;
+     z-index: 1;
+     background-color: #FFF;
+     text-align: center;
+     font-size: 14px;
+     box-shadow: rgba(0, 0, 0, .2) 0 2px 3px;
+     backface-visibility: hidden;
+
+     .pu-wysiwyg-modal-title {
+         font-size: 24px;
+         font-weight: bold;
+         margin: 0 0 20px;
+         padding: 15px 0 13px;
+         display: block;
+         border-bottom: 2px solid #EEE;
+         color: #333;
+         background: lighten($light-color, 5%);
+     }
+
+     .pu-wysiwyg-progress {
+         width: 100%;
+         height: 3px;
+         position: absolute;
+         top: 58px;
+
+         .pu-wysiwyg-progress-bar {
+             background: #2BC06A;
+             width: 0;
+             height: 100%;
+             transition: width $transition-duration linear;
+         }
+     }
+
+     label {
+         display: block;
+         position: relative;
+         margin: 15px 12px;
+         height: 29px;
+         line-height: 29px;
+         overflow: hidden;
+
+         .pu-wysiwyg-input-infos {
+             display: block;
+             text-align: left;
+             height: 25px;
+             line-height: 25px;
+             transition: all 150ms;
+
+             span {
+                 display: block;
+                 color: darken($light-color, 45%);
+                 background-color: lighten($light-color, 5%);
+                 border: 1px solid #DEDEDE;
+                 padding: 0 7px;
+                 width: 150px;
+             }
+             span.pu-wysiwyg-msg-error {
+                 color: #e74c3c;
+             }
+         }
+
+         &.pu-wysiwyg-input-error {
+             input,
+             textarea {
+                 border: 1px solid #e74c3c;
+             }
+
+             .pu-wysiwyg-input-infos {
+                 margin-top: -27px;
+             }
+         }
+
+         input {
+             position: absolute;
+             top: 0;
+             right: 0;
+             height: 27px;
+             line-height: 27px;
+             border: 1px solid #DEDEDE;
+             background: #fff;
+             font-size: 14px;
+             max-width: 330px;
+             width: 70%;
+             padding: 0 7px;
+             transition: all $transition-duration;
+
+             &:hover,
+             &:focus {
+                 outline: none;
+                 border: 1px solid #95a5a6;
+             }
+             &:focus {
+                 background: lighten($light-color, 5%);
+             }
+         }
+
+         input[type="checkbox"]{
+             left: 5px;
+             top: 5px;
+             right: auto;
+
+             + .pu-wysiwyg-input-infos span{
+                 width: auto;
+                 padding-left: 25px;
+             }
+         }
+     }
+
+     .error {
+         margin-top: 25px;
+         display: block;
+         color: red;
+     }
+
+     .pu-wysiwyg-modal-button {
+         position: absolute;
+         bottom: 10px;
+         right: 0;
+         text-decoration: none;
+         color: #FFF;
+         display: block;
+         width: 100px;
+         height: 35px;
+         line-height: 33px;
+         margin: 0 10px;
+         background-color: #333;
+         border: none;
+         cursor: pointer;
+         font-family: "Trebuchet MS", Helvetica, Verdana, sans-serif;
+         font-size: 16px;
+         transition: all $transition-duration;
+
+         &.pu-wysiwyg-modal-submit {
+             right: 110px;
+             background: darken($modal-submit-color, 3%);
+
+             &:hover,
+             &:focus {
+                 background: lighten($modal-submit-color, 5%);
+                 outline: none;
+             }
+             &:active {
+                 background: darken($modal-submit-color, 10%);
+             }
+         }
+
+         &.pu-wysiwyg-modal-reset {
+             color: #555;
+             background: darken($modal-reset-color, 3%);
+
+             &:hover,
+             &:focus {
+                 background: lighten($modal-reset-color, 5%);
+                 outline: none;
+             }
+             &:active {
+                 background: darken($modal-reset-color, 10%);
+             }
+         }
+     }
+ }
+
+ .pu-wysiwyg-overlay {
+     position: absolute;
+     background-color: rgba(255, 255, 255, 0.5);
+     height: 100%;
+     width: 100%;
+     left: 0;
+     display: none;
+     top: 0;
+     z-index: 10;
+ }
+
+ /**
+  * Fullscreen
+  */
+ body.pu-wysiwyg-body-fullscreen {
+     overflow: hidden;
+ }
+
+ .pu-wysiwyg-fullscreen {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     margin: 0;
+     padding: 0;
+     z-index: 99999;
+
+     &.pu-wysiwyg-box,
+     .pu-wysiwyg-editor {
+         border: none;
+     }
+     .pu-wysiwyg-editor,
+     .pu-wysiwyg-textarea {
+         height: calc(100% - 37px) !important;
+         overflow: auto;
+     }
+     .pu-wysiwyg-overlay {
+         height: 100% !important;
+     }
+     .pu-wysiwyg-button-group .pu-wysiwyg-fullscreen-button svg {
+         color: $dark-color;
+         fill: transparent;
+     }
+ }
+
+ .pu-wysiwyg-editor {
+     object,
+     embed,
+     video,
+     img {
+         max-width: 100%;
+     }
+     video,
+     img {
+         height: auto;
+     }
+     img {
+         cursor: move;
+     }
+
+     /*
+      * lset for resetCss option
+      */
+     &.pu-wysiwyg-reset-css {
+         background: #FEFEFE !important;
+         font-family: "Trebuchet MS", Helvetica, Verdana, sans-serif !important;
+         font-size: 14px !important;
+         line-height: 1.45em !important;
+         color: #333;
+
+         a {
+             color: #15c !important;
+             text-decoration: underline !important;
+         }
+
+         div,
+         p,
+         ul,
+         ol,
+         blockquote {
+             box-shadow: none !important;
+             background: none !important;
+             margin: 0 !important;
+             margin-bottom: 15px !important;
+             line-height: 1.4em !important;
+             font-family: "Trebuchet MS", Helvetica, Verdana, sans-serif !important;
+             font-size: 14px !important;
+             border: none;
+         }
+         iframe,
+         object,
+         hr {
+             margin-bottom: 15px !important;
+         }
+         blockquote {
+             margin-left: 32px !important;
+             font-style: italic !important;
+             color: #555;
+         }
+         ul {
+             list-style: disc;
+         }
+         ul,
+         ol {
+             padding-left: 20px !important;
+         }
+         ul ul,
+         ol ol,
+         ul ol,
+         ol ul {
+             border: none;
+             margin: 2px !important;
+             padding: 0 !important;
+             padding-left: 24px !important;
+         }
+         hr {
+             display: block;
+             height: 1px;
+             border: none;
+             border-top: 1px solid #CCC;
+         }
+
+         h1,
+         h2,
+         h3,
+         h4 {
+             color: #111;
+             background: none;
+             margin: 0 !important;
+             padding: 0 !important;
+             font-weight: bold;
+         }
+
+         h1 {
+             font-size: 32px !important;
+             line-height: 38px !important;
+             margin-bottom: 20px !important;
+         }
+         h2 {
+             font-size: 26px !important;
+             line-height: 34px !important;
+             margin-bottom: 15px !important;
+         }
+         h3 {
+             font-size: 22px !important;
+             line-height: 28px !important;
+             margin-bottom: 7px !important;
+         }
+         h4 {
+             font-size: 16px !important;
+             line-height: 22px !important;
+             margin-bottom: 7px !important;
+         }
+     }
+ }
+
+ /*
+  * Dark theme
+  */
+ .pu-wysiwyg-dark {
+     .pu-wysiwyg-textarea {
+         background: #111;
+         color: #ddd;
+     }
+     .pu-wysiwyg-box {
+         border: 1px solid lighten($dark-color, 7%);
+
+         &.pu-wysiwyg-fullscreen {
+             background: #111;
+         }
+         &.pu-wysiwyg-box-blur .pu-wysiwyg-editor {
+             *,
+             &::before {
+                 text-shadow: 0 0 7px #ccc;
+
+                 @media screen and (min-width: 0 \0
+                 ) {
+                     color: rgba(20, 20, 20, 0.6) !important;
+                 }
+                 @supports (-ms-accelerator:true) {
+                     color: rgba(20, 20, 20, 0.6) !important;
+                 }
+             }
+         }
+
+         svg {
+             fill: $light-color;
+             color: $light-color;
+         }
+     }
+     .pu-wysiwyg-button-pane {
+         background-color: $dark-color;
+         border-bottom-color: lighten($dark-color, 7%);
+
+         &::after {
+             background: lighten($dark-color, 7%);
+         }
+
+         .pu-wysiwyg-button-group:not(:empty) {
+             &::after {
+                 background-color: lighten($dark-color, 7%);
+             }
+             .pu-wysiwyg-fullscreen-button svg {
+                 color: transparent;
+             }
+         }
+
+         &.pu-wysiwyg-disable {
+             .pu-wysiwyg-button-group::after {
+                 background-color: lighten($dark-color, 3%);
+             }
+         }
+
+         button:not(.pu-wysiwyg-disable):hover,
+         button:not(.pu-wysiwyg-disable):focus,
+         button.pu-wysiwyg-active {
+             background-color: #333;
+         }
+
+         .pu-wysiwyg-open-dropdown::after {
+             border-top-color: #fff;
+         }
+     }
+     .pu-wysiwyg-fullscreen {
+         .pu-wysiwyg-button-group .pu-wysiwyg-fullscreen-button svg {
+             color: $light-color;
+             fill: transparent;
+         }
+     }
+
+     .pu-wysiwyg-dropdown {
+         border-color: $dark-color;
+         background: #333;
+         box-shadow: rgba(0, 0, 0, .3) 0 2px 3px;
+
+         button {
+             background: #333;
+             color: #fff !important;
+
+             &:hover,
+             &:focus {
+                 background: $dark-color;
+             }
+         }
+     }
+
+     // Modal box
+     .pu-wysiwyg-modal-box {
+         background-color: $dark-color;
+
+         .pu-wysiwyg-modal-title {
+             border-bottom: 1px solid #555;
+             color: #fff;
+             background: lighten($dark-color, 10%);
+         }
+
+         label {
+             display: block;
+             position: relative;
+             margin: 15px 12px;
+             height: 27px;
+             line-height: 27px;
+             overflow: hidden;
+
+             .pu-wysiwyg-input-infos {
+                 span {
+                     color: #eee;
+                     background-color: lighten($dark-color, 5%);
+                     border-color: $dark-color;
+                 }
+                 span.pu-wysiwyg-msg-error {
+                     color: #e74c3c;
+                 }
+             }
+
+             &.pu-wysiwyg-input-error {
+                 input,
+                 textarea {
+                     border-color: #e74c3c;
+                 }
+             }
+
+             input {
+                 border-color: $dark-color;
+                 color: #eee;
+                 background: #333;
+
+                 &:hover,
+                 &:focus {
+                     border-color: lighten($dark-color, 25%);
+                 }
+                 &:focus {
+                     background-color: lighten($dark-color, 5%);
+                 }
+             }
+         }
+
+         .pu-wysiwyg-modal-button {
+             &.pu-wysiwyg-modal-submit {
+                 background: darken($modal-submit-color, 20%);
+
+                 &:hover,
+                 &:focus {
+                     background: darken($modal-submit-color, 10%);
+                 }
+                 &:active {
+                     background: darken($modal-submit-color, 25%);
+                 }
+             }
+             &.pu-wysiwyg-modal-reset {
+                 background: #333;
+                 color: #ccc;
+
+                 &:hover,
+                 &:focus {
+                     background: #444;
+                 }
+                 &:active {
+                     background: #111;
+                 }
+             }
+         }
+     }
+     .pu-wysiwyg-overlay {
+         background-color: rgba(15, 15, 15, 0.6);
+     }
+ }
+
+
+/** CUSTOM EDITS **/
+
 .pu-wysiwyg {
-    padding: 0;
-    overflow: hidden;
-    white-space: normal;
+  padding: 0;
 
-    &-textarea {
-        display: none;
+  &-button-pane {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+    background-color: #f9f9f9;
+  }
+
+  &-box {
+    margin-top: 0px;
+    border-radius: 5px;
+  }
+
+  &-button-group {
+    &:last-child {
+    float: right;
     }
+  }
 
-    &-button-pane {
-        transition: border-color 0.2s;
-        list-style: none;
-        padding: 0;
-        height: 42px;
-        border-bottom: 1px solid #eee;
-        background-color: #f9f9f9;
-        padding: 5px;
-
-        li {
-            display: inline-block;
-            margin-right: 5px;
-            font-size: 0;
-            vertical-align: middle;
-
-            button {
-                cursor: pointer;
-                width: 30px;
-                height: 30px;
-                border-radius: 3px;
-                border: 1px solid #ccc;
-                background-color: #fff;
-                font-size: 0;
-
-                &:hover {
-                    background-color: #f9f9f9;
-                }
-            }
-
-            &:nth-last-child(2) {
-                float: right;
-            }
-        }
+  &-editor {
+    &:hover {
+      cursor: pointer;
     }
-
-    &-textarea {
-        min-height: 300px;
-        outline: none;
-        padding: 12px;
-        width: 100%;
-        border: 0;
-        font-size: 16px;
-        font-family: $font-primary;
-    }
-
-    &-editor {
-        min-height: 300px;
-        outline: none;
-        padding: 12px;
-
-        &[contenteditable=true]:empty:before {
-            content: attr(placeholder);
-            color: #999;
-        }
-
-        &-hidden {
-            .pu-wysiwyg-editor {
-                display: none;
-            }
-
-            .pu-wysiwyg-textarea {
-                display: block;
-            }
-        }
-    }
-
-    &-reset-css {
-        p, blockquote, ul {
-            margin-top: 10px;
-
-            &:first-child {
-                margin-top: 0;
-            }
-        }
-
-        blockquote {
-            text-align: center;
-
-            &:before,
-            &:after {
-                content: '"';
-            }
-        }
-    }
-
-    &-overlay {
-        position: absolute;
-        background-color: rgba(255, 255, 255, 0.5);
-        width: 100%;
-        left: 0;
-        display: none;
-        z-index: 10;
-    }
-
-    &-modal {
-        position: absolute;
-        height: auto !important;
-        top: 42px !important;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 11;
-        overflow: hidden;
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        background-color: rgba(#fff, 0.1);
-
-        &-box {
-            padding: 20px;
-
-            > span {
-                display: none;
-            }
-
-            form {
-                background-color: #fff;
-                padding: 20px;
-                border: 2px solid darken(#ccc, 10%);
-                border-radius: 5px;
-
-                label {
-                    display: block;
-                    margin-bottom: 5px;
-
-                    &:last-child {
-                        display: none;
-                    }
-
-                    span.pu-wysiwyg-input-infos {
-                        line-height: 46px;
-                        float: left;
-                        width: 50px;
-                        font-weight: bold;
-                    }
-
-                    &:last-of-type {
-                        display: none;
-                    }
-                }
-
-                input {
-                    width: calc(100% - 50px);
-                    font-size: 16px;
-                    padding: 12px;
-                    border: 2px solid #eee;
-                    border-radius: 5px;
-                    outline: none;
-                }
-
-                button {
-                    margin-top: 10px;
-                    padding: 12px 15px;
-                    height: 40px;
-                    color: #fff;
-                    font-family: $font-secondary;
-                    font-size: 15px;
-                    font-weight: bold;
-                    line-height: 15px;
-                    border: 0;
-                    border-radius: 4px;
-                    outline: none;
-                    margin-right: 15px;
-                    cursor: pointer;
-                }
-            }
-        }
-    }
-
-    &-dropdown {
-        border: 2px solid #eee;
-        background-color: #fff;
-        border-top: 0;
-        border-radius: 0 0 5px 5px;
-        overflow: hidden;
-
-        button {
-            width: 100%;
-            border: 0;
-            background-color: #fff;
-            padding: 10px;
-            text-align: left;
-            font-size: 15px;
-            color: #292929;
-
-            &:hover {
-                background-color: #f9f9f9;
-            }
-        }
-    }
-
-    &-bold-button {
-        &:after {
-            font-size: 15px;
-            font-weight: bold;
-            content: "B";
-        }
-    }
-
-    &-italic-button {
-        &:after {
-            font-size: 15px;
-            font-weight: normal;
-            font-style: italic;
-            content: "I";
-        }
-    }
-
-    &-underline-button {
-        &:after {
-            font-size: 15px;
-            font-weight: normal;
-            text-decoration: underline;
-            content: "U";
-        }
-    }
-
-    &-strikethrough-button {
-        &:after {
-            font-size: 15px;
-            font-weight: normal;
-            text-decoration: line-through;
-            content: "T";
-        }
-    }
-
-    &-formatting-button {
-        &:after {
-            font-size: 15px;
-            font-weight: normal;
-            content: "¶";
-        }
-    }
-
-    &-unorderedList-button {
-        padding-top: 8px;
-
-        &:after {
-            font-size: 14px;
-            font-weight: normal;
-            content: "→→→";
-            line-height: 0.2em;
-        }
-    }
-
-    &-link-button {
-        &:after {
-            font-size: 15px;
-            font-weight: normal;
-            content: "://";
-            line-height: 0.6em;
-        }
-    }
-
-    &-viewHTML-button {
-        width: 40px !important;
-
-        &:after {
-            font-size: 14px;
-            font-weight: normal;
-            content: "</>";
-        }
-
-        &.pu-wysiwyg-active {
-            background-color: #ccc;
-
-            &:after {
-                font-weight: bold;
-                color: #fff;
-            }
-
-            &:hover {
-                background-color: darken(#ccc, 5%);
-            }
-        }
-    }
-
-    &:hover,
-    &:focus {
-        .pu-wysiwyg-button-pane {
-            border-bottom-color: #cccccc;
-        }
-    }
+  }
 }

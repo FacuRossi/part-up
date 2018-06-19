@@ -60,4 +60,30 @@ Partup.client.html = {
             });
         });
     },
+
+    wrap(string, tag, always = true) {
+      if (!string || !string.length > 0) {
+        return;
+      }
+
+      const htmlString = new HTMLString.String(string);
+      const char = htmlString.charAt(0);
+
+      if (char === -1) {
+        return;
+      }
+
+      const htmlTag = new HTMLString.Tag(tag);
+
+      let output = htmlString;
+      if (always) {
+        output = htmlString.format(0, -1, htmlTag);
+      } else {
+        if (char.tags().length === 0) {
+          output = htmlString.format(0, -1, htmlTag);
+        }
+      }
+
+      return output.html();
+    }
 };

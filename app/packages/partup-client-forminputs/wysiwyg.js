@@ -1,3 +1,9 @@
+import 'trumbowyg';
+import _ from 'lodash';
+
+$.trumbowyg.hideButtonTexts = true;
+$.trumbowyg.svgPath = '/images/trumbowyg.svg';
+
 Template.Wysiwyg.onCreated(function() {
     var template = this;
     template.placeholder = new ReactiveVar('');
@@ -8,6 +14,7 @@ function strip(html) {
     tmp.innerHTML = html;
     return tmp.textContent || tmp.innerText || "";
 }
+
 Template.Wysiwyg.onRendered(function() {
     var template = this;
 
@@ -16,54 +23,44 @@ Template.Wysiwyg.onRendered(function() {
     template.className.set(settings.className);
 
     template.editor = template.$('[data-wysiwyg]').trumbowyg({
-        removeformatPasted: true,
-        btnsDef: {
-            formattingCustom: {
-                dropdown: ['blockquote', 'p'],
-                ico: 'formatting' // Apply formatting icon
-            },
-        },
-        btns: [
-            ['bold'],
-            ['unorderedList'],
-            ['formattingCustom'],
-            ['link'],
-            ['viewHTML']
-        ],
-        fullscreenable: false,
-        closable: false,
-        autogrow: true,
-        resetCss: true,
-        prefix: 'pu-wysiwyg-'
-    });
-    if (settings.prefill) $(template.editor).trumbowyg('html', settings.prefill);
-    var wrapInParagraphIfNoTagsArePresent = function(string) {
-        var hasTags = /<[a-z][\s\S]*>/i.test(string);
-
-        if (hasTags) {
-            return string;
-        } else {
-            return '<p>' + string + '</p>';
+      prefix: 'pu-wysiwyg-',
+      btns: [
+        ['bold'],
+        ['unorderedList'],
+        ['formattingCustom'],
+        ['link'],
+        ['viewHTML'],
+      ],
+      btnsDef: {
+        formattingCustom: {
+          dropdown: ['blockquote', 'p'],
+          ico: 'p',
         }
-    };
+      },
+      closable: false,
+      fullscreenable: false,
+      removeformatPasted: true,
+    });
 
-    template.outputHandler = function(event) {
+    template.outputHandler = () => {
+      const trumboHtml = template.editor.trumbowyg('html');
+      const output = Partup.client.sanitizeOutputHTML(trumboHtml);
 
-        // console.log(event, template.editor);
-        var output = Partup.client.sanitizeOutputHTML(template.editor.trumbowyg('html'));
-        var textOutput = strip(output);
+      const wrapped = Partup.client.html.wrap(output, 'p', false);
+      const text = strip(output);
 
-        var wrappedOutput = wrapInParagraphIfNoTagsArePresent(output);
+      if (settings.htmlCharacterCountVar) {
+        settings.htmlCharacterCountVar.set(wrapped.length);
+      }
+      if (settings.characterCountVar) {
+        settings.characterCountVar.set(text.length);
+      }
 
-        if (settings.htmlCharacterCountVar) settings.htmlCharacterCountVar.set(wrappedOutput.length);
-        if (settings.characterCountVar) settings.characterCountVar.set(textOutput.length);
-
-        $('[' + settings.input + ']').val(wrappedOutput);
+      $(`[${settings.input}]`).val(wrapped);
     };
 
     template.editor.on('tbwchange', template.outputHandler);
-
-    lodash.defer(template.outputHandler);
+    _.defer(template.outputHandler);
 });
 
 Template.Wysiwyg.onDestroyed(function() {

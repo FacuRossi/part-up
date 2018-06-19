@@ -39,7 +39,6 @@ Package.onUse(function(api) {
 
             'constructors/ColumnTilesLayout.js',
 
-            'client/trumbowyg.js',
             'client/Debugger.js',
             'autoform/afFieldInput.js',
             'autoform/arrayHelpers.js',
