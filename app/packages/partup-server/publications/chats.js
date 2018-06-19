@@ -300,6 +300,13 @@ Meteor.publishComposite('chats.by_id.for_web', function(chatId, chatMessagesOpti
     this.unblock();
     if (!chatId) return; // Return if no chat specified in the URL
     check(chatId, String);
+
+    // Prevent users to navigate to chats that arent theirs.
+    const user = Meteor.users.findOne(this.userId)
+    if (user.chats.indexOf(chatId) === -1) {
+        return this.ready();
+    }
+
     chatMessagesOptions = chatMessagesOptions || {};
     check(chatMessagesOptions, {
         limit: Match.Optional(Number),
