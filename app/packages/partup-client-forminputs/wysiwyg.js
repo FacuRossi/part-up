@@ -1,5 +1,8 @@
 import 'trumbowyg';
 
+$.trumbowyg.hideButtonTexts = true;
+$.trumbowyg.svgPath = '/images/trumbowyg.svg';
+
 Template.Wysiwyg.onCreated(function() {
     var template = this;
     template.placeholder = new ReactiveVar('');
