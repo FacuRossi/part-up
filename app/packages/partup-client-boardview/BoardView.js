@@ -74,7 +74,7 @@ Template.BoardView.onCreated(function() {
         const lanes = Lanes.find({ _id: { $in: board.lanes } })
           .map((lane) => {
             const order = [...lane.activities];
-            const laneActivities = Activities.find({ _id: { $in: lane.activities }, deleted_at: { $ne: true } }).fetch();
+            const laneActivities = Activities.find({ _id: { $in: lane.activities } }).fetch();
 
             each(order, (o, i) => {
               const ui = findIndex(laneActivities, (a) => a._id === o);
