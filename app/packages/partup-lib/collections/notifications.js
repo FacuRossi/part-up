@@ -35,7 +35,6 @@ Notifications.findForUser = function(user, selector, options) {
 };
 
 Notifications.deleteForCreator = function(user) {
-    console.log("Deleting notifications for user: ", user._id)
     if (!user) return;
 
     // Set the name to deleted user to anonimize notifications
