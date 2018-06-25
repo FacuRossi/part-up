@@ -13,14 +13,14 @@ var equal = Npm.require('deeper');
 var basicAfterInsert = function(namespace) {
     return function(userId, document) {
 
-        // If no userId is present, try getting it from the document 
+        // If no userId is present, try getting it from the document
         // Used for User-API access, as no user is specified
-        if (!userId) { 
-            userId = document.creator_id || 
-                     document.upper_id || 
+        if (!userId) {
+            userId = document.creator_id ||
+                     document.upper_id ||
                      get(document, 'type_data.creator._id')
         }
-        
+
         Event.emit(namespace + '.inserted', userId, document);
     };
 };
@@ -36,14 +36,14 @@ var basicAfterInsert = function(namespace) {
 var basicAfterUpdate = function(namespace) {
     return function(userId, document, fieldNames, modifier, options) {
 
-        // If no userId is present, try getting it from the document 
+        // If no userId is present, try getting it from the document
         // Used for User-API access, as no user is specified
-        if (!userId) { 
-            userId = document.creator_id || 
-                     document.upper_id || 
+        if (!userId) {
+            userId = document.creator_id ||
+                     document.upper_id ||
                      get(document, 'type_data.creator._id')
         }
-        
+
         Event.emit(namespace + '.updated', userId, document, this.previous);
 
         if (this.previous) {
@@ -111,3 +111,7 @@ Ratings.after.remove(basicAfterRemove('partups.contributions.ratings'));
 
 // Notifications Events
 Notifications.after.insert(basicAfterInsert('partups.notifications'));
+
+ImpersonationRequests.before.insert((userId, doc) => {
+  doc.created_at = new Date();
+});
