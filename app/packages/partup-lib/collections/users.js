@@ -88,7 +88,7 @@ Meteor.users.findSinglePrivateProfile = function(userId) {
  * @return {Mongo.Cursor}
  */
 Meteor.users.findSinglePublicProfile = function(userId) {
-    return Meteor.users.find({_id: userId, deletedAt: {$exists: false}}, {fields: getPublicUserFields()});
+    return Meteor.users.find({_id: userId}, {fields: getPublicUserFields()});
 };
 
 /**

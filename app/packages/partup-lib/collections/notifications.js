@@ -33,3 +33,21 @@ Notifications.findForUser = function(user, selector, options) {
 
     return Notifications.find(selector, options);
 };
+
+Notifications.deleteForCreator = function(user) {
+    if (!user) return;
+
+    // Set the name to deleted user to anonimize notifications
+    Notifications.update( 
+        {'type_data.creator._id': user._id},
+        {"$set": {"type_data.creator.name": "Deleted User"}}, 
+        {"multi": true}
+    )
+
+    // Set the name to deleted user to anonimize notifications
+    Notifications.update( 
+        {'type_data.upper._id': user._id},
+        {"$set": {"type_data.upper.name": "Deleted User"}}, 
+        {"multi": true}
+    )
+}

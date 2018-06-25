@@ -83,7 +83,13 @@ Partup.server.services.images = {
                 _id: id,
             };
         }
-        throw new Meteor.Error(0, `images:remove could not find image with _id: ${id} or the image has no copies: ${image.copies}`);
+        
+        if (image && images.copies) {
+            throw new Meteor.Error(0, `images:remove could not find image with _id: ${id} or the image has no copies: ${image.copies}`);    
+        } else {
+            throw new Meteor.Error(0, `images:remove could not find image with _id: ${id}`);
+        }
+        
     },
 
     /**
