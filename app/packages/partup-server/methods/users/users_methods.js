@@ -1,5 +1,7 @@
 import _ from 'lodash'
 
+const { impersonation } = Partup.helpers;
+
 Meteor.methods({
     /**
      * Update a user
@@ -203,6 +205,41 @@ Meteor.methods({
         return Meteor.users.findStatsForAdmin();
     },
 
+    'users.admin_get_accepted_impersonation_requests'() {
+      const admin = Meteor.users.findOne(this.userId);
+
+      if (User(admin).isAdmin()) {
+        return ImpersonationRequests.findAcceptedRequests();
+      }
+
+      return undefined;
+    },
+
+    'users.admin_request_impersonation'(userId) {
+      const admin = Meteor.users.findOne(this.userId);
+
+      if (User(admin).isAdmin()) {
+        const impersonateUser = Meteor.users.findOne(userId);
+
+        if (impersonateUser) {
+          const existingImpersonationRequest = ImpersonationRequests.findOneActiveRequest(impersonateUser._id, impersonation.IMPERSONATION_REQUEST_STATUS.PENDING);
+          if (existingImpersonationRequest) {
+            throw new Meteor.Error(0, `admin-error-impersonation-request-existing-request`, 'The user already has a pending impersonation request, please both refresh the page.');
+          }
+
+          if (impersonateUser) {
+            ImpersonationRequests.insert({
+              adminId: admin._id,
+              userId: impersonateUser._id,
+              status: impersonation.IMPERSONATION_REQUEST_STATUS.PENDING,
+            });
+            return 1;
+          }
+        }
+      }
+      return -1;
+    },
+
     /**
     * Returns user stats to superadmins only
     */
@@ -215,11 +252,10 @@ Meteor.methods({
           const impersonateUser = Meteor.users.findOne(userId);
 
           if (impersonateUser) {
-            const { impersonation } = Partup.helpers;
+            const request = ImpersonationRequests.findOneActiveRequest(impersonateUser._id, impersonation.IMPERSONATION_REQUEST_STATUS.ACCEPTED);
 
-            const date = impersonation.getLastDate(impersonateUser);
-            if (date) {
-              const timeLeft = impersonation.timeLeft(date);
+            if (request) {
+              const timeLeft = impersonation.timeLeft(request);
 
               if (timeLeft > 0) {
                 Meteor.setTimeout(() => {
@@ -239,10 +275,26 @@ Meteor.methods({
     },
 
     'users.allow_impersonation'() {
-      const user = Meteor.users.findOne(this.userId);
-      if (user) {
-        Meteor.users.update(user._id, { $push: { impersonation: new Date() } });
+      const impersonationRequest = ImpersonationRequests.findOneActiveRequest(this.userId);
+
+      if (!impersonationRequest) {
+        return -1;
       }
+      if (impersonation.isActive(impersonationRequest)) {
+        throw new Meteor.Error(0, 'impersonation-still-active', 'The last ImpersonationRequest is still active');
+      }
+
+      const changes =  {
+        status: impersonation.IMPERSONATION_REQUEST_STATUS.ACCEPTED,
+        accepted_at: new Date(),
+      };
+
+      ImpersonationRequests.update(impersonationRequest._id, { $set: changes });
+      return Object.assign(impersonationRequest, changes);
+    },
+
+    'users.get_non_expired_impersonation_request'() {
+      return ImpersonationRequests.findOneActiveRequest(this.userId);
     },
 
     /**
