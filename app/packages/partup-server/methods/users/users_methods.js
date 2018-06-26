@@ -507,18 +507,30 @@ Meteor.methods({
         }
 
         try {
-            
+
             // Remove all partnerships & and become a supporter
             _.get(user, 'upperOf', []).forEach((partupId) => {
                 partup = Partups.findOne({_id: partupId})
+                
                 // If the user is the only partner, archive first
-                if (_.isEqual(partup.uppers, [user.id])) {
+                if (_.isEqual(partup.uppers, [user._id])) {
                     Meteor.call('partups.archive', partupId)
                 }
+
                 Meteor.call('partups.unpartner', partupId, function (err, res) {
                     Meteor.call('partups.supporters.remove', partupId)
                 })
             })
+
+
+            // Remove the user as a creator from partups
+            const createdPartups = Partups.find({"creator_id": user._id}).fetch()
+            createdPartups.forEach((partup) => {
+            	// Remove the user as a creator by setting the creator ID to the next partner
+            	if (partup.uppers) {
+            		Partups.update(partup._id, { $set: { 'creator_id': partup.uppers[0] }});	
+            	}
+            })	
 
             // Remove supporter from partup
             _.get(user, 'supporterOf', []).forEach((partupId) => {
