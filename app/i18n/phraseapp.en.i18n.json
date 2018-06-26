@@ -41,6 +41,7 @@
   "base-client-language-ss-badDate": "This is not a valid date",
   "base-client-language-ss-emailExists": "This email already exists",
   "base-client-language-ss-emailNotFound": "This user is not found",
+  "base-client-language-ss-accountDeactivated": "This account has been deactivated. Email team@part-up.com to reactivate your account",
   "base-client-language-ss-expectedArray": "This value does not meet the requirements",
   "base-client-language-ss-expectedBoolean": "This value does not meet the requirements",
   "base-client-language-ss-expectedConstructor": "This value does not meet the requirements",

@@ -41,6 +41,7 @@
   "base-client-language-ss-badDate": "Ongeldige datum",
   "base-client-language-ss-emailExists": "Er is al een gebruiker met dit e-mailadres",
   "base-client-language-ss-emailNotFound": "Er bestaat geen gebruiker met dit e-mailadres",
+  "base-client-language-ss-accountDeactivated": "Dit account is gedeactiveerd. Email team@part-up.com om je account te activeren",
   "base-client-language-ss-expectedArray": "Dit veld voldoet niet aan de eisen",
   "base-client-language-ss-expectedBoolean": "Dit veld voldoet niet aan de eisen",
   "base-client-language-ss-expectedConstructor": "Dit veld voldoet niet aan de eisen",

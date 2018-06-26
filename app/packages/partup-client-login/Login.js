@@ -171,6 +171,9 @@ AutoForm.hooks({
                         case 'Incorrect password [403]':
                             Partup.client.forms.addStickyFieldError(self, 'password', 'passwordIncorrect');
                             break;
+                        case 'User is deactivated [403]':
+                            Partup.client.forms.addStickyFieldError(self, 'email', 'accountDeactivated');
+                            break;
                         default:
                             Partup.client.notify.error(TAPi18n.__('login-error_' + Partup.client.strings.slugify(error.reason)));
                     }
