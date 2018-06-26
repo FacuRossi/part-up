@@ -1,3 +1,20 @@
+<a name="4.4.0"></a>
+# [4.4.0](https://github.com/part-up/part-up/compare/4.3.1...4.4.0) (2018-06-19)
+
+
+### Bug Fixes
+
+* **text:** Wrap text in textareas ([ae759bb](https://github.com/part-up/part-up/commit/ae759bb))
+* **user:** Rename user in notification when a user is deleted ([32839b4](https://github.com/part-up/part-up/commit/32839b4))
+* **wysiwyg:** Update trumbowyg settings ([c3a04ad](https://github.com/part-up/part-up/commit/c3a04ad))
+
+
+### Features
+
+* **string:** Add helper to wrap a string in html tag ([97e7b2a](https://github.com/part-up/part-up/commit/97e7b2a))
+
+
+
 <a name="4.3.1"></a>
 ## [4.3.1](https://github.com/part-up/part-up/compare/4.3.0...4.3.1) (2018-06-15)
 
@@ -23,6 +40,7 @@
 * **client:** Add register and login button to partup closed page ([39dba64](https://github.com/part-up/part-up/commit/39dba64)), closes [#1658](https://github.com/part-up/part-up/issues/1658)
 * **impersonation:** Ask for permission for impersonation ([6f235d4](https://github.com/part-up/part-up/commit/6f235d4))
 * **meurs:** Remove meurs strength finder ([3bb00bb](https://github.com/part-up/part-up/commit/3bb00bb))
+* **profile-reactivation:** When a deactivated user tries to login, show a warning to reactivate an ([fb3a585](https://github.com/part-up/part-up/commit/fb3a585)), closes [#1646](https://github.com/part-up/part-up/issues/1646)
 * **profile-settings:** The front-end now has an advanced tab in profile settings with a delete acco ([d79c99f](https://github.com/part-up/part-up/commit/d79c99f)), closes [#1636](https://github.com/part-up/part-up/issues/1636)
 * **users:** Added a meteor method for deleting a user ([cd77b92](https://github.com/part-up/part-up/commit/cd77b92)), closes [#1636](https://github.com/part-up/part-up/issues/1636)
 * **users:** Allow users to delete their account ([c0a7955](https://github.com/part-up/part-up/commit/c0a7955))
