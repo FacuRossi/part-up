@@ -31,13 +31,6 @@ Template.app_profile_about.onCreated(function() {
             var profileIsCurrentUser = !!(Meteor.userId() === profileId);
             var profilehasMediaTiles = !!(tiles && tiles.length);
 
-            if (profileIsCurrentUser) {
-                displayTiles = displayTiles.concat([{
-                    type: 'result',
-                    profileId,
-                }]);
-            }
-
             if (!profilehasMediaTiles && profileIsCurrentUser) {
                 displayTiles = displayTiles.concat([{
                     type: 'image',
@@ -46,6 +39,8 @@ Template.app_profile_about.onCreated(function() {
             }
 
             displayTiles = displayTiles.concat(tiles || []);
+
+            console.log(displayTiles);
 
             template.columnTilesLayout.addTiles(displayTiles, function() {
                 template.loading.set(false);
