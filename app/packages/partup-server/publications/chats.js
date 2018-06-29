@@ -303,7 +303,7 @@ Meteor.publishComposite('chats.by_id.for_web', function(chatId, chatMessagesOpti
 
     // Prevent users to navigate to chats that arent theirs.
     const user = Meteor.users.findOne(this.userId);
-    if (!user && user.chats.indexOf(chatId) === -1) {
+    if (!user || user.chats.indexOf(chatId) === -1) {
       return this.ready();
     }
 
