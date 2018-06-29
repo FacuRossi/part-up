@@ -100,4 +100,13 @@ Template.modal_profile_settings_advanced.events({
 
       }
     },
+    'click [data-intercom-export-data]'(event, template) {
+        event.preventDefault();
+
+        if (typeof Intercom !== "undefined") {
+          Intercom('showNewMessage', TAPi18n.__('intercom-question-export-data'));
+        } else {
+          Partup.client.notify.error(TAPi18n.__('error-intercom-not-available'));
+        }
+    }
 });
