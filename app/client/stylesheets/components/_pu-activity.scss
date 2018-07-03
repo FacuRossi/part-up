@@ -37,6 +37,11 @@
       font-weight: 700;
       width: 80%;
 
+      > a {
+        color: #292929;
+        text-decoration: none;
+      }
+
       > a:focus, > a:hover {
         color: inherit;
         text-decoration: underline;
