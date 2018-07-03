@@ -187,6 +187,7 @@ Meteor.methods({
         check(activityId, String);
 
         var upper = Meteor.users.findOneOrFail(this.userId);
+
         var activity = Activities.findOneOrFail(activityId);
 
         if (activity.isRemoved()) throw new Meteor.Error(404, 'activity_could_not_be_found');
@@ -331,7 +332,7 @@ Meteor.methods({
             var board = Boards.findOneOrFail(toPartup.board_id);
             var backlogLane = Lanes.findOneOrFail(board.lanes[0]);
 
-            var existingActivities = Activities.find({partup_id: fromPartupId}).fetch();
+            var existingActivities = Activities.find({partup_id: fromPartupId, deleted_at: { $exists: false }, archived: { $ne: true }}).fetch();
             existingActivities.forEach(function(activity) {
                 var newActivity = {
                     name: activity.name,
