@@ -56,6 +56,22 @@ Template.app_partup_navigation.events({
             }
         });
     },
+    'click [data-archive-partup]'(event, templateInstance) {
+      event.preventDefault();
+      Partup.client.prompt.confirm({
+        title: TAPi18n.__('pages-app-partup-popup-title-archive', {partup: templateInstance.data.partup.name}),
+        message: TAPi18n.__('pages-app-partup-popup-message-archive'),
+        confirmButton: TAPi18n.__('pages-app-popup-confirmation-confirm-button'),
+        cancelButton: TAPi18n.__('pages-app-popup-confirmation-cancel-button'),
+        onConfirm: function () {
+            Meteor.call('partups.archive', templateInstance.data.partup._id, function(error, result) {
+              if (!error) {
+                Partup.client.notify.info(TAPi18n.__('notify-partup-archived-success', {partup: templateInstance.data.partup.name}));
+              }
+            });
+        }
+    });
+    },
     'click [data-end-partup-partnership]': function (event, template) {
         event.preventDefault()
         Partup.client.prompt.confirm({

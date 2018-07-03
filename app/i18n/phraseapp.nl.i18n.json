@@ -1242,6 +1242,7 @@
   "pages-app-partup-level-label-partup": "Part-up",
   "pages-app-partup-level-label-tribe": "Tribe",
   "pages-app-partup-menu-endpartnership": "Stop als partner",
+  "pages-app-partup-menu-archive": "Archiveer partup",
   "pages-app-partup-menu_activities": "Activiteiten",
   "pages-app-partup-menu_conversations": "Gesprekken",
   "pages-app-partup-menu_documents": "Documenten & links",
@@ -1254,7 +1255,9 @@
   "pages-app-partup-menu_updates": "Alle updates",
   "pages-app-partup-menu_updates_abbr": "Alle",
   "pages-app-partup-popup-message-unpartner": "Weet je zeker dat je wilt stoppen als partner? Vergeet niet dat alleen partners kunnen bijdragen aan activiteiten. Als je op Bevestigen klikt, dan ben je nog wel supporter van deze part-up",
+  "pages-app-partup-popup-message-archive": "Weet je zeker dat je deze partup wilt archiveren",
   "pages-app-partup-popup-title-unpartner": "Stop met partner zijn van",
+  "pages-app-partup-popup-title-archive": "Archiveer partup",
   "pages-app-partup-privacy-label-closed": "Alleen open voor __label__ van __network__",
   "pages-app-partup-privacy-label-custom": "Alleen op voor __label__ van __network__",
   "pages-app-partup-privacy-label-invite": "Open voor uitgenodigde uppers",
@@ -2013,5 +2016,6 @@
   "widgetcommentfield-comment-systemmessage-show": "Laat meldingen zien",
   "widgetcommentfield-comment-totalcomments": "__count__ reactie",
   "widgetcommentfield-comment-totalcomments_plural": "__count__ reacties",
-  "widgetcommentfield-comment-viewall-button": "Toon alle %s reacties"
+  "widgetcommentfield-comment-viewall-button": "Toon alle %s reacties",
+  "notify-partup-archived-success": "__partup__ gearchiveerd"
 }

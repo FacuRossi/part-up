@@ -1237,6 +1237,7 @@
   "pages-app-partup-level-label-partup": "Part-up",
   "pages-app-partup-level-label-tribe": "Tribe",
   "pages-app-partup-menu-endpartnership": "Stop being partner",
+  "pages-app-partup-menu-archive": "Archive partup",
   "pages-app-partup-menu_activities": "Activities",
   "pages-app-partup-menu_conversations": "Conversations",
   "pages-app-partup-menu_documents": "Documents & links",
@@ -1249,7 +1250,9 @@
   "pages-app-partup-menu_updates": "All updates",
   "pages-app-partup-menu_updates_abbr": "All",
   "pages-app-partup-popup-message-unpartner": "Are you sure you want to stop being a partner? Remember, only partners can contribute to activities. If you click 'yes', you will still be supporter in this part-up",
+  "pages-app-partup-popup-message-archive": "Are you sure you want to archive this partup?",
   "pages-app-partup-popup-title-unpartner": "Stop being a partner on",
+  "pages-app-partup-popup-title-archive": "Archive partup",
   "pages-app-partup-privacy-label-closed": "Only open to members of __network__",
   "pages-app-partup-privacy-label-custom": "Only open to __label__ of __network__",
   "pages-app-partup-privacy-label-invite": "Open to invited uppers",
@@ -2008,5 +2011,6 @@
   "widgetcommentfield-comment-systemmessage-show": "Show system messages",
   "widgetcommentfield-comment-totalcomments": "__count__ comment",
   "widgetcommentfield-comment-totalcomments_plural": "__count__ comments",
-  "widgetcommentfield-comment-viewall-button": "View all %s comments"
+  "widgetcommentfield-comment-viewall-button": "View all %s comments",
+  "notify-partup-archived-success": "__partup__ archived"
 }
