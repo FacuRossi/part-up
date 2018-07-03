@@ -1,3 +1,21 @@
+<a name="4.5.0"></a>
+# [4.5.0](https://github.com/part-up/part-up/compare/4.4.0...4.5.0) (2018-06-26)
+
+
+### Bug Fixes
+
+* **activities:** no longer copy archived and deleted activities ([ada1292](https://github.com/part-up/part-up/commit/ada1292))
+* **chats:** Check for existance user object ([dced295](https://github.com/part-up/part-up/commit/dced295))
+* **invite:** Get partup inviter from DB if necessary ([de1f30a](https://github.com/part-up/part-up/commit/de1f30a))
+* **publications:** Dont publish calls to networks.one without networkslug ([481bd1f](https://github.com/part-up/part-up/commit/481bd1f))
+
+
+### Features
+
+* **impersonation:** Improve impersonation flow ([34551c9](https://github.com/part-up/part-up/commit/34551c9))
+
+
+
 <a name="4.4.0"></a>
 # [4.4.0](https://github.com/part-up/part-up/compare/4.3.1...4.4.0) (2018-06-19)
 
@@ -29,6 +47,7 @@
 * **hovercard:** Hovercard fixes to not show deleted or deactivated users ([266a5ef](https://github.com/part-up/part-up/commit/266a5ef))
 * **hovercard:** Safeguard user finds in hovercards ([4988e94](https://github.com/part-up/part-up/commit/4988e94))
 * **invite:** Set access token for user without account ([f724757](https://github.com/part-up/part-up/commit/f724757))
+* **menu:** Add archive partup option to partup cog ([177448b](https://github.com/part-up/part-up/commit/177448b))
 * **meteor:** Manually set Meteor.autorun ([2f804f0](https://github.com/part-up/part-up/commit/2f804f0))
 * **scores:** Adjust calculation of user participation score ([78a2e6c](https://github.com/part-up/part-up/commit/78a2e6c))
 * **signup:** Reversed agreed to ToS check ([924b7b5](https://github.com/part-up/part-up/commit/924b7b5))
