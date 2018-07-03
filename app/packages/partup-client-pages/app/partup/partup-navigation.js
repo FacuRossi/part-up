@@ -66,7 +66,7 @@ Template.app_partup_navigation.events({
         onConfirm: function () {
             Meteor.call('partups.archive', templateInstance.data.partup._id, function(error, result) {
               if (!error) {
-                Partup.client.notify.info(TAPi18n.__('notify-partup-archived-success'), { partup: templateInstance.data.partup.name });
+                Partup.client.notify.info(TAPi18n.__('notify-partup-archived-success', {partup: templateInstance.data.partup.name}));
               }
             });
         }
