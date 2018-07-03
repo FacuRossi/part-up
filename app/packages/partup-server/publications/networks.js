@@ -100,6 +100,10 @@ Meteor.publishComposite('networks.discoverfilter', function(urlParams, parameter
  * @param {String} networkSlug
  */
 Meteor.publishComposite('networks.one', function(networkSlug) {
+    if (!networkSlug) {
+      return;
+    }
+
     check(networkSlug, String);
 
     if (this.unblock) this.unblock();
