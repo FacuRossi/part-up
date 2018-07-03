@@ -40,8 +40,6 @@ Template.app_profile_about.onCreated(function() {
 
             displayTiles = displayTiles.concat(tiles || []);
 
-            console.log(displayTiles);
-
             template.columnTilesLayout.addTiles(displayTiles, function() {
                 template.loading.set(false);
             });
