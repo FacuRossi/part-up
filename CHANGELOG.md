@@ -1,3 +1,13 @@
+<a name="4.5.1"></a>
+## [4.5.1](https://github.com/part-up/part-up/compare/4.5.0...4.5.1) (2018-07-03)
+
+
+### Bug Fixes
+
+* **profile:** No longer show meurs result ([a2eeb79](https://github.com/part-up/part-up/commit/a2eeb79))
+
+
+
 <a name="4.5.0"></a>
 # [4.5.0](https://github.com/part-up/part-up/compare/4.4.0...4.5.0) (2018-06-26)
 
