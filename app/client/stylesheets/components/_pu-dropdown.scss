@@ -509,7 +509,10 @@
         right: 0px;
         pointer-events: all;
         display: block;
-        overflow-y: scroll;
+    }
+
+    &__profile {
+      overflow-y: scroll;
     }
 }
 

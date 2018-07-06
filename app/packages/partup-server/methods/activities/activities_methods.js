@@ -198,11 +198,14 @@ Meteor.methods({
             throw new Meteor.Error(401, 'unauthorized');
         }
 
+
         try {
+
             // Check if the activity is in a lane, and remove from there if so
             if (activity.lane_id) {
-                var lane = Lanes.findOneOrFail(activity.lane_id);
-                lane.removeActivity(activity._id);
+
+              var lane = Lanes.findOneOrFail(activity.lane_id);
+              lane.removeActivity(activity._id);
             }
 
             const { images = [], documents = [] } = _.get(activity, 'files', {});
@@ -342,6 +345,7 @@ Meteor.methods({
                     updated_at: new Date(),
                     creator_id: upper._id,
                     partup_id: toPartupId,
+                    lane_id: backlogLane._id,
                     archived: false
                 };
 
