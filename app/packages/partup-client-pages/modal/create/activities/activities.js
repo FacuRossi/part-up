@@ -5,7 +5,7 @@ Template.modal_create_activities.onCreated(function() {
   this.partupId = this.data.partupId || Router.current().params._id;
   if (isString(this.partupId)) {
     this.subscribe('activities.partup_create', this.partupId);
-    this.cursor = Activities.find({ partup_id: template.partupId }, { sort: { created_at: -1 } });
+    this.cursor = Activities.find({ partup_id: template.partupId, deleted_at: { $exists: false } }, { sort: { created_at: -1 } });
   }
 });
 
