@@ -85,7 +85,7 @@
                 <span class="pu-sub-error">{{ afFieldMessage name='description' }}</span>
             </div>
         </label>
-        
+
         <!-- Excpected result -->
         <label class="pu-formfield">
             <span class="pu-label">
@@ -169,54 +169,33 @@
             </div>
         </label>
 
-        <!-- Type -->
-        <div class="pu-formfield">
-            <span class="pu-label">
-                {{_ 'partupsettings-form-type-label' }}
-            </span>
+        <!-- Location -->
+        <label class="pu-formfield">
+          <span class="pu-label">{{_ 'partupsettings-form-location_input-label'}}</span>
+          <div class="pu-sub-validations pu-sub-autocomplete
+                      {{#if afFieldIsInvalid name='location_input' }}pu-state-invalid{{/if}}">
+              <span class="pu-sub-input">
+                  {{# AutocompleteAdvanced
+                              placeholder=formPlaceholders.location_input
+                              label=locationLabel
+                              selection=locationSelectionReactiveVar
+                              onQuery=locationQuery
+                              hasValueVar=locationHasValueVar
+                              formValue=locationFormvalue }}
 
-            <div class="pu-sub-validations {{#if afFieldIsInvalid name='type' }}pu-state-invalid{{/if}} {{#if afFieldIsInvalid name='type_commercial_budget' }}pu-state-invalid{{/if}} {{#if afFieldIsInvalid name='type_organization_budget' }}pu-state-invalid{{/if}}">
-                <div class="pu-sub-input">
-                    <fieldset class="pu-sub-radiogroup" data-type>
-                        {{# each typeOptions }}
-                            <label><input type="radio" name="type_input" value="{{ value }}" class="pu-input-radio" checked="{{ typeChecked }}">{{_ label }}</label>
-                            {{# if showCommercialBudget }}
-                                <label class="pu-sub-input pu-sub-input-half">
-                                    <span class="pu-inputcontainer pu-inputcontainer-currency">
-                                        <!-- <span class="pu-sub-text">
-                                            {{_ 'partupsettings-form-budget-unit-euro' }}
-                                        </span> -->
-                                        {{> afFieldInput name='type_commercial_budget' type='text' placeholder=0 class="pu-input" }}
-                                        <!-- <span class="pu-inputcontainer pu-inputcontainer-select"> -->
-                                        {{> afFieldInput name='currency' value=currentCurrency placeholder='EUR' firstOption=false options="allowed" class="pu-input pu-input-select"}}
-                                        <!-- </span> -->
-                                    </span>
-                                </label>
-                            {{/ if }}
-                            {{# if showOrganizationBudget }}
-                                <label class="pu-sub-input pu-sub-input-half">
-                                    <span class="pu-inputcontainer pu-inputcontainer-text">
-                                        <span class="pu-sub-text">
-                                            {{_ 'partupsettings-form-budget-unit-hours' }}
-                                        </span>
-                                        {{> afFieldInput name='type_organization_budget' type='text' placeholder=0 class="pu-input" }}
-                                    </span>
-                                </label>
-                            {{/ if }}
-                        {{/ each }}
-                    </fieldset>
-                </div>
-                <span class="pu-sub-error">
-                    {{ afFieldMessage name='type' }}
-                    {{ afFieldMessage name='type_commercial_budget' }}
-                    {{ afFieldMessage name='type_organization_budget' }}
-                </span>
+                      {{> afFieldInput name='location_input' data-input="" }}
 
-                <!-- {{> afFieldInput name='currency' type='hidden' value=selectedCurrency}} -->
-                {{> afFieldInput type='hidden' name='type' value=selectedType }}
-                <!-- {{> afFieldInput type='hidden' name='network_id' value=selectedPrivacyNetwork }} -->
-            </div>
-        </div>
+                  {{/ AutocompleteAdvanced }}
+              </span>
+              <span class="pu-sub-error">
+                  {{#if locationHasValueVar.get}}
+                      {{_ 'partupsettings-form-location_input-error-has-value-but-no-location-selected' }}
+                  {{else}}
+                      {{ afFieldMessage name='location_input' }}
+                  {{/if}}
+              </span>
+          </div>
+        </label>
 
         <!-- End date -->
         <label class="pu-formfield">
@@ -241,33 +220,7 @@
             </div>
         </label>
 
-        <!-- Location -->
-        <label class="pu-formfield">
-            <span class="pu-label">{{_ 'partupsettings-form-location_input-label'}}</span>
-            <div class="pu-sub-validations pu-sub-autocomplete
-                        {{#if afFieldIsInvalid name='location_input' }}pu-state-invalid{{/if}}">
-                <span class="pu-sub-input">
-                    {{# AutocompleteAdvanced
-                                placeholder=formPlaceholders.location_input
-                                label=locationLabel
-                                selection=locationSelectionReactiveVar
-                                onQuery=locationQuery
-                                hasValueVar=locationHasValueVar
-                                formValue=locationFormvalue }}
 
-                        {{> afFieldInput name='location_input' data-input="" }}
-
-                    {{/ AutocompleteAdvanced }}
-                </span>
-                <span class="pu-sub-error">
-                    {{#if locationHasValueVar.get}}
-                        {{_ 'partupsettings-form-location_input-error-has-value-but-no-location-selected' }}
-                    {{else}}
-                        {{ afFieldMessage name='location_input' }}
-                    {{/if}}
-                </span>
-            </div>
-        </label>
 
         <div class="pu-formfield">
             <span class="pu-label">
@@ -359,11 +312,11 @@
             {{> afFieldInput name="focuspoint_y_input" type="hidden" }}
 
             {{> ImageSystem imageId=imageId focuspoint=focuspoint }}
-            
+
             <div class="pu-sub-validations {{#if afFieldIsInvalid name='image' }}pu-state-invalid{{/if}}">
                 <span class="pu-sub-error">{{ afFieldMessage name='image' }}</span>
             </div>
-        </div> 
+        </div>
 
         <div class="pu-formfield">
             <span class="pu-label">Upload additional photos or videos</span>
@@ -373,6 +326,6 @@
 
         <!-- Variable footer -->
         {{> yield region="PartupsettingsFooter" }}
-    
+
     {{/autoForm}}
 </template>
