@@ -729,15 +729,21 @@ User = function(user) {
             });
         },
 
-        hasVerifiedEmail(email = undefined) {
-          if (user) {
-            if (email) {
-              return find(user.emails, (e) => e.address === email && !!e.verified);
-            } else {
-              return get(user, 'emails[0].verified') ||
-                get(user, 'registered_emails[0].verified');
+        hasVerifiedEmail(address) {
+          let verified = undefined;
+
+          if (user && address) {
+            verified = false;
+
+            for (const e of user.emails) {
+              if (e.address === address && e.verified) {
+                verified = true;
+                break;
+              }
             }
           }
+
+          return verified;
         },
     };
 };
