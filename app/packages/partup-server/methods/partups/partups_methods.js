@@ -29,6 +29,10 @@ Meteor.methods({
             };
             newPartup.refreshed_at = new Date();
 
+            if (!newPartup.type) {
+              newPartup.type = Partups.TYPE.CHARITY;
+            }
+
             // Create a board
             // newPartup.board_id = Meteor.call('boards.insert', newPartup._id);
             let board_id = Random.id()

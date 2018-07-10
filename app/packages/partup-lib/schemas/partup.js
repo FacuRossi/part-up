@@ -53,6 +53,7 @@ var partupBaseSchema = new SimpleSchema({
     },
     type: {
         type: String,
+        optional: true,
         allowedValues: [
             Partups.TYPE.CHARITY,
             Partups.TYPE.ENTERPRISING,
