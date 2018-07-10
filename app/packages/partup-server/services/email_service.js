@@ -45,6 +45,7 @@ Partup.server.services.emails = {
                 const usr = Meteor.users.findOne({ _id: existingUser._id, 'emails.address': options.toAddress }, { fields: { emails: 1 } });
 
                 for (let e of usr.emails) {
+                  if (e.address === options.toAddress) {
                     const sendIfMoreThanZero = moment().subtract(7, 'days').diff(moment(e.lastVerificationMail));
 
                     if (!e.lastVerificationMail || sendIfMoreThanZero > 0) {
@@ -52,6 +53,7 @@ Partup.server.services.emails = {
                         Meteor.users.update({ _id: existingUser._id, 'emails.address': options.toAddress }, { $set: { 'emails.$.lastVerificationMail': new Date() } });
                         break;
                     }
+                  }
                 }
 
                 return;
