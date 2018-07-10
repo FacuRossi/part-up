@@ -1,10 +1,26 @@
+<a name="4.5.2"></a>
+## [4.5.2](https://github.com/part-up/part-up/compare/4.5.1...4.5.2) (2018-07-06)
+
+
+### Bug Fixes
+
+* **acc-finds:** Menu scroll & Copy activities ([2bcc0fb](https://github.com/part-up/part-up/commit/2bcc0fb))
+
+
+
 <a name="4.5.1"></a>
 ## [4.5.1](https://github.com/part-up/part-up/compare/4.5.0...4.5.1) (2018-07-03)
 
 
 ### Bug Fixes
 
+* **analytics:** defer call to 'ga' ([4d597f1](https://github.com/part-up/part-up/commit/4d597f1))
 * **profile:** No longer show meurs result ([a2eeb79](https://github.com/part-up/part-up/commit/a2eeb79))
+
+
+### Features
+
+* **export:** User can request data export via Intercom ([255f30d](https://github.com/part-up/part-up/commit/255f30d))
 
 
 
@@ -16,6 +32,7 @@
 
 * **activities:** no longer copy archived and deleted activities ([ada1292](https://github.com/part-up/part-up/commit/ada1292))
 * **chats:** Check for existance user object ([dced295](https://github.com/part-up/part-up/commit/dced295))
+* **delete-user:** When a account is deleted, that account is removed as a creator from a partup ([478f1d6](https://github.com/part-up/part-up/commit/478f1d6)), closes [#1704](https://github.com/part-up/part-up/issues/1704)
 * **invite:** Get partup inviter from DB if necessary ([de1f30a](https://github.com/part-up/part-up/commit/de1f30a))
 * **publications:** Dont publish calls to networks.one without networkslug ([481bd1f](https://github.com/part-up/part-up/commit/481bd1f))
 
@@ -23,6 +40,7 @@
 ### Features
 
 * **impersonation:** Improve impersonation flow ([34551c9](https://github.com/part-up/part-up/commit/34551c9))
+* **opt-in:** Only send verification mails once a week on update ([44978eb](https://github.com/part-up/part-up/commit/44978eb))
 
 
 
