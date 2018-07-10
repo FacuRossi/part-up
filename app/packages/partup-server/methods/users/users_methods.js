@@ -511,7 +511,7 @@ Meteor.methods({
             // Remove all partnerships & and become a supporter
             _.get(user, 'upperOf', []).forEach((partupId) => {
                 partup = Partups.findOne({_id: partupId})
-                
+
                 // If the user is the only partner, archive first
                 if (_.isEqual(partup.uppers, [user._id])) {
                     Meteor.call('partups.archive', partupId)
@@ -522,15 +522,29 @@ Meteor.methods({
                 })
             })
 
-
             // Remove the user as a creator from partups
-            const createdPartups = Partups.find({"creator_id": user._id}).fetch()
-            createdPartups.forEach((partup) => {
-            	// Remove the user as a creator by setting the creator ID to the next partner
-            	if (partup.uppers) {
-            		Partups.update(partup._id, { $set: { 'creator_id': partup.uppers[0] }});	
-            	}
-            })	
+            Partups.find({ creator_id: user._id })
+              .forEach((partup) => {
+                if (Array.isArray(partup.uppers)) {
+                  let newCreatorId;
+
+                  while (partup.uppers.length > 0) {
+                    const id = partup.uppers.unshift();
+                    if (id !== user._id) {
+                      newCreatorId = id;
+                      break;
+                    }
+                  }
+
+                  // If there's no upper other than the user that get's deleted set it to partup admin
+                  // this is so there will always be a creator_id;
+                  if (!newCreatorId) {
+                    newCreatorId = 'EBnHxX2WYy6LicBPg'; // Partup admin user
+                  }
+
+                  Partups.update(partup._id, { $set: { 'creator_id': newCreatorId }});
+                }
+              });
 
             // Remove supporter from partup
             _.get(user, 'supporterOf', []).forEach((partupId) => {
