@@ -121,7 +121,6 @@ Accounts.onCreateUser(function(options, user) {
 
         profile = {
             firstname: fbData.first_name,
-            gender: fbData.gender,
             lastname: fbData.last_name,
             facebook_url: 'https://facebook.com/' + fbData.id,
             name: fbData.name,
