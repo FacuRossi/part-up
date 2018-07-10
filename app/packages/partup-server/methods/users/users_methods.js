@@ -529,7 +529,7 @@ Meteor.methods({
                   let newCreatorId;
 
                   while (partup.uppers.length > 0) {
-                    const id = partup.uppers.unshift();
+                    const id = partup.uppers.shift();
                     if (id !== user._id) {
                       newCreatorId = id;
                       break;
