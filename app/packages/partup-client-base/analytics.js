@@ -1,5 +1,6 @@
 var SECOND_TRACKER_NAME = 'newPartupAnalyticsTracker';
 var second_tracker_id = get(Meteor, 'settings.public.secondGATracker');
+var _ = require('lodash');
 
 Meteor.startup(function() {
 
@@ -7,15 +8,19 @@ Meteor.startup(function() {
     if (second_tracker_id) {
         analytics.ready(function() {
 
-            // Create 2nd tracker
-            var createOptions = {'name': SECOND_TRACKER_NAME};
-            if (Meteor.settings.public.development) {
-                createOptions.cookieDomain = 'none';
-            }
-            ga('create', second_tracker_id, createOptions);
+          // Create 2nd tracker
+          var createOptions = {'name': SECOND_TRACKER_NAME};
+          if (Meteor.settings.public.development) {
+              createOptions.cookieDomain = 'none';
+          }
+          if (_) {
+            _.defer(() => {
+              ga('create', second_tracker_id, createOptions);
 
-            // Pass initial page event to 2nd tracker
-            ga(SECOND_TRACKER_NAME + '.send', 'pageview', Router.current().route.path());
+              // Pass initial page event to 2nd tracker
+              ga(SECOND_TRACKER_NAME + '.send', 'pageview', Router.current().route.path());
+            });
+          }
         });
 
         // Pass page events to 2nd tracker
