@@ -59,6 +59,10 @@ Template.Wysiwyg.onRendered(function() {
       $(`[${settings.input}]`).val(wrapped);
     };
 
+    if (settings.prefill) {
+      $(template.editor).trumbowyg('html', settings.prefill);
+    }
+
     template.editor.on('tbwchange', template.outputHandler);
     _.defer(template.outputHandler);
 });
