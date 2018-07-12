@@ -413,6 +413,7 @@
   "impersonation-allow-success": "Impersonation is now allowed for 30 minutes",
   "impersonation-error-not-active": "Impersonation is not active for user",
   "impersonation-still-active": "Impersonation is still active for __minutes__ minutes",
+  "intercom-question-export-data": "Hello Part-up team, I would like to receive an export of my data.",
   "invite-to-activity-popup-close": "Close",
   "invite-to-activity-popup-explaination": "You might want to work with someone you know, but who is not yet a Part-up user. You can send this invitation email or rewrite it.",
   "invite-to-activity-popup-form-copy-confirm": "Send it!",
