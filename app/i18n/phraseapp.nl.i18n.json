@@ -413,6 +413,7 @@
   "impersonation-allow-success": "Impersonatie is nu actief voor 30 minuten",
   "impersonation-error-not-active": "Impersonatie is niet actief voor deze gebruiker",
   "impersonation-still-active": "Impersonatie is nog __minutes__ minuten actief",
+  "intercom-question-export-data": "Hallo Part-up team, graag zou ik een export van mijn data ontvangen waarover Part-up beschikt",
   "invite-to-activity-popup-close": "Sluiten",
   "invite-to-activity-popup-explaination": "We kunnen ons voorstellen dat je graag samenwerkt met iemand die je kent en nog niet actief is op Part-up. Je kunt deze uitnodiging versturen of hem aanpassen.",
   "invite-to-activity-popup-form-copy-confirm": "Op de bus",
