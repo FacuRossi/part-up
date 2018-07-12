@@ -1,3 +1,21 @@
+<a name="4.6.0"></a>
+# [4.6.0](https://github.com/part-up/part-up/compare/4.5.2...4.6.0) (2018-07-10)
+
+
+### Bug Fixes
+
+* **profile:** Removed references to additional profile data that is not used ([78f5815](https://github.com/part-up/part-up/commit/78f5815)), closes [#1655](https://github.com/part-up/part-up/issues/1655) [#1645](https://github.com/part-up/part-up/issues/1645)
+* **shift:** unshift should be shift ([7d7698f](https://github.com/part-up/part-up/commit/7d7698f))
+* **user:** Set partup creator when user is only upper in partup ([aa016eb](https://github.com/part-up/part-up/commit/aa016eb))
+* **verification:** Match email adress before send verification email ([f54d3da](https://github.com/part-up/part-up/commit/f54d3da))
+
+
+### Features
+
+* **partup:** Set partuptype to charity by default and remove it from create flow ([4c989fc](https://github.com/part-up/part-up/commit/4c989fc))
+
+
+
 <a name="4.5.2"></a>
 ## [4.5.2](https://github.com/part-up/part-up/compare/4.5.1...4.5.2) (2018-07-06)
 
