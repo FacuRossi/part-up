@@ -79,7 +79,7 @@ Partup.client.html = {
       if (always) {
         output = wrapContent(output, tag)
       } else {
-        if (char.tags().length === 0) {
+        if (startChar.tags().length === 0) {
           output = wrapContent(output, tag);
         }
       }
