@@ -67,23 +67,23 @@ Partup.client.html = {
       }
 
       const htmlString = new HTMLString.String(string);
-      const char = htmlString.charAt(0);
+      const startChar = htmlString.charAt(0);
 
-      if (char === -1) {
+      if (startChar === -1) {
         return;
       }
 
-      const htmlTag = new HTMLString.Tag(tag);
+      const wrapContent = (content, tag) => `<${tag}>${content}</${tag}>`;
 
-      let output = htmlString;
+      let output = string;
       if (always) {
-        output = htmlString.format(0, -1, htmlTag);
+        output = wrapContent(output, tag)
       } else {
-        if (char.tags().length === 0) {
-          output = htmlString.format(0, -1, htmlTag);
+        if (startChar.tags().length === 0) {
+          output = wrapContent(output, tag);
         }
       }
 
-      return output.html();
+      return output;
     }
 };
