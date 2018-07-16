@@ -1,3 +1,13 @@
+<a name="4.6.1"></a>
+## [4.6.1](https://github.com/part-up/part-up/compare/4.6.0...4.6.1) (2018-07-12)
+
+
+### Bug Fixes
+
+* **wysiwyg:** Init with prefill ([0146ba8](https://github.com/part-up/part-up/commit/0146ba8))
+
+
+
 <a name="4.6.0"></a>
 # [4.6.0](https://github.com/part-up/part-up/compare/4.5.2...4.6.0) (2018-07-10)
 
