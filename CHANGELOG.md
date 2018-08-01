@@ -1,3 +1,14 @@
+<a name="4.6.2"></a>
+## [4.6.2](https://github.com/part-up/part-up/compare/4.6.1...4.6.2) (2018-07-16)
+
+
+### Bug Fixes
+
+* **wysiwyg:** Change char to startChar ([46fea4f](https://github.com/part-up/part-up/commit/46fea4f))
+* **wysiwyg:** No longer remove some html tags when processing html ([5aa2d3d](https://github.com/part-up/part-up/commit/5aa2d3d))
+
+
+
 <a name="4.6.1"></a>
 ## [4.6.1](https://github.com/part-up/part-up/compare/4.6.0...4.6.1) (2018-07-12)
 
