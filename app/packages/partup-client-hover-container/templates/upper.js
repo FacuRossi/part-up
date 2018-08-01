@@ -13,12 +13,12 @@ Template.HoverContainer_upper.helpers({
       var userId = Template.instance().data;
       var user = Meteor.users.findSingleActivePublicProfile(userId).fetch().pop();
 
-      if (!user) return;
-
-      var image = Images.findOne(user.profile.image);
-      if (!image) return;
-
-      Partup.client.embed.user(user, [image]);
+      if (user) {
+        var image = Images.findOne(user.profile.image);
+        if (image) {
+          Partup.client.embed.user(user, [image]);
+        }
+      }
 
       return user;
     },
