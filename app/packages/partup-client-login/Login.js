@@ -100,7 +100,7 @@ Template.Login.events({
         linkedinLoading.set(true);
 
         Meteor.loginWithLinkedin({
-            requestPermissions: ['r_emailaddress'],
+            requestPermissions: ['r_emailaddress', 'r_basicprofile'],
             loginStyle: isChrome ? 'redirect' : 'popup'
         }, function(error) {
             linkedinLoading.set(false);
