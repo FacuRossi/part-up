@@ -51,6 +51,11 @@ Meteor.startup(function() {
     Meteor.subscribe('users.loggedin');
 
     /*************************************************************/
+    /* Subscribe globally to any activity invite the user will get */
+    /*************************************************************/
+    Meteor.subscribe('invites.my_activity_invites');
+
+    /*************************************************************/
     /* Language configuration */
     /*************************************************************/
     // sets the language of the user to user setting

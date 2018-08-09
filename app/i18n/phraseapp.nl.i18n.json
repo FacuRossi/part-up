@@ -1,4 +1,6 @@
 {
+  "my_activities-no_activities": "Je hebt al je werk afgerond. Vind meer activiteiten om een bijdrage aan te leveren in het Tribe en part-ups overzicht op de <a href='__url__'>discover pagina</a>",
+  "my_activities-page_title": "Mijn activiteiten",
   "activity-button-archive": "Markeer als af",
   "activity-button-edit": "Wijzig activiteit",
   "activity-button-next_page": "Wat ga jij bijdragen?",
@@ -8,6 +10,8 @@
   "activity-comment_plural": "reacties",
   "activity-contribute": "Ik wil dit doen",
   "activity-contribute-short": "Ik doe het",
+  "activity-contribute-pending_invite": "Accepteer uitnodiging",
+  "activity-contribute-pending_invite-short": "Accepteer",
   "activity-dragging-disabled": "Alleen partners kunnen lanes en activiteiten verplaatsen",
   "activity-form-close": "Annuleren",
   "activity-form-description-label": "Beschrijf de activiteit",
@@ -267,6 +271,7 @@
   "dropdowns-profile-button-more": "Meer",
   "dropdowns-profile-button-myprofile": "Profiel",
   "dropdowns-profile-button-settings": "Instellingen",
+  "dropdowns-profile-button-my_activities": "Mijn activiteiten",
   "dropdowns-profile-supporteractions-label": "Toon:",
   "dropdowns-profile-supporteractions-option-active": "Actieve part-ups",
   "dropdowns-profile-supporteractions-option-all": "Alle part-ups",

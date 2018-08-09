@@ -13,6 +13,16 @@ Meteor.publishComposite('invites.for_activity_id', function(activityId) {
     };
 });
 
+Meteor.publish('invites.my_activity_invites', function () {
+  const selector = {
+    invitee_id: this.userId,
+    type: Invites.INVITE_TYPE_ACTIVITY_EXISTING_UPPER,
+    status: Invites.INVITE_STATUS.PENDING,
+  };
+
+  return Invites.find(selector);
+});
+
 Meteor.routeComposite('invites/me', function(request, parameters) {
     const userId = parameters.query.userId || this.userId;
 

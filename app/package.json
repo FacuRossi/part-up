@@ -26,6 +26,7 @@
     "lodash": "^4.17.4",
     "marked": "^0.3.9",
     "meteor-node-stubs": "^0.4.1",
+    "moment": "^2.22.2",
     "pluralize": "^4.0.0",
     "powercheck": "^1.0.3",
     "prop-types": "^15.6.0",

@@ -1,0 +1,88 @@
+<template name="myActivities">
+
+  <div class="my-activities__wrap">
+    <h1 class="pu-title">{{_ 'my_activities-page_title'}}</h1>
+
+    {{#if activitiesLoading }}
+
+      {{> Loader ALIGNMENT='center' }}
+
+    {{ else }}
+
+      <div class="pu-activity-list">
+
+        <ul class="pu-activity-list__block">
+          <li class="pu-activity-list__block-header">
+            {{_ 'pur-dashboard-activities-this_week' }}
+          </li>
+
+          {{#if hasActivities }}
+
+            {{#if activityCount 'this' }}
+
+              {{#each thisWeekActivities }}
+                <li class="pu-activity-list__block-item">
+                  {{> Activity activity=. type='me' }}
+                </li>
+              {{/each }}
+
+            {{/if }}
+
+          {{ else }}
+
+            <li class="pu-activity-list__block-item__placeholder">
+                {{{_ 'my_activities-no_activities' url=(pathFor route='discover') }}}
+            </li>
+
+          {{/if }}
+        </ul>
+
+        <ul class="pu-activity-list__block">
+          <li class="pu-activity-list__block-header">
+            {{_ 'pur-dashboard-activities-next_week' }}
+          </li>
+
+          {{#if activityCount 'next' }}
+
+            {{#each nextWeekActivities }}
+              <li class="pu-activity-list__block-item">
+                {{> Activity activity=. type='me' }}
+              </li>
+            {{/each }}
+
+          {{ else }}
+
+            <!-- <li class="pu-activity-list__block-item__placeholder">
+              {{_ 'pur-dashboard-activities-next_week-no_activities' }}
+              <button data-new-activity>New activity :)</button>
+            </li> -->
+
+          {{/if }}
+        </ul>
+
+        <ul class="pu-activity-list__block">
+          <li class="pu-activity-list__block-header">
+            {{_ 'pur-dashboard-activities-later' }}
+          </li>
+          {{#if activityCount 'later' }}
+            {{#each laterActivities }}
+              <li class="pu-activity-list__block-item">
+                {{> Activity activity=. type='me' }}
+              </li>
+            {{/each }}
+          {{ else }}
+
+            <!-- <li class="pu-activity-list__block-item__placeholder">
+              {{_ 'pur-dashboard-activities-later-no_activities' }}
+            </li> -->
+
+          {{/if }}
+        </ul>
+
+      </div>
+
+    {{/if }}
+
+  </div>
+
+</template>

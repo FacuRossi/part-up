@@ -1,3 +1,4 @@
+import _ from 'lodash';
 
 Meteor.publish('activities.partup_create', function(partupId) {
   check(partupId, String);
@@ -66,6 +67,70 @@ Meteor.routeComposite('/activities/me', function(request, parameters) {
             {find: () => imagesCursor},
         ],
     };
+});
+
+Meteor.publish('activities.me', function () {
+  const userId = this.userId;
+
+  const partupCursor = Partups.guardedFind(userId, {
+    uppers: {
+      $elemMatch: { $eq: userId },
+    },
+  }, {
+    fields: {
+      _id: 1,
+      name: 1,
+      image: 1,
+      uppers: 1,
+      slug: 1,
+    },
+  });
+
+  const partupIds = partupCursor.map(p => p._id);
+
+  const userContributionCursor = Contributions.find({
+    partup_id: { $in: partupIds },
+    upper_id: userId,
+  });
+
+  const activityIds = _.concat(
+    userContributionCursor.map((c) => c.activity_id),
+  );
+
+  const activityCursor = Activities.find({
+    _id: {
+      $in: activityIds
+    },
+    deleted_at: {
+      $exists: false,
+    },
+    archived: {
+      $ne: true,
+    },
+  });
+  const contributionCursor = Contributions.find({
+    activity_id: { $in: activityIds }
+  });
+
+  const userIds = contributionCursor.map((c) => c.upper_id);
+
+  const userCursor = Meteor.users.find({
+    _id: { $in: userIds },
+  });
+
+  const updateCursor = Updates.find({
+    _id: {
+      $in: activityCursor.map((a) => a.update_id),
+    }
+  });
+
+  return [
+    partupCursor,
+    activityCursor,
+    contributionCursor,
+    userCursor,
+    updateCursor,
+  ];
 });
 
 
