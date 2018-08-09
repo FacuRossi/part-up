@@ -1,3 +1,14 @@
+<a name="4.6.3"></a>
+## [4.6.3](https://github.com/part-up/part-up/compare/4.6.2...4.6.3) (2018-08-01)
+
+
+### Bug Fixes
+
+* **login:** Add r_basicprofile to linkedin permissions in request ([9db61ff](https://github.com/part-up/part-up/commit/9db61ff))
+* **profile:** Show hovercard also without image ([b778b0a](https://github.com/part-up/part-up/commit/b778b0a))
+
+
+
 <a name="4.6.2"></a>
 ## [4.6.2](https://github.com/part-up/part-up/compare/4.6.1...4.6.2) (2018-07-16)
 
