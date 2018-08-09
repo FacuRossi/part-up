@@ -81,7 +81,7 @@ Template.myActivities.onCreated(function () {
           return false;
         }
         const date = moment(a.end_date);
-        return date > nextWeekStart && date < nextTwoWeekStart;
+        return date >= nextWeekStart && date < nextTwoWeekStart;
       }),
     )
 
@@ -92,7 +92,7 @@ Template.myActivities.onCreated(function () {
           return true;
         }
         const date = moment(a.end_date);
-        return date > nextTwoWeekStart;
+        return date >= nextTwoWeekStart;
       }),
     )
   });
