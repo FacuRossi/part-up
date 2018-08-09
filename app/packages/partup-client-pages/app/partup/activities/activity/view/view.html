@@ -20,7 +20,7 @@
         data-activity-id="{{ activity._id }}">
 
         <header class="pu-activity-header">
-          {{#unless partupEquals type 'boardview'}}
+          {{#unless partupOr (partupEquals type 'boardview') (partupEquals type 'me') }}
             {{#if lane.name }}
               {{#with lane }}
                 {{#Tag }}
@@ -30,12 +30,24 @@
             {{/if }}
           {{/unless}}
           <h3 class="title" data-detail>
-              {{#if partupOr (partupEquals type 'boardview') (partupEquals type 'listview') }}
+              {{#if partupOr (partupEquals type 'boardview') (partupEquals type 'listview') (partupEquals type 'me') }}
                 <a href="{{ pathFor route='partup-update' slug=partupSlug update_id=activity.update_id }}">{{ activity.name }}</a>
               {{ else }}
                 {{ activity.name }}
               {{/if }}
           </h3>
+          {{#if partupEquals type 'me' }}
+            <span class="subtitle">
+              {{#if activity.end_date }}
+                <time
+                  class="pu-date {{ dateClasses }}"
+                  title="{{ partupDateFull activity.end_date }}"
+                  datetime="{{ activity.end_date.toISOString }}"
+                >{{ partupDateShort activity.end_date }}</time>
+              {{/if }}
+              <a href="{{ pathFor route='partup-activities' slug=partupSlug }}">{{ partupName }}</a>
+            </span>
+          {{/if }}
         </header>
 
         <aside class="pu-activity-more-options">
@@ -94,7 +106,7 @@
           {{#if activity.end_date }}
             <li class="meta-date">
               <time
-                class="pu-date"
+                class="pu-date {{ dateClasses }}"
                 title="{{ partupDateFull activity.end_date }}"
                 datetime="{{ activity.end_date.toISOString }}"
               >{{ partupDateShort activity.end_date }}</time>
@@ -102,42 +114,52 @@
           {{/if }}
           {{#unless partupEquals type 'boardview' }}
           {{#unless isContributing }}
-            <li class="meta-me">
-              <button class="pu-button-me" data-contribute>
-                  <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                    width="20px" height="20px" viewBox="0 0 200 200" enable-background="new 0 0 200 200" xml:space="preserve">
-                    <path d="M94.737,112.253v-7.565c12.531-7.299,21.052-20.724,21.052-36.267V57.895c0-23.252-18.853-42.105-42.105-42.105
-                      c-23.253,0-42.105,18.854-42.105,42.105v10.526c0,15.543,8.526,28.968,21.052,36.267v7.565C16.329,118.112,0,138.651,0,163.158
-                      v10.526c0,5.828,4.718,10.526,10.526,10.526h126.315c5.809,0,10.527-4.698,10.527-10.526v-10.526
-                      C147.369,138.651,131.045,118.112,94.737,112.253" style="fill:#ffa725;" />
-                  </svg>
-                  {{#unless partupEquals type 'boardview' }}
-                    {{#if inRange '700' '1349' }}
-                      <span>{{_ 'activity-contribute-short' }}</span>
-                    {{ else }}
-                      <span>{{_ 'activity-contribute' }}</span>
-                    {{/if }}
-                  {{/unless}}
+              <li class="meta-me">
+                <button class="pu-button-me" data-contribute>
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                      width="20px" height="20px" viewBox="0 0 200 200" enable-background="new 0 0 200 200" xml:space="preserve">
+                      <path d="M94.737,112.253v-7.565c12.531-7.299,21.052-20.724,21.052-36.267V57.895c0-23.252-18.853-42.105-42.105-42.105
+                        c-23.253,0-42.105,18.854-42.105,42.105v10.526c0,15.543,8.526,28.968,21.052,36.267v7.565C16.329,118.112,0,138.651,0,163.158
+                        v10.526c0,5.828,4.718,10.526,10.526,10.526h126.315c5.809,0,10.527-4.698,10.527-10.526v-10.526
+                        C147.369,138.651,131.045,118.112,94.737,112.253" style="fill:#ffa725;" />
+                    </svg>
+                    {{#unless partupEquals type 'boardview' }}
+                      {{#if hasPendingInvite }}
+                        {{#if inRange '700' '1349' }}
+                          <span>{{_ 'activity-contribute-pending_invite-short' }}</span>
+                        {{ else }}
+                          <span>{{_ 'activity-contribute-pending_invite' }}</span>
+                        {{/if }}
+                      {{ else }}
+                        {{#if inRange '700' '1349' }}
+                          <span>{{_ 'activity-contribute-short' }}</span>
+                        {{ else }}
+                          <span>{{_ 'activity-contribute' }}</span>
+                        {{/if }}
+                      {{/if }}
+                    {{/unless}}
+                </button>
+              </li>
+          {{/unless }}
+            <li class="meta-you">
+              <button class="pu-button-you" data-invite>
+                <i class="picon-person-plus"></i>
+                {{#unless partupEquals type 'boardview' }}
+                  {{#if inRange '700' '1349' }}
+                    <span>{{_ 'activity-invite-short' }}</span>
+                  {{/if }}
+                  {{#if screenWidthEqualOrAbove '1350' }}
+                    <span>{{_ 'activity-invite' }}</span>
+                  {{/if }}
+                {{/unless }}
               </button>
             </li>
-          {{/unless }}
-          <li class="meta-you">
-            <button class="pu-button-you" data-invite>
-              <i class="picon-person-plus"></i>
-              {{#unless partupEquals type 'boardview' }}
-                {{#if inRange '700' '1349' }}
-                  <span>{{_ 'activity-invite-short' }}</span>
-                {{/if }}
-                {{#if screenWidthEqualOrAbove '1350' }}
-                  <span>{{_ 'activity-invite' }}</span>
-                {{/if }}
-              {{/unless }}
-            </button>
-          </li>
           {{/unless }}
         </ul>
 
         {{#if contributions.count }}
+        {{#if partupOr (partupAnd (screenWidthEqualOrAbove '800') (partupEquals type 'me')) (partupNotEquals type 'me') }}
+
           <section class="pu-activity-contributions">
             <ul class="pu-avatar-stack">
               {{#each contributions }}
@@ -153,6 +175,8 @@
               {{/each }}
             </ul>
           </section>
+
+        {{/if }}
         {{/if }}
 
         {{#if partupAnd fileCount filesExpanded }}
@@ -195,6 +219,7 @@
         </a>
       </li>
       {{#if isUpper }}
+      {{# if activityMayBeStarred}}
       {{#if updateIsStarred }}
       <li class="pu-dropdown-item">
         <a data-unstar>{{_ 'unstar'}}</a>
@@ -203,6 +228,7 @@
       <li class="pu-dropdown-item">
         <a data-star>{{_ 'star'}}</a>
       </li>
+      {{/if }}
       {{/if }}
       {{/if }}
       {{/unless}}

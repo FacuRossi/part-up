@@ -139,10 +139,10 @@ const continueLogin = function() {
         arguments: [user],
         fallback_action: function() {
             if (mout.object.get(user, 'profile.settings.optionalDetailsCompleted')) {
-                Router.go('dashboard');
+                Router.go('myactivities');
             } else {
                 Intent.go({route: 'register-details'}, function() {
-                    Router.go('dashboard');
+                    Router.go('myactivities');
                 });
             }
         }

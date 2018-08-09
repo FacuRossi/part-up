@@ -48,6 +48,11 @@
       }
     }
 
+    .subtitle {
+      font-size: 14px;
+      padding-top: 2px;
+    }
+
     .pu-state-deleted {
       text-decoration: line-through;
     }
@@ -385,5 +390,104 @@
         }
       }
     }
+  }
+
+  &-me {
+    display: flex;
+
+    .pu-activity {
+      &-header {
+        width: 100%;
+        flex: 1 1 auto;
+
+        .title {
+          position: relative;
+          width: calc(100% - 40px);
+          overflow:hidden;
+          white-space: nowrap;
+          font-size: 14px;
+
+          &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(to left, white, transparent);
+            z-index: 1;
+          }
+        }
+
+        .subtitle {
+          font-size: 14px;
+          white-space: nowrap;
+          overflow:hidden;
+
+          &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0px;
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(to left, white, transparent);
+            z-index: 1;
+          }
+
+          .pu-date {
+            font-weight: 400;
+          }
+
+          > *:nth-child(2) {
+            padding-left: 4px;
+            border-left: 2px solid #eee;
+          }
+        }
+      }
+
+      &-more-options {
+        margin-right: 4px;
+        height: 30px;
+        position: absolute;
+        right: 0;
+
+        @include goingLarge(800) {
+          position: relative;
+        }
+      }
+
+      &-content,
+      &-meta {
+        display: none;
+      }
+
+      &-contributions {
+        border-top: none;
+        border-left: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        justify-content: start;
+        min-width: 120px;
+
+        .pu-avatar-stack {
+          height: 36px;
+          padding-top: 0;
+        }
+      }
+    }
+
+    .pu-activity-header {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .pu-date--due-today {
+    // color: $color-alert-warning;
+  }
+
+  .pu-date--overdue {
+    // color: $color-alert-error;
   }
 }

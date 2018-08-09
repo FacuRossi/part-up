@@ -35,6 +35,10 @@ Partup.schemas.entities.activity_invite = new SimpleSchema({
     created_at: {
         type: Date,
         defaultValue: new Date()
+    },
+    status: {
+      optional: true,
+      custom: requiredForType('upper')
     }
 });
 

@@ -5,11 +5,14 @@ Template.activityForm.onCreated(function() {
 
     // --- internal state
     this.isSubmitting = new ReactiveVar(false);
+    this.partupSelectorToggle = new ReactiveVar(false);
     // ---
 
-    this.partupId = this.data.partupId || '';
+    this.partupId = this.data.partupId;
+    this.reactivePartupId = new ReactiveVar(this.partupId);
 
-    this.isExistingActivity = this.data instanceof Activity;
+    this.isExistingActivity = Partup.schemas.forms.activity.newContext().isValid(this.data) && !!this.data._id //this.data instanceof Activity;
+
     this.activity = this.isExistingActivity ? this.data : new Activity();
     this.doSelf = new ReactiveVar(false);
 
@@ -137,6 +140,9 @@ Template.activityForm.helpers({
     },
     doSelf() {
         return Template.instance().doSelf.get();
+    },
+    isPartupIdSet() {
+      return  typeof Template.instance().reactivePartupId.get() === 'string';
     },
 });
 

@@ -8,6 +8,8 @@
   "activity-comment_plural": "comments",
   "activity-contribute": "I want to do this",
   "activity-contribute-short": "I'll do it",
+  "activity-contribute-pending_invite": "Accept invite",
+  "activity-contribute-pending_invite-short": "Accept",
   "activity-dragging-disabled": "Only partners can move lanes and activities",
   "activity-form-close": "Cancel",
   "activity-form-description-label": "Describe the activity",
@@ -266,6 +268,7 @@
   "dropdowns-profile-button-logout": "Log out",
   "dropdowns-profile-button-more": "More",
   "dropdowns-profile-button-myprofile": "My profile",
+  "dropdowns-profile-button-my_activities": "My activities",
   "dropdowns-profile-button-settings": "Settings",
   "dropdowns-profile-supporteractions-label": "Show:",
   "dropdowns-profile-supporteractions-option-active": "Active part-ups",
@@ -2024,5 +2027,7 @@
   "widgetcommentfield-comment-totalcomments": "__count__ comment",
   "widgetcommentfield-comment-totalcomments_plural": "__count__ comments",
   "widgetcommentfield-comment-viewall-button": "View all %s comments",
-  "notify-partup-archived-success": "__partup__ archived"
+  "notify-partup-archived-success": "__partup__ archived",
+  "my_activities-no_activities": "You have finished all your work. Find more activities to contribute to in the Tribes and part-ups you can browse on the <a href='__url__'>discover page</a>",
+  "my_activities-page_title": "My activities"
 }

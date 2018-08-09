@@ -510,7 +510,8 @@ Meteor.methods({
             activity_id: activity._id,
             inviter_id: inviter._id,
             invitee_id: invitee._id,
-            created_at: new Date
+            created_at: new Date,
+            status: Invites.INVITE_STATUS.PENDING,
         };
 
         Invites.insert(invite);

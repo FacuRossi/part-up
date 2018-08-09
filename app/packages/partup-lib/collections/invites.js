@@ -73,3 +73,9 @@ Invites.INVITE_TYPE_PARTUP_EMAIL = 'partup_email';
  * @public
  */
 Invites.INVITE_TYPE_PARTUP_EXISTING_UPPER = 'partup_existing_upper';
+
+Invites.INVITE_STATUS = Object.freeze({
+  ACCEPTED: 'accepted',
+  PENDING: 'pending',
+  REJECTED: 'rejected',
+});

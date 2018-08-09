@@ -5,9 +5,19 @@ const isContributing = (activity) => {
   return Contributions.find({ upper_id: Meteor.userId(), activity_id: activity._id, archived: { $ne: true } }).count();
 };
 
+const pendingInvite = (activity) => {
+  return Invites.findOne({
+    invitee_id: Meteor.userId(),
+    status: Invites.INVITE_STATUS.PENDING,
+    activity_id: activity._id,
+  });
+}
+
 const contribute = (activity, callback = noop, contribution) => {
   new Promise((resolve, reject) => {
-    if (User(Meteor.user()).isPartnerInPartup(activity.partup_id)) {
+    const isInvited = pendingInvite(activity) != null;
+
+    if (User(Meteor.user()).isPartnerInPartup(activity.partup_id) || isInvited) {
       if (contribution) {
         resolve(contribution);
       } else {
@@ -58,8 +68,17 @@ Template.ActivityView.helpers({
     }
     return false;
   },
+  partupName() {
+    return get(Partups.findOne(get(this.activity, 'partup_id')), 'name');
+  },
+  hasPendingInvite() {
+    return pendingInvite(this.activity) != null;
+  },
   dropdownData() {
     const self = this;
+
+    // hack to make reactive?
+    Template.instance().dropdownToggle.get();
 
     return {
       activity() {
@@ -81,6 +100,9 @@ Template.ActivityView.helpers({
       },
       mayEditActivity() {
         return User(Meteor.user()).isPartnerInPartup(get(self.activity, 'partup_id'));
+      },
+      activityMayBeStarred() {
+        return self.type !== 'me';
       }
     }
   },
@@ -128,6 +150,20 @@ Template.ActivityView.helpers({
   update() {
     return Updates.findOne(get(this.activity, 'update_id'));
   },
+  dateClasses() {
+    const endDate = get(this.activity, 'end_date');
+    const today = moment().startOf('day');
+
+    if (moment(endDate).diff(today) === 0) {
+      return 'pu-date--due-today';
+    } else if (moment(endDate).diff(today) < 0) {
+      return 'pu-date--overdue';
+    }
+    return undefined;
+  },
+  // mayInviteOthers() {
+  //   return User(Meteor.user()).isPartnerInPartup(get(this.activity, 'partup_id'));
+  // }
 });
 
 Template.ActivityView.events({

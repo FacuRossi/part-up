@@ -1,7 +1,7 @@
 Template.Dropdown.onRendered(function() {
     const template = this;
     const dropdown_element = template.find('[data-dropdown]');
-    
+
     // This solves the problem that the dropdown is closed before it could open caused by the onClickOutside handler above
     let click_outside_checker_enabled = false;
 
@@ -27,7 +27,7 @@ Template.Dropdown.helpers({
 
     // Hydrate the template data with the 'active'-reactivevar
     templateData: function() {
-        var data = this.data;
+        var data = this.data || {};
         data.isActive = this.toggle;
         return data;
     },
