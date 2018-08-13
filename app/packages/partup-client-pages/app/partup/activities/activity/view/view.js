@@ -62,9 +62,31 @@ Template.ActivityView.onCreated(function() {
 });
 
 Template.ActivityView.helpers({
+  contributionCount() {
+    return !!Contributions.find({ activity_id: this.activity._id, archived: { $ne: true } }).count();
+  },
   contributions() {
     if (this.activity) {
-      return Contributions.find({ activity_id: this.activity._id, archived: { $ne: true } });
+      const cursor = Contributions.find({ activity_id: this.activity._id, archived: { $ne: true } });
+      let contributions;
+
+      if (this.type === 'me') {
+
+        const amountToShow = 3;
+        contributions = cursor.fetch();
+
+        if (contributions.length > amountToShow) {
+          const rest = contributions.length - amountToShow;
+          contributions.splice(amountToShow, rest);
+          contributions.push({
+            rest,
+          });
+        }
+      } else {
+        contributions = cursor;
+      }
+
+      return contributions;
     }
     return false;
   },

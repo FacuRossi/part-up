@@ -73,6 +73,9 @@ Meteor.publish('activities.me', function () {
   const userId = this.userId;
 
   const partupCursor = Partups.guardedFind(userId, {
+    archived_at: {
+      $exists: false,
+    },
     uppers: {
       $elemMatch: { $eq: userId },
     },
@@ -91,6 +94,9 @@ Meteor.publish('activities.me', function () {
   const userContributionCursor = Contributions.find({
     partup_id: { $in: partupIds },
     upper_id: userId,
+    archived: {
+      $ne: true,
+    }
   });
 
   const activityIds = _.concat(
@@ -109,7 +115,10 @@ Meteor.publish('activities.me', function () {
     },
   });
   const contributionCursor = Contributions.find({
-    activity_id: { $in: activityIds }
+    activity_id: { $in: activityIds },
+    archived: {
+      $ne: true,
+    }
   });
 
   const userIds = contributionCursor.map((c) => c.upper_id);

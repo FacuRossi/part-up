@@ -15,6 +15,14 @@
         filter: grayscale(100%);
     }
 
+    &-rest {
+      vertical-align: top;
+      text-align: center;
+      line-height:34px;
+      color:rgb(100, 100, 100);
+      letter-spacing: -1px;
+    }
+
     .pu-sub-image {
         display: block;
         position: absolute;
