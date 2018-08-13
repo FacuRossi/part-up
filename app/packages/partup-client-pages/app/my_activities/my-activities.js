@@ -27,38 +27,8 @@ Template.myActivities.onCreated(function () {
     }
 
     const userId = Meteor.userId();
-
-    // Since subscriptions are cached too many activities are shown
-    // whenever the user has already navigated to the partup activities page.
-    // Therefore a filter needs to be applied here to all published activities.
-
-    const userContributions = Contributions.find({
-      upper_id: userId,
-    });
-    // const invites = Invites.find({
-    //   invitee_id: userId,
-    // });
-
-    // const activityIds = _.concat(
-    //   userContributions.map((c) => c.activity_id),
-    //   invites.map((i) => i.activity_id),
-    // );
-
-    const activityIds = userContributions.map((c) => c.activity_id);
-    const baseSelector = {
-      _id: {
-        $in: activityIds,
-      },
-      archived: {
-        $ne: true,
-      },
-      deleted_at: {
-        $exists: false,
-      }
-    }
-    const activities = Activities.find({
-      ...baseSelector,
-    }).fetch();
+    const activityCursor = Activities.findForUser(userId);
+    const activities = activityCursor.fetch();
 
     const nextWeekStart = moment().startOf('week').add(1, 'week');
     const nextTwoWeekStart = moment().startOf('week').add(2, 'week');

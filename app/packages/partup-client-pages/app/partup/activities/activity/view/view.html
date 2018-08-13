@@ -157,18 +157,24 @@
           {{/unless }}
         </ul>
 
-        {{#if contributions.count }}
+        {{#if contributionCount }}
         {{#if partupOr (partupAnd (screenWidthEqualOrAbove '800') (partupEquals type 'me')) (partupNotEquals type 'me') }}
 
           <section class="pu-activity-contributions">
             <ul class="pu-avatar-stack">
               {{#each contributions }}
                 {{#unless partupEquals ../type 'detail' }}
+                {{#if rest }}
+                  <li
+                    class="pu-avatar pu-avatar-small pu-avatar-rest"
+                  >+{{ rest }}</li>
+                {{ else }}
                   <li
                     data-hovercontainer="HoverContainer_upper"
                     data-hovercontainer-context="{{ upper_id }}"
                     class="pu-avatar pu-avatar-small {{#unless verified }}unverified{{/unless }}"
                     style="{{ userBackgroundImage upper_id '80x80' }}"></li>
+                {{/if }}
                 {{ else }}
                   <li>{{> Contribution contribution=. }}</li>
                 {{/unless }}

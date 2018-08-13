@@ -184,7 +184,7 @@ Meteor.methods({
         var activity = Activities.findOneOrFail(contribution.activity_id);
 
         if (!upper || contribution.upper_id !== upper._id) {
-            throw new Meteor.Error(401, 'unauthorized');
+          throw new Meteor.Error(401, 'unauthorized');
         }
 
         try {
