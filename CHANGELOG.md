@@ -1,3 +1,20 @@
+<a name="4.7.0"></a>
+# [4.7.0](https://github.com/part-up/part-up/compare/4.6.3...4.7.0) (2018-08-09)
+
+
+### Bug Fixes
+
+* **activities:** You may now also work on monday ([50f7b28](https://github.com/part-up/part-up/commit/50f7b28))
+* **modal:** Darken color of modal close button on hover ([b68dcd4](https://github.com/part-up/part-up/commit/b68dcd4))
+* **profile:** Refresh profile template on tiles change ([1b650e5](https://github.com/part-up/part-up/commit/1b650e5))
+
+
+### Features
+
+* **activities:** Add my activities overview ([a998c36](https://github.com/part-up/part-up/commit/a998c36))
+
+
+
 <a name="4.6.3"></a>
 ## [4.6.3](https://github.com/part-up/part-up/compare/4.6.2...4.6.3) (2018-08-01)
 
