@@ -1,3 +1,13 @@
+<a name="4.7.1"></a>
+## [4.7.1](https://github.com/part-up/part-up/compare/4.7.0...4.7.1) (2018-08-13)
+
+
+### Bug Fixes
+
+* **activities:** Make compatible for iOS ([e2a0bd5](https://github.com/part-up/part-up/commit/e2a0bd5))
+
+
+
 <a name="4.7.0"></a>
 # [4.7.0](https://github.com/part-up/part-up/compare/4.6.3...4.7.0) (2018-08-09)
 
