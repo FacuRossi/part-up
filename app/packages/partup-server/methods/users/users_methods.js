@@ -1,4 +1,5 @@
-import _ from 'lodash'
+import _ from 'lodash';
+import { userProfileVisibilityLevels } from 'meteor/partup-lib';
 
 const { impersonation } = Partup.helpers;
 
@@ -655,6 +656,36 @@ Meteor.methods({
       if (intercomSecret) {
         return Npm.require('crypto').createHmac('sha256', new Buffer(intercomSecret, 'utf8')).update(userId).digest('hex');
       }
+    },
+
+    'users.getProfileVisibility'(userId) {
+      check(userId, String);
+
+      if (userId !== this.userId) {
+        throw new Meteor.Error(401, 'unauthorized', 'users.getProfileVisibility userId mismatch. Can only be called by for the viewer by the viewer');
+      }
+
+      const user = Meteor.users.findOne(userId);
+      return _.get(user, 'profileVisibility', 'public');
+    },
+
+    'users.setProfileVisibility'(userId, visibility) {
+      check(userId, String);
+      check(visibility, String);
+
+      const visibilityLevels = Array.from(userProfileVisibilityLevels);
+
+      const r = new RegExp(visibilityLevels.join('|'), 'gi');
+      if (!r.test(visibility)) {
+        throw new Meteor.Error(0, 'invalid visibility level', `visibility given is ${visibility} but must be one of '${visibilityLevels.join(', ')}'`);
+      }
+
+      if (userId !== Meteor.userId()) {
+        throw new Meteor.Error(401, 'unauthorized', 'users.setProfileVisibility userId mismatch. Can only be used for the user requesting the change');
+      }
+
+      Meteor.users.update(userId, { $set: { profileVisibility: visibility } });
+      return true;
     },
 
 });
