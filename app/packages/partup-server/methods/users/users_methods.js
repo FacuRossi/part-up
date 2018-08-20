@@ -56,15 +56,17 @@ Meteor.methods({
         var user = Meteor.user();
         if (!user) throw new Meteor.Error(401, 'unauthorized');
 
+        const userId = user._id;
+
         try {
             // Remove accents that might have been added to the query
             searchString = mout.string.replaceAccents(searchString.toLowerCase());
             var selector = {'profile.normalized_name': new RegExp('.*' + searchString + '.*', 'i')};
             if (options.chatSearch) selector._id = {$ne: user._id};
-            var suggestions = Meteor.users.findActiveUsers(selector, {limit: 30}).fetch();
+            var suggestions = Meteor.users.findActiveUsers(userId, selector, {limit: 30}).fetch();
             switch (group) {
                 case 'partners':
-                    var partners = Meteor.users.findActiveUsers({upperOf: {$in: [partupId]}}).fetch();
+                    var partners = Meteor.users.findActiveUsers(userId, {upperOf: {$in: [partupId]}}).fetch();
                     suggestions.unshift({
                         type: 'partners',
                         name: 'Partners',
@@ -73,7 +75,7 @@ Meteor.methods({
 
                     break;
                 case 'supporters':
-                    var supporters = Meteor.users.findActiveUsers({supporterOf: {$in: [partupId]}}).fetch();
+                    var supporters = Meteor.users.findActiveUsers(userId, {supporterOf: {$in: [partupId]}}).fetch();
                     suggestions.unshift({
                         type: 'supporters',
                         name: 'Supporters',
@@ -106,10 +108,11 @@ Meteor.methods({
         var user = Meteor.user();
         if (!user) throw new Meteor.Error(401, 'unauthorized');
 
+        const userId = user._id;
         try {
             // Remove accents that might have been added to the query
             searchString = mout.string.replaceAccents(searchString.toLowerCase());
-            return Meteor.users.findActiveUsers({'profile.normalized_name': new RegExp('.*' + searchString + '.*', 'i')}, {limit: 30}).fetch();
+            return Meteor.users.findActiveUsers(userId, {'profile.normalized_name': new RegExp('.*' + searchString + '.*', 'i')}, {limit: 30}).fetch();
         } catch (error) {
             Log.error(error);
             throw new Meteor.Error(400, 'users_could_not_be_autocompleted');

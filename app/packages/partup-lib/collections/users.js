@@ -4,6 +4,45 @@
  */
 
 import { get, find } from 'lodash';
+import {
+  mergeFilters,
+  assign,
+} from '../helpers/collections/index';
+import {
+  idIn,
+  isActive,
+} from '../helpers/collections/selector';
+import {
+  includeFields,
+} from '../helpers/collections/options';
+
+Meteor.users.guardedFind = function (viewerId, selector, options) {
+  const viewer = Meteor.users.findOne(viewerId);
+  const viewableUserIds = [];
+
+  options = assign(options, {
+    fields: {
+      ...(User(viewer).isAdmin() ? getPrivateUserFields() : getPublicUserFields())
+    }
+  });
+
+  Meteor.users.find(selector, options)
+    .observe({
+      added(user) {
+        if (authorization.checkCanSeeProfile(viewer, user)) {
+          viewableUserIds.push(user._id);
+        }
+      },
+      removed(user) {
+        viewableUserIds.splice(viewableUserIds.indexOf(user._id), 1);
+      }
+    });
+
+  const finalSelector = mergeFilters(selector,
+    idIn(viewableUserIds),
+  );
+  return this.find(finalSelector, options);
+}
 
 //N.B.: Meteor.users is already defined by meteor
 
@@ -195,13 +234,16 @@ Meteor.users.findMultipleNetworkAdminProfiles = function(userIds) {
  * @param {Object} parameters
  * @return {Mongo.Cursor}
  */
-Meteor.users.findUppersForNetwork = function(network, options, parameters) {
-    var uppers = network.uppers || [];
+Meteor.users.findUppersForNetwork = function(viewerId, network, options, parameters) {
+  const networkUppers = _.get(network, 'uppers', []);
 
-    parameters = parameters || {};
-    parameters.onlyActive = true;
+  let selector = mergeFilters(
+    {},
+    idIn(networkUppers),
+    isActive,
+  );
 
-    return Meteor.users.findMultiplePublicProfiles(uppers, options, parameters);
+  return Meteor.users.guardedFind(viewerId, selector);
 };
 
 /**
@@ -211,10 +253,19 @@ Meteor.users.findUppersForNetwork = function(network, options, parameters) {
  * @param {Network} network
  * @return {Mongo.Cursor}
  */
-Meteor.users.findUppersForNetworkDiscover = function(network) {
-    var uppers = network.most_active_uppers || [];
-    // Only return ID and image ID
-    return Meteor.users.find({_id: {$in: uppers}, deletedAt: {$exists: false}}, {fields: {'_id': 1, 'profile.image': 1}});
+Meteor.users.findUppersForNetworkDiscover = function(viewerId, network) {
+  const networkUppers = _.get(network, 'most_active_uppers', []);
+
+  const options = assign(null,
+    includeFields('_id', 'profile.image'),
+  );
+
+  let selector = mergeFilters({},
+    idIn(networkUppers),
+    isActive,
+  );
+
+  return Meteor.users.guardedFind(viewerId, selector, options);
 };
 
 /**
@@ -344,14 +395,15 @@ Meteor.users.findForInvite = function(invite) {
  * @param {Object} options
  * @return {Mongo.Cursor}
  */
-Meteor.users.findActiveUsers = function(selector, options) {
+Meteor.users.findActiveUsers = function(viewerId, selector, options) {
     selector = selector || {};
     options = options || {};
 
-    selector.deactivatedAt = {$exists: false};
-    selector.deletedAt = {$exists: false};
-    options.fields = getPublicUserFields();
-    return Meteor.users.find(selector, options);
+    const finalSelector = mergeFilters(selector,
+      isActive
+    );
+
+    return Meteor.users.guardedFind(viewerId, finalSelector, options);
 };
 
 /**
