@@ -37,9 +37,9 @@ var getPublicUserFields = function() {
         'networks': 1,
         'completeness': 1,
         'participation_score': 1,
-        'chats': 1,
         'deactivatedAt': 1,
         'impersonation': 1,
+        'profileVisibility': 1,
     };
 };
 
@@ -52,7 +52,7 @@ var getPrivateUserFields = function() {
         'profile.normalized_name': 1,
         'pending_networks': 1,
         'roles': 1,
-        'chats': 1
+        'chats': 1,
     }, getPublicUserFields());
 };
 
@@ -130,6 +130,7 @@ Meteor.users.findMultiplePublicProfiles = function(userIds, options, parameters)
     if (parameters.hackyReplaceSelectorWithChatId) {
         delete selector._id;
         selector.chats = {$in: [parameters.hackyReplaceSelectorWithChatId]};
+        options.fields.chats = 1;
     }
 
     // Filter the uppers that match the text search
