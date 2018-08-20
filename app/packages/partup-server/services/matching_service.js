@@ -1,3 +1,5 @@
+import { get, uniq } from 'lodash';
+
 /**
  @namespace Partup server matching service
  @name Partup.server.services.matching
@@ -72,104 +74,137 @@ Partup.server.services.matching = {
      *
      * @param {Object} searchOptions
      * @param {String} searchOptions.query
-     * @param {String} searchOptions.network
-     * @param {String} searchOptions.invited_in_network
-     * @param {String} searchOptions.invited_in_partup
+     * @param {String} searchOptions.network // Flag to exclude uppers from network X
+     * @param {String} searchOptions.invited_in_network // Flag to only search already invited users to network X
+     * @param {String} searchOptions.invited_in_partup // Flag to only search already invited users to partup X
      * @param {Number} searchOptions.limit
      * @param {Number} searchOptions.skip
      * @param {[String]} tags
      * @param {[String]} excludedUppers
      * @return {[String]}
      */
-    findMatchingUppers: function(searchOptions, tags, excludedUppers) {
-        var selector = {};
-        // Exclude the current logged in user from the results
-        selector['_id'] = {$nin: [Meteor.userId()]};
+    findMatchingUppers(searchOptions = {}, tags, excludedUppers) {
+      let selector = {};
+      let query = get(searchOptions, 'query', '');
+      let results;
 
-        if (searchOptions.query !== '') {
-            // Remove accents that might have been added to the query
-            var searchQuery = mout.string.replaceAccents(searchOptions.query.toLowerCase());
+      const viewerId = Meteor.userId();
+      const {
+        invited_in_network = '',
+        invited_in_partup = '',
+        network,
+        limit,
+        skip,
+      } = searchOptions;
 
-            // Set the search criteria
-            var searchCriteria = [
-                {'profile.normalized_name': new RegExp('.*' + searchQuery + '.*', 'i')},
-                {'profile.description': new RegExp('.*' + searchQuery + '.*', 'i')},
-                {'profile.tags': new RegExp('.*' + searchQuery + '.*', 'i')},
-                {'profile.location.city': new RegExp('.*' + searchQuery + '.*', 'i')}
-            ];
+      const excludeIds = [viewerId];
 
-            // search for separate tags if multiple words are detected in searchQuery
-            var multipleWordsQuery = searchQuery.split(' ');
-            if (multipleWordsQuery.length > 1) {
-                searchCriteria.push({'profile.tags': {$in: multipleWordsQuery}});
+      if (Array.isArray(excludedUppers)) {
+        selector['_id'] = {
+          $nin: uniq(excludeIds.concat(excludedUppers)),
+        }
+      }
+
+      if (query.length > 0) {
+        query = mout.string.replaceAccents(query.toLowerCase());
+
+        const criteria = [
+          {'profile.normalized_name': new RegExp('.*' + query + '.*', 'i')},
+          {'profile.description': new RegExp('.*' + query + '.*', 'i')},
+          {'profile.tags': new RegExp('.*' + query + '.*', 'i')},
+          {'profile.location.city': new RegExp('.*' + query + '.*', 'i')}
+        ]
+
+        const multipleWords = query.split(' ');
+        if (multipleWords.length > 1) {
+          criteria.push({
+            'profile.tags': {
+              $in: multipleWords,
             }
+          })
+        }
 
-            // Combine it in an $or selector
-            selector = {$and: [selector, {$or: searchCriteria}]};
+        selector = {
+          $and: [
+            selector,
+            {
+              $or: criteria,
+            }
+          ]
+        }
+      } else {
+        selector['profile.tags'] = {
+          $in: tags || [],
+        }
+      }
+
+      if (invited_in_network.length > 0) {
+        const networkInvited = uniq(
+          Invites.find({
+            network_id: invited_in_network,
+            type: Invites.INVITE_TYPE_NETWORK_EXISTING_UPPER,
+          }).map((x) => x.invitee_id),
+        );
+        selector['_id'] = {
+          $in: networkInvited,
+        }
+      }
+
+      if (invited_in_partup.length > 0) {
+        const partupInvited = uniq(
+          Invites.find({
+            partup_id: invited_in_partup,
+            type: Invites.INVITE_TYPE_PARTUP_EXISTING_UPPER,
+          }).map((x) => x.invitee_id),
+        );
+        selector['_id'] = {
+          $in: partupInvited,
+        }
+      }
+
+      if (get(network, 'length') > 0 && network !== 'all-users') {
+        let networkFilterIds = [];
+
+        if (network === 'all') {
+          const publicNetworkIds = Networks.find({
+            privacy_type: Networks.NETWORK_PUBLIC,
+          }, { _id: 1 }).map((x) => x._id);
+
+          networkFilterIds = publicNetworkIds;
         } else {
-            // No search query is provided, so match the uppers on the provided tags
-            tags = tags || [];
-            selector['profile.tags'] = {$in: tags};
+          const networkBySlug = Networks.findOne({
+            slug: network,
+          });
 
-            // Exclude provided uppers from result
-            excludedUppers = excludedUppers || [];
-            selector['_id'] = {$nin: excludedUppers};
+          if (networkBySlug && networkBySlug.hasMember(Meteor.userId())) {
+            networkFilterIds = [networkBySlug._id];
+          }
         }
 
-        // Apply invited filter for network
-        if (searchOptions.invited_in_network) {
-            var network_invited = lodash.unique(Invites.find({
-                type: Invites.INVITE_TYPE_NETWORK_EXISTING_UPPER,
-                network_id: searchOptions.invited_in_network
-            }).map(function(invited) {
-                return invited.invitee_id;
-            }));
-            selector['_id'] = {$in: network_invited};
+        selector['networks'] = {
+          $in: networkFilterIds,
         }
+      }
 
-        // Apply invited filter for partup
-        if (searchOptions.invited_in_partup) {
-            var invited = lodash.unique(Invites.find({
-                type: Invites.INVITE_TYPE_PARTUP_EXISTING_UPPER,
-                partup_id: searchOptions.invited_in_partup
-            }).map(function(invited) {
-                return invited.invitee_id;
-            }));
-            selector['_id'] = {$in: invited};
-        }
+      const options = {
+        limit: limit ? parseInt(limit, 10) : 10,
+        skip: skip ? parseInt(skip, 10) : 0,
+        sort: {
+          participation_score: -1,
+        },
+        fields: {
+          _id: 1,
+        },
+      };
 
-        // Apply networks filter
-        if (searchOptions.network == 'all') {
-            // Get IDs of all public networks
-            var networkIds = Networks.find({privacy_type: Networks.NETWORK_PUBLIC}, {_id: 1}).map(function(network) {
-                return network._id;
-            });
-            selector['networks'] = {$in: networkIds};
-        } else if (searchOptions.network == 'all-users') {
-            // No network ID needed
-        } else if (searchOptions.network != '') {
-            var network = Networks.findOne({slug: searchOptions.network});
-            if (network && network.hasMember(Meteor.userId())) {
-                selector['networks'] = {$in: [network._id]};
-            }
-        }
+      const fetch = () => Meteor.users.findActiveUsers(viewerId, selector, options).fetch();
 
-        // Set options
-        var options = {
-            limit: searchOptions.limit ? parseInt(searchOptions.limit) : 10,
-            skip: searchOptions.skip ? parseInt(searchOptions.skip) : 0,
-            sort: {participation_score: -1}, // Sort the uppers on participation_score
-            fields: {_id: 1} // Only return the IDs
-        };
+      results = fetch();
+      if (get(query, 'length', '') < 1 && results.length == 0) {
+        delete selector['profile.tags'];
+        results = fetch();
+      }
 
-        var results = Meteor.users.findActiveUsers(selector, options).fetch();
-
-        // If there are no results, we remove some matching steps (only when no search options were provided)
-        if (!searchOptions.query && results.length === 0) {
-            delete selector['profile.tags'];
-            results = Meteor.users.findActiveUsers(selector, options).fetch();
-        }
-
-        return results;
+      return results;
     }
 };
