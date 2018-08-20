@@ -109,6 +109,9 @@ Template.ActivityView.helpers({
       isCreate() {
         return self.type === 'create';
       },
+      isMyActivities() {
+        return self.type === 'me';
+      },
       isContributing() {
         return isContributing(self.activity);
       },
@@ -291,5 +294,39 @@ Template.ActivityView.events({
     if (template.data.type !== 'boardview') {
       template.filesToggle.set(!template.filesToggle.curValue);
     }
-  }
+  },
+  'click [data-finalize-contribution]'(event, template) {
+    const contribution = Contributions.findOne({
+      upper_id: Meteor.userId(),
+      activity_id: get(template.data, 'activity._id'),
+      finalized: false,
+    });
+
+    if (contribution) {
+      Meteor.call('contributions.finalize', contribution._id, (error, result) => {
+        if (error) {
+          Partup.client.notify.error(TAPi18n.__(error));
+        } else if (result._id) {
+          Partup.client.notify.info(TAPi18n.__('contribution-finalize-success'));
+        }
+      });
+    }
+  },
+  'click [data-unfinalize-contribution]'(event, template) {
+    const contribution = Contributions.findOne({
+      upper_id: Meteor.userId(),
+      activity_id: get(template.data, 'activity._id'),
+      finalized: true,
+    });
+
+    if (contribution) {
+      Meteor.call('contributions.unfinalize', contribution._id, (error, result) => {
+        if (error) {
+          Partup.client.notify.error(TAPi18n.__(error));
+        } else if (result._id) {
+          Partup.client.notify.info(TAPi18n.__('contribution-unfinalize-success'));
+        }
+      });
+    }
+  },
 });

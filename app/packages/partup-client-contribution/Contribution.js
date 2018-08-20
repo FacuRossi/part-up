@@ -22,6 +22,9 @@ Template.Contribution.helpers({
   filled() {
     return isNumber(get(this.contribution, 'hours')) || isNumber(get(this.contribution, 'rate'));
   },
+  finalized() {
+    return get(this.contribution, 'finalized', false);
+  },
   formId() {
     return `editContributionForm-${this.contribution._id}`;
   },
@@ -78,7 +81,7 @@ Template.Contribution.events({
         } catch (err) {}
       }
     });
-  }
+  },
 });
 
 AutoForm.addHooks(null, {

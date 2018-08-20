@@ -3,13 +3,15 @@
     grid-template-columns: 40px auto;
     align-items: center;
 
+
+
     &.unverified {
       img, figure {
         filter: grayscale(80%) brightness(70%) contrast(50%);
         -webkit-filter: grayscale(80%) brightness(70%) contrast(50%);
       }
 
-      > p {
+      span {
         color: gray;
       }
     }
@@ -25,15 +27,33 @@
       transition: color 0.2s ease-out;
     }
 
+    &--content {
+      grid-column: span 2;
+      -ms-grid-column-span: 2;
+
+      display: flex;
+      align-items: center;
+
+      > * {
+        display: inline-flex;
+      }
+
+      > span {
+        padding-left: 5px;
+      }
+    }
+
     &-own {
       cursor: pointer;
 
       .pu-avatar {
         text-align: center;
+        display: flex;
+        justify-content: center;
+        align-content: center;
 
         .picon-pencil {
           color: white;
-          margin-top: 6.5px;
           opacity: 0;
           transition: opacity 0.2s ease-out;
         }
@@ -62,6 +82,13 @@
           margin-right: 5px;
         }
       }
+    }
+
+    .pu-button-finalize {
+      grid-column: 3;
+      -ms-grid-column: 3;
+
+      justify-self: flex-end;
     }
 
     .pu-form {

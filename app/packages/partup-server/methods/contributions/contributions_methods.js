@@ -69,6 +69,7 @@ Meteor.methods({
                 newContribution.upper_id = upper._id;
                 newContribution.partup_id = activity.partup_id;
                 newContribution.verified = isUpperInPartup;
+                newContribution.finalized = false;
 
                 newContribution._id = Contributions.insert(newContribution);
 
@@ -202,5 +203,62 @@ Meteor.methods({
             Log.error(error);
             throw new Meteor.Error(500, 'contribution_could_not_be_archived');
         }
+    },
+
+    'contributions.finalize'(contributionId) {
+      check(contributionId, String);
+
+      const caller = Meteor.user();
+      const contribution = Contributions.findOneOrFail(contributionId);
+
+      if (
+        !caller
+        || caller._id !== contribution.upper_id
+      ) {
+        throw new Meteor.Error(401, 'unauthorized', 'You can only finalize your own contributions');
+      }
+
+      try {
+        Contributions.update(contribution._id, {
+          $set: {
+            finalized: true,
+          }
+        });
+
+        return {
+          _id: contribution._id,
+        };
+      } catch  (error) {
+        Log.error(error);
+        throw new Meteor.Error(500, 'contribution_could_not_be_finalized');
+      }
+    },
+    'contributions.unfinalize'(contributionId) {
+      check(contributionId, String);
+
+      const caller = Meteor.user();
+      const contribution = Contributions.findOneOrFail(contributionId);
+
+      if (
+        !caller
+        || caller._id !== contribution.upper_id
+      ) {
+        throw new Meteor.Error(401, 'unauthorized', 'You can only finalize your own contributions');
+      }
+
+      try {
+        Contributions.update(contribution._id, {
+          $set: {
+            finalized: false,
+          }
+        });
+
+        return {
+          _id: contribution._id,
+        };
+      } catch  (error) {
+        Log.error(error);
+        throw new Meteor.Error(500, 'contribution_could_not_be_unfinalized');
+      }
     }
 });

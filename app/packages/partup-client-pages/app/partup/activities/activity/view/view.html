@@ -210,6 +210,13 @@
         </a>
       </li>
       {{/unless }}
+      {{#if partupAnd isMyActivities isContributing }}
+      <li class="pu-dropdown-item">
+        <a data-finalize-contribution>
+          {{_ 'contribution-finalize'}}
+        </a>
+      </li>
+      {{/if }}
       {{#if isUpper }}
       <li class="pu-dropdown-item">
         {{#if activity.archived }}
