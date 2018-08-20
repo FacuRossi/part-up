@@ -1112,4 +1112,15 @@ Migrations.add({
 //   }
 // });
 
+// Migrations.add({
+//   version: 44,
+//   name: 'Set default profile visibility to public',
+//   up() {
+//     Meteor.users.update({ profileVisibility: { $exists: false } }, { $set: { profileVisibility: 'public' } }, { multi: true })
+//   },
+//   down() {
+//     // ...
+//   }
+// });
+
 // DO NOT ADD Migrations.migrateTo() here!!! This is controlled by the ENV_VAR 'MIGRATE'
