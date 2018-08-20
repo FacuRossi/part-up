@@ -1,3 +1,5 @@
+import { authorization } from 'meteor/partup-lib';
+
 /**
  * Embed helpers
  *
@@ -10,14 +12,19 @@ Partup.client.embed = {
 
         // Add upperObjects to partup
         if (partup.uppers) {
-            partup.upperObjects = partup.uppers.map(function(userId) {
-                var upper = mout.object.find(users, {_id: userId});
-                if (!upper) return {};
+          partup.upperObjects = partup.uppers.map(function(userId) {
+            var upper = mout.object.find(users, {_id: userId});
 
-                embed.user(upper, images);
-
-                return upper;
-            });
+            if (
+              upper
+              && (
+                authorization.checkCanSeeProfile(Meteor.user(), upper)
+              )
+            ) {
+              embed.user(upper, images);
+              return upper;
+            }
+          }).filter(x => x);
         }
 
         // Add partup image to partup
@@ -43,12 +50,16 @@ Partup.client.embed = {
         if (network.most_active_uppers) {
             network.mostActiveUpperObjects = network.most_active_uppers.map(function(userId) {
                 var upper = mout.object.find(users, {_id: userId});
-                if (!upper) return {};
 
-                embed.user(upper, images);
-
-                return upper;
-            });
+                if (upper
+                  && (
+                    authorization.checkCanSeeProfile(Meteor.user(), upper)
+                  )
+                ) {
+                  embed.user(upper, images);
+                  return upper;
+                }
+            }).filter(x => x);
         }
 
         // Add network iconObject
