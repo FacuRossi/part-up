@@ -44,7 +44,7 @@ if (process.env.PARTUP_CRON_ENABLED) {
 
                 // Create profiles sitemap
                 var profilesXml = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
-                Meteor.users.find({ deactivatedAt: { $exists: false } }, { fields: { _id: 1 } }).forEach(function(user) {
+                Meteor.users.find({ deactivatedAt: { $exists: false }, profileVisibility: 'public' }, { fields: { _id: 1 } }).forEach(function(user) {
                     profilesXml += '<url>';
                     profilesXml += '<loc>' + baseUrl + 'profile/' + user._id + '</loc>';
                     profilesXml += '<changefreq>monthly</changefreq>';
