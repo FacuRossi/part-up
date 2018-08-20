@@ -36,6 +36,7 @@ Package.onUse(function(api) {
         'version.js',
         'globals.js',
         'routes.js',
+        'authorization.js',
         'services/location.js',
         'services/placeholder.js',
         'services/tags.js',
@@ -177,13 +178,16 @@ Package.onUse(function(api) {
     api.export('FEATURE_FLAGS');
     api.export('features');
     api.export('subManager', 'client');
+
+    api.export('userProfileVisibilityLevels');
+    api.export('authorization');
 });
 
 Package.onTest(function(api) {
-  api.use(['ecmascript', 'underscore', 'tinytest', 'practicalmeteor:chai', 'momentjs:moment']);
-
-//   api.addFiles('helpers/fileUploader.tests.js', 'client');
+  api.use(['ecmascript', 'underscore', 'tinytest', 'practicalmeteor:chai', 'stevezhu:lodash', 'momentjs:moment']);
+  // api.addFiles('helpers/fileUploader.tests.js', 'client');
   api.addFiles('helpers/files/files.test.js', 'client');
   api.addFiles('helpers/impersonation.test.js', 'client');
+  api.addFiles('authorization.test.js');
 
 });
