@@ -1,23 +1,26 @@
+import { authorization } from 'meteor/partup-lib';
+
 Template.app_profile.onCreated(function() {
     var template = this;
 
     template.autorun(function() {
-        var data = Template.currentData();
-        if (!data.profileId) return;
-        template.subscribe('users.one', data.profileId, {
-            onReady: function() {
-                var user = Meteor.users.findOne(data.profileId);
+        const { profileId } = Template.currentData();
+        if (profileId) {
+          template.subscribe('users.one', profileId, {
+            onReady() {
+              user = Meteor.users.findOne(profileId);
 
-                if (!user || user.deactivatedAt) {
-                    Router.pageNotFound('profile');
-                }
+              if (!authorization.checkCanSeeProfile(Meteor.user(), user)) {
+                Router.pageNotFound('profile');
+              }
 
-                var isViewable = User(user).aboutPageIsViewable();
-                if (!isViewable && Router.current().route.getName() === 'profile') {
-                    Router.replaceYieldTemplate('app_profile_upper_partups', 'app_profile');
-                }
+              var isViewable = User(user).aboutPageIsViewable();
+              if (!isViewable && Router.current().route.getName() === 'profile') {
+                  Router.replaceYieldTemplate('app_profile_upper_partups', 'app_profile');
+              }
             }
-        });
+          });
+        }
     });
 
     template.autorun(function() {
