@@ -26,12 +26,10 @@
     }
 
     .pu-page {
-        padding-bottom: 100px;
+      padding-top: 90px;
     }
 
     @media screen and (min-width: $breakpoint-desktop) {
-        padding-top: $spacing-modal-headerheight;
-
         .pu-header {
             position: fixed;
             top: 0;
