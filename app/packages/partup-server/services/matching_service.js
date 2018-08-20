@@ -82,7 +82,6 @@ Partup.server.services.matching = {
      * @return {[String]}
      */
     findMatchingUppers: function(searchOptions, tags, excludedUppers) {
-      console.log('findMatchingUppers searchOptions: ', searchOptions);
         var selector = {};
         // Exclude the current logged in user from the results
         selector['_id'] = {$nin: [Meteor.userId()]};
@@ -162,8 +161,6 @@ Partup.server.services.matching = {
             sort: {participation_score: -1}, // Sort the uppers on participation_score
             fields: {_id: 1} // Only return the IDs
         };
-
-        console.log('findMatchingUppers finalSelector: ', selector);
 
         var results = Meteor.users.findActiveUsers(selector, options).fetch();
 

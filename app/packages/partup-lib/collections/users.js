@@ -350,8 +350,6 @@ Meteor.users.findActiveUsers = function(selector, options) {
     selector.deactivatedAt = {$exists: false};
     selector.deletedAt = {$exists: false};
     options.fields = getPublicUserFields();
-
-    console.log('findActiveUppers selector & options: ', selector, options);
     return Meteor.users.find(selector, options);
 };
 
