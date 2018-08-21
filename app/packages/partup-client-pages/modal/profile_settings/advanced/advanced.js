@@ -34,8 +34,7 @@ Template.modal_profile_settings_advanced.onCreated(function() {
 
     if (error) {
       Partup.client.notify.error(error.reason);
-    } else if (!level) {
-    } else {
+    } else if (level) {
       this.activeVisibilityLevel.set(level);
     }
   });
