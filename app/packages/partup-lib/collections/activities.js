@@ -113,7 +113,8 @@ Activities.findForUser = function (userId, selector, options) {
     upper_id: userId,
     archived: {
       $ne: true,
-    }
+    },
+    finalized: false,
   });
 
   const activityCursor = Activities.find({
