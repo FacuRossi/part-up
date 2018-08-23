@@ -1,3 +1,18 @@
+<a name="4.8.0"></a>
+# [4.8.0](https://github.com/part-up/part-up/compare/4.7.2...4.8.0) (2018-08-22)
+
+
+### Bug Fixes
+
+* **user:** Fix typo for removing user tiles ([290e8db](https://github.com/part-up/part-up/commit/290e8db))
+
+
+### Features
+
+* **contribution:** You can now finalize contributions ([5858ee9](https://github.com/part-up/part-up/commit/5858ee9))
+
+
+
 <a name="4.7.2"></a>
 ## [4.7.2](https://github.com/part-up/part-up/compare/4.7.1...4.7.2) (2018-08-17)
 
