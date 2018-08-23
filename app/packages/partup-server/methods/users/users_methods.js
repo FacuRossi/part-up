@@ -585,9 +585,9 @@ Meteor.methods({
 
             // Find any tiles associated with a user and delete them
             // But keep a record for images that need to deleted
-            Tiles.find({upper_id: user.id}).forEach((tile) => {
-                if (tile.image_id) {
-                    imagesForDeletion.push(tile.image_id)
+            Tiles.find({upper_id: user._id}).forEach((tile) => {
+                if (tile.image_id && tile.upper_id === user._id) {
+                  imagesForDeletion.push(tile.image_id)
                 }
                 Meteor.call('tiles.remove', tile._id)
             })
