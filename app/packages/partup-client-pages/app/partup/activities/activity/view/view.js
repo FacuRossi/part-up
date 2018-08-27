@@ -299,7 +299,9 @@ Template.ActivityView.events({
     const contribution = Contributions.findOne({
       upper_id: Meteor.userId(),
       activity_id: get(template.data, 'activity._id'),
-      finalized: false,
+      finalized: {
+        $ne: true
+      },
     });
 
     if (contribution) {
