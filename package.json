@@ -1,7 +1,7 @@
 {
   "name": "part-up",
   "description": "Part-up =================",
-  "version": "4.8.2",
+  "version": "4.8.3",
   "scripts": {
     "conventional-github-releaser": "conventional-github-releaser",
     "gulp": "gulp",

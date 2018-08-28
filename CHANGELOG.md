@@ -1,3 +1,13 @@
+<a name="4.8.2"></a>
+## [4.8.2](https://github.com/part-up/part-up/compare/4.8.1...4.8.2) (2018-08-27)
+
+
+### Bug Fixes
+
+* **contributions:** Allow finalizing of existing contributions ([15d051d](https://github.com/part-up/part-up/commit/15d051d))
+
+
+
 <a name="4.8.1"></a>
 ## [4.8.1](https://github.com/part-up/part-up/compare/4.8.0...4.8.1) (2018-08-23)
 
