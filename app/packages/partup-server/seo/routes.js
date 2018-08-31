@@ -1,3 +1,5 @@
+import { authorization } from 'meteor/partup-lib';
+
 var SeoRouter = Picker.filter(function(request, response) {
     // TODO: Add more checks to see if we should render a snippet
 
@@ -95,7 +97,7 @@ SeoRouter.route('/profile/:id', function(params, request, response) {
     var userId = params.id;
     var user = Meteor.users.findOne(userId);
 
-    if (!user || user.deactivatedAt) {
+    if (!user || user.deactivatedAt || !authorization.checkCanSeeProfile(null, user)) {
         response.statusCode = 404;
         return response.end();
     }

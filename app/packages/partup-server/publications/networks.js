@@ -46,7 +46,9 @@ Meteor.routeComposite('/networks/discover', function(request, parameters) {
         children: [
             { find: Images.findForNetwork },
             {
-                find: Meteor.users.findUppersForNetworkDiscover,
+                find(network) {
+                  return Meteor.users.findUppersForNetworkDiscover(this.userId, network);
+                },
                 children: [
                     { find: Images.findForUser }
                 ]
@@ -226,7 +228,7 @@ Meteor.publishComposite('networks.one.uppers', function(urlParams, parameters) {
                 parameters.isAdminOfNetwork = true;
             }
 
-            return Meteor.users.findUppersForNetwork(network, options, parameters);
+            return Meteor.users.findUppersForNetwork(this.userId, network, options);
         },
         children: [
             { find: Images.findForUser }
@@ -312,7 +314,7 @@ Meteor.publishComposite('networks.one.chat', function(networkSlug, parameters) {
             }]
         }, {
             find: function(network) {
-                return Meteor.users.findUppersForNetwork(network, {}, {});
+                return Meteor.users.findUppersForNetwork(this.userId, network);
             },
             children: [{
                 find: Images.findForUser

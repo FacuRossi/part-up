@@ -1,12 +1,20 @@
 .pu-composition-defaultmodal {
+
     h2 {
         margin-top: -10px;
         margin-bottom: 20px;
     }
 
+    input[type=checkbox] {
+      margin: 0;
+      pointer-events: none;
+      width: 15px;
+      height: 15px;
+    }
+
     .pu-section {
       margin: 10px 0px;
-      padding: 10px;
+      padding: 12px;
       border: 1.5px solid $color-border-light;
       border-radius: 3px;
 
@@ -16,6 +24,34 @@
       &-description {
         font-size: 1rem;
         padding: 3px 0px;
+      }
+
+      [data-level] {
+        cursor: pointer;
+
+        > p {
+          pointer-events: none;
+          display: inline-block;
+        }
+      }
+    }
+
+    .pu-profile-visibility {
+
+      .pu-list {
+        padding-bottom: 10px;
+      }
+
+      &-item {
+        padding: 5px 0px;
+
+        display: grid;
+        display: -ms-grid;
+
+        grid-template-rows: auto;
+        grid-template-columns: 20px 80px auto;
+
+        align-items: center;
       }
     }
 

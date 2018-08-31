@@ -15,6 +15,24 @@
     </section>
     {{/if }}
 
+    <section class="pu-section pu-profile-visibility">
+        <h4 class="pu-section-title">{{_ 'modal-profilesettings-advanced-profile_visibility-title'}}</h4>
+        <p class="pu-section-description">{{_ 'modal-profilesettings-advanced-profile_visibility-description'}}</p>
+        <ul class="pu-list">
+          {{#each visibilityLevels }}
+            <li class="pu-profile-visibility-item" data-level="{{level}}">
+              <input
+                type="checkbox"
+                name="{{level}}"
+                checked="{{ isActiveProfileVisibilityLevel level }}">
+              <span><b>{{level}}</b>:</span>
+              <p>{{_ description }}</p>
+            </li>
+          {{/each }}
+        </ul>
+        <button class="pu-button" data-update-level>{{_'modal-profilesettings-advanced-profile_visibility-update-button'}}</button>
+    </section>
+
     <section class="pu-section">
       <h4 class="pu-section-title">{{_ 'modal-profilesettings-advanced-data-export-title'}}</h4>
       <p class="pu-section-description">{{_ 'modal-profilesettings-advanced-data-export-description'}}</p>
