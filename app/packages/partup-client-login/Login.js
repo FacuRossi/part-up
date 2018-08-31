@@ -100,7 +100,7 @@ Template.Login.events({
         linkedinLoading.set(true);
 
         Meteor.loginWithLinkedin({
-            requestPermissions: ['r_emailaddress'],
+            requestPermissions: ['r_emailaddress', 'r_basicprofile'],
             loginStyle: isChrome ? 'redirect' : 'popup'
         }, function(error) {
             linkedinLoading.set(false);
@@ -139,10 +139,10 @@ const continueLogin = function() {
         arguments: [user],
         fallback_action: function() {
             if (mout.object.get(user, 'profile.settings.optionalDetailsCompleted')) {
-                Router.go('dashboard');
+                Router.go('myactivities');
             } else {
                 Intent.go({route: 'register-details'}, function() {
-                    Router.go('dashboard');
+                    Router.go('myactivities');
                 });
             }
         }
@@ -170,6 +170,9 @@ AutoForm.hooks({
                             break;
                         case 'Incorrect password [403]':
                             Partup.client.forms.addStickyFieldError(self, 'password', 'passwordIncorrect');
+                            break;
+                        case 'User is deactivated [403]':
+                            Partup.client.forms.addStickyFieldError(self, 'email', 'accountDeactivated');
                             break;
                         default:
                             Partup.client.notify.error(TAPi18n.__('login-error_' + Partup.client.strings.slugify(error.reason)));

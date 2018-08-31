@@ -66,7 +66,7 @@ Template.ContentBlockForm.helpers({
         return {
             contentBlockInput: {
                 input: 'data-paragraph',
-                className: 'pu-textarea pu-wysiwyg',
+                className: 'pu-wysiwyg',
                 placeholder: TAPi18n.__('network-settings-about-form-placeholder-text'),
                 prefill: template.data.block.text || false,
                 maxCharacters: Partup.schemas.forms.contentBlock._schema.text.max,

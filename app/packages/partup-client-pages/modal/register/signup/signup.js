@@ -148,7 +148,7 @@ Template.modal_register_signup.events({
 
         linkedinLoading.set(true);
         Meteor.loginWithLinkedin({
-            requestPermissions: ['r_emailaddress'],
+            requestPermissions: ['r_emailaddress', 'r_basicprofile'],
             loginStyle: navigator.userAgent.match('CriOS') ? 'redirect' : 'popup'
         }, function(error) {
             linkedinLoading.set(false);

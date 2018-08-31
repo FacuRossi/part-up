@@ -1,3 +1,178 @@
+<a name="4.8.2"></a>
+## [4.8.2](https://github.com/part-up/part-up/compare/4.8.1...4.8.2) (2018-08-27)
+
+
+### Bug Fixes
+
+* **contributions:** Allow finalizing of existing contributions ([15d051d](https://github.com/part-up/part-up/commit/15d051d))
+
+
+
+<a name="4.8.1"></a>
+## [4.8.1](https://github.com/part-up/part-up/compare/4.8.0...4.8.1) (2018-08-23)
+
+
+
+<a name="4.8.0"></a>
+# [4.8.0](https://github.com/part-up/part-up/compare/4.7.2...4.8.0) (2018-08-22)
+
+
+### Bug Fixes
+
+* **user:** Fix typo for removing user tiles ([290e8db](https://github.com/part-up/part-up/commit/290e8db))
+
+
+### Features
+
+* **contribution:** You can now finalize contributions ([5858ee9](https://github.com/part-up/part-up/commit/5858ee9))
+
+
+
+<a name="4.7.2"></a>
+## [4.7.2](https://github.com/part-up/part-up/compare/4.7.1...4.7.2) (2018-08-17)
+
+
+
+<a name="4.7.1"></a>
+## [4.7.1](https://github.com/part-up/part-up/compare/4.7.0...4.7.1) (2018-08-13)
+
+
+### Bug Fixes
+
+* **activities:** Make compatible for iOS ([e2a0bd5](https://github.com/part-up/part-up/commit/e2a0bd5))
+
+
+
+<a name="4.7.0"></a>
+# [4.7.0](https://github.com/part-up/part-up/compare/4.6.3...4.7.0) (2018-08-09)
+
+
+### Bug Fixes
+
+* **activities:** You may now also work on monday ([50f7b28](https://github.com/part-up/part-up/commit/50f7b28))
+* **modal:** Darken color of modal close button on hover ([b68dcd4](https://github.com/part-up/part-up/commit/b68dcd4))
+* **profile:** Refresh profile template on tiles change ([1b650e5](https://github.com/part-up/part-up/commit/1b650e5))
+
+
+### Features
+
+* **activities:** Add my activities overview ([a998c36](https://github.com/part-up/part-up/commit/a998c36))
+
+
+
+<a name="4.6.3"></a>
+## [4.6.3](https://github.com/part-up/part-up/compare/4.6.2...4.6.3) (2018-08-01)
+
+
+### Bug Fixes
+
+* **login:** Add r_basicprofile to linkedin permissions in request ([9db61ff](https://github.com/part-up/part-up/commit/9db61ff))
+* **profile:** Show hovercard also without image ([b778b0a](https://github.com/part-up/part-up/commit/b778b0a))
+
+
+
+<a name="4.6.2"></a>
+## [4.6.2](https://github.com/part-up/part-up/compare/4.6.1...4.6.2) (2018-07-16)
+
+
+### Bug Fixes
+
+* **wysiwyg:** Change char to startChar ([46fea4f](https://github.com/part-up/part-up/commit/46fea4f))
+* **wysiwyg:** No longer remove some html tags when processing html ([5aa2d3d](https://github.com/part-up/part-up/commit/5aa2d3d))
+
+
+
+<a name="4.6.1"></a>
+## [4.6.1](https://github.com/part-up/part-up/compare/4.6.0...4.6.1) (2018-07-12)
+
+
+### Bug Fixes
+
+* **wysiwyg:** Init with prefill ([0146ba8](https://github.com/part-up/part-up/commit/0146ba8))
+
+
+
+<a name="4.6.0"></a>
+# [4.6.0](https://github.com/part-up/part-up/compare/4.5.2...4.6.0) (2018-07-10)
+
+
+### Bug Fixes
+
+* **profile:** Removed references to additional profile data that is not used ([78f5815](https://github.com/part-up/part-up/commit/78f5815)), closes [#1655](https://github.com/part-up/part-up/issues/1655) [#1645](https://github.com/part-up/part-up/issues/1645)
+* **shift:** unshift should be shift ([7d7698f](https://github.com/part-up/part-up/commit/7d7698f))
+* **user:** Set partup creator when user is only upper in partup ([aa016eb](https://github.com/part-up/part-up/commit/aa016eb))
+* **verification:** Match email adress before send verification email ([f54d3da](https://github.com/part-up/part-up/commit/f54d3da))
+
+
+### Features
+
+* **partup:** Set partuptype to charity by default and remove it from create flow ([4c989fc](https://github.com/part-up/part-up/commit/4c989fc))
+
+
+
+<a name="4.5.2"></a>
+## [4.5.2](https://github.com/part-up/part-up/compare/4.5.1...4.5.2) (2018-07-06)
+
+
+### Bug Fixes
+
+* **acc-finds:** Menu scroll & Copy activities ([2bcc0fb](https://github.com/part-up/part-up/commit/2bcc0fb))
+
+
+
+<a name="4.5.1"></a>
+## [4.5.1](https://github.com/part-up/part-up/compare/4.5.0...4.5.1) (2018-07-03)
+
+
+### Bug Fixes
+
+* **analytics:** defer call to 'ga' ([4d597f1](https://github.com/part-up/part-up/commit/4d597f1))
+* **profile:** No longer show meurs result ([a2eeb79](https://github.com/part-up/part-up/commit/a2eeb79))
+
+
+### Features
+
+* **export:** User can request data export via Intercom ([255f30d](https://github.com/part-up/part-up/commit/255f30d))
+
+
+
+<a name="4.5.0"></a>
+# [4.5.0](https://github.com/part-up/part-up/compare/4.4.0...4.5.0) (2018-06-26)
+
+
+### Bug Fixes
+
+* **activities:** no longer copy archived and deleted activities ([ada1292](https://github.com/part-up/part-up/commit/ada1292))
+* **chats:** Check for existance user object ([dced295](https://github.com/part-up/part-up/commit/dced295))
+* **delete-user:** When a account is deleted, that account is removed as a creator from a partup ([478f1d6](https://github.com/part-up/part-up/commit/478f1d6)), closes [#1704](https://github.com/part-up/part-up/issues/1704)
+* **invite:** Get partup inviter from DB if necessary ([de1f30a](https://github.com/part-up/part-up/commit/de1f30a))
+* **publications:** Dont publish calls to networks.one without networkslug ([481bd1f](https://github.com/part-up/part-up/commit/481bd1f))
+
+
+### Features
+
+* **impersonation:** Improve impersonation flow ([34551c9](https://github.com/part-up/part-up/commit/34551c9))
+* **opt-in:** Only send verification mails once a week on update ([44978eb](https://github.com/part-up/part-up/commit/44978eb))
+
+
+
+<a name="4.4.0"></a>
+# [4.4.0](https://github.com/part-up/part-up/compare/4.3.1...4.4.0) (2018-06-19)
+
+
+### Bug Fixes
+
+* **text:** Wrap text in textareas ([ae759bb](https://github.com/part-up/part-up/commit/ae759bb))
+* **user:** Rename user in notification when a user is deleted ([32839b4](https://github.com/part-up/part-up/commit/32839b4))
+* **wysiwyg:** Update trumbowyg settings ([c3a04ad](https://github.com/part-up/part-up/commit/c3a04ad))
+
+
+### Features
+
+* **string:** Add helper to wrap a string in html tag ([97e7b2a](https://github.com/part-up/part-up/commit/97e7b2a))
+
+
+
 <a name="4.3.1"></a>
 ## [4.3.1](https://github.com/part-up/part-up/compare/4.3.0...4.3.1) (2018-06-15)
 
@@ -12,6 +187,7 @@
 * **hovercard:** Hovercard fixes to not show deleted or deactivated users ([266a5ef](https://github.com/part-up/part-up/commit/266a5ef))
 * **hovercard:** Safeguard user finds in hovercards ([4988e94](https://github.com/part-up/part-up/commit/4988e94))
 * **invite:** Set access token for user without account ([f724757](https://github.com/part-up/part-up/commit/f724757))
+* **menu:** Add archive partup option to partup cog ([177448b](https://github.com/part-up/part-up/commit/177448b))
 * **meteor:** Manually set Meteor.autorun ([2f804f0](https://github.com/part-up/part-up/commit/2f804f0))
 * **scores:** Adjust calculation of user participation score ([78a2e6c](https://github.com/part-up/part-up/commit/78a2e6c))
 * **signup:** Reversed agreed to ToS check ([924b7b5](https://github.com/part-up/part-up/commit/924b7b5))
@@ -23,6 +199,7 @@
 * **client:** Add register and login button to partup closed page ([39dba64](https://github.com/part-up/part-up/commit/39dba64)), closes [#1658](https://github.com/part-up/part-up/issues/1658)
 * **impersonation:** Ask for permission for impersonation ([6f235d4](https://github.com/part-up/part-up/commit/6f235d4))
 * **meurs:** Remove meurs strength finder ([3bb00bb](https://github.com/part-up/part-up/commit/3bb00bb))
+* **profile-reactivation:** When a deactivated user tries to login, show a warning to reactivate an ([fb3a585](https://github.com/part-up/part-up/commit/fb3a585)), closes [#1646](https://github.com/part-up/part-up/issues/1646)
 * **profile-settings:** The front-end now has an advanced tab in profile settings with a delete acco ([d79c99f](https://github.com/part-up/part-up/commit/d79c99f)), closes [#1636](https://github.com/part-up/part-up/issues/1636)
 * **users:** Added a meteor method for deleting a user ([cd77b92](https://github.com/part-up/part-up/commit/cd77b92)), closes [#1636](https://github.com/part-up/part-up/issues/1636)
 * **users:** Allow users to delete their account ([c0a7955](https://github.com/part-up/part-up/commit/c0a7955))

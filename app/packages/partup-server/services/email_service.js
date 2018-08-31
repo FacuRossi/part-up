@@ -1,4 +1,13 @@
 var d = Debug('services:emails');
+const _ = require('lodash');
+const moment = require('moment');
+
+const canReceiveEmails = (user) => {
+  const deactivated = _.get(user, 'deactivatedAt');
+  const deleted = _.get(user, 'deletedAt');
+
+  return !deactivated && !deleted;
+};
 
 /**
  @namespace Partup server email service
@@ -20,19 +29,35 @@ Partup.server.services.emails = {
      * @param {String|null} options.body
      * @param {Object} existingUser Email service will use this user object to check if it's deactivated
      */
-    send: function(options, existingUser) {
+    send(options, existingUser) {
 
-        // check if user is deactivated, if so, don't send an email (failsafe)
-        const existingUserId = lodash.get(existingUser, '_id');
-        if (existingUserId) {
-            const user = Meteor.users.findOne({_id: existingUserId});
-            const deactivatedAt = lodash.get(user, 'deactivatedAt');
-            if (deactivatedAt) return; // user is deactivated, bailing out
-        }
+        // If 'existingUser' is not specified the email is not for a member, e.g. invite activity by email.
+        // This means the following checks are only required when a user is specified.
+        if (existingUser) {
+            if (!canReceiveEmails(existingUser)) {
+                return;
+            }
 
-        // check if user's email is verified, else send a reminder instead
-        if (existingUser && !User(existingUser).hasVerifiedEmail(options.toAddress)) {
-          return Accounts.sendVerificationEmail(existingUser._id, options.toAddress);
+            // if options.toAddress is not verified send a verification mail
+            // only when the last received verification mail was over 7 days ago
+            if (!User(existingUser).hasVerifiedEmail(options.toAddress)) {
+
+                const usr = Meteor.users.findOne({ _id: existingUser._id, 'emails.address': options.toAddress }, { fields: { emails: 1 } });
+
+                for (let e of usr.emails) {
+                  if (e.address === options.toAddress) {
+                    const sendIfMoreThanZero = moment().subtract(7, 'days').diff(moment(e.lastVerificationMail));
+
+                    if (!e.lastVerificationMail || sendIfMoreThanZero > 0) {
+                        Accounts.sendVerificationEmail(existingUser._id, options.toAddress);
+                        Meteor.users.update({ _id: existingUser._id, 'emails.address': options.toAddress }, { $set: { 'emails.$.lastVerificationMail': new Date() } });
+                        break;
+                    }
+                  }
+                }
+
+                return;
+            }
         }
 
         Meteor.defer(function() {

@@ -22,36 +22,33 @@ Template.app_profile_about.onCreated(function() {
 
     var profileId = template.data.profileId;
 
-    template.subscribe('tiles.profile', profileId, {
-        onReady: function() {
-            var tiles = Tiles.find({upper_id: profileId}).fetch();
-            var user = Meteor.users.findOne({_id: profileId});
-            var displayTiles = [];
+    this.tilesSub = template.subscribe('tiles.profile', profileId);
 
-            var profileIsCurrentUser = !!(Meteor.userId() === profileId);
-            var profilehasMediaTiles = !!(tiles && tiles.length);
+    const user = Meteor.users.findOne({
+      _id: profileId,
+    });
+    this.autorun(() => {
+      if (!this.tilesSub.ready()) {
+        return;
+      }
 
-            if (profileIsCurrentUser) {
-                displayTiles = displayTiles.concat([{
-                    type: 'result',
-                    profileId,
-                }]);
-            }
+      const tiles = Tiles.find({
+        upper_id: profileId,
+      }).fetch();
 
-            if (!profilehasMediaTiles && profileIsCurrentUser) {
-                displayTiles = displayTiles.concat([{
-                    type: 'image',
-                    placeholder: true,
-                }]);
-            }
+      const displayTiles = tiles;
 
-            displayTiles = displayTiles.concat(tiles || []);
+      if (Meteor.userId() === profileId && !tiles.length) {
+        displayTiles.push({
+          type: 'image',
+          placeholder: true,
+        });
+      }
 
-            template.columnTilesLayout.addTiles(displayTiles, function() {
-                template.loading.set(false);
-            });
-        }
-
+      template.columnTilesLayout.clear();
+      template.columnTilesLayout.addTiles(displayTiles, () => {
+        template.loading.set(false);
+      });
     });
 });
 
@@ -97,7 +94,6 @@ Template.app_profile_about.events({
         Partup.client.popup.open({
             id: 'new-' + type
         }, function(result) {
-            template.refresh();
         });
     },
     'click [data-delete]': function(event, template) {
@@ -114,7 +110,6 @@ Template.app_profile_about.events({
                         return;
                     }
                     Partup.client.notify.success('Tile removed');
-                    template.refresh();
                 });
             }
         });

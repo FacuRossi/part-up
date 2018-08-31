@@ -2,12 +2,12 @@
  * @memberOf Partups
  * @private
  */
-var PUBLIC = 1;
+var PUBLIC = 1; // Deprecated!
 /**
  * @memberOf Partups
  * @private
  */
-var PRIVATE = 2;
+var PRIVATE = 2; // Deprecated!
 /**
  * @memberOf Partups
  * @private

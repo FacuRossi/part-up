@@ -51,6 +51,11 @@ Meteor.startup(function() {
     Meteor.subscribe('users.loggedin');
 
     /*************************************************************/
+    /* Subscribe globally to any activity invite the user will get */
+    /*************************************************************/
+    Meteor.subscribe('invites.my_activity_invites');
+
+    /*************************************************************/
     /* Language configuration */
     /*************************************************************/
     // sets the language of the user to user setting
@@ -169,8 +174,8 @@ Meteor.startup(function() {
               info['name'] = user.profile.name;
               info['firstname'] = user.profile.firstname;
               info['language'] = user.profile.settings.locale;
-              info['phonenumber'] = user.profile.phonenumber;
-              info['gender'] = user.profile.gender;
+              // info['phonenumber'] = user.profile.phonenumber;
+              // info['gender'] = user.profile.gender;
               info['location'] = user.profile.location ? user.profile.location.city : undefined;
               info['participation_score'] = user.participation_score;
               info['completeness'] = user.completeness;

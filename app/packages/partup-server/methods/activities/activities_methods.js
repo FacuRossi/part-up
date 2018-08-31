@@ -187,6 +187,7 @@ Meteor.methods({
         check(activityId, String);
 
         var upper = Meteor.users.findOneOrFail(this.userId);
+
         var activity = Activities.findOneOrFail(activityId);
 
         if (activity.isRemoved()) throw new Meteor.Error(404, 'activity_could_not_be_found');
@@ -197,11 +198,14 @@ Meteor.methods({
             throw new Meteor.Error(401, 'unauthorized');
         }
 
+
         try {
+
             // Check if the activity is in a lane, and remove from there if so
             if (activity.lane_id) {
-                var lane = Lanes.findOneOrFail(activity.lane_id);
-                lane.removeActivity(activity._id);
+
+              var lane = Lanes.findOneOrFail(activity.lane_id);
+              lane.removeActivity(activity._id);
             }
 
             const { images = [], documents = [] } = _.get(activity, 'files', {});
@@ -331,7 +335,7 @@ Meteor.methods({
             var board = Boards.findOneOrFail(toPartup.board_id);
             var backlogLane = Lanes.findOneOrFail(board.lanes[0]);
 
-            var existingActivities = Activities.find({partup_id: fromPartupId}).fetch();
+            var existingActivities = Activities.find({partup_id: fromPartupId, deleted_at: { $exists: false }, archived: { $ne: true }}).fetch();
             existingActivities.forEach(function(activity) {
                 var newActivity = {
                     name: activity.name,
@@ -341,6 +345,7 @@ Meteor.methods({
                     updated_at: new Date(),
                     creator_id: upper._id,
                     partup_id: toPartupId,
+                    lane_id: backlogLane._id,
                     archived: false
                 };
 
@@ -505,7 +510,8 @@ Meteor.methods({
             activity_id: activity._id,
             inviter_id: inviter._id,
             invitee_id: invitee._id,
-            created_at: new Date
+            created_at: new Date,
+            status: Invites.INVITE_STATUS.PENDING,
         };
 
         Invites.insert(invite);

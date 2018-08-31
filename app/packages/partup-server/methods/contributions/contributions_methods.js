@@ -15,6 +15,22 @@ Meteor.methods({
         var activity = Activities.findOneOrFail(activityId);
         var contribution = Contributions.findOne({activity_id: activityId, upper_id: upper._id});
         var isUpperInPartup = User(upper).isPartnerInPartup(activity.partup_id);
+        var contributionInvite = Invites.findOne({
+          invitee_id: upper._id,
+          activity_id: activityId,
+          status: Invites.INVITE_STATUS.PENDING,
+        });
+
+        if (!isUpperInPartup && contributionInvite != null) {
+          // If you are invited you should automatically become an upper in the partup.
+          try {
+            Partups.findOne({
+              _id: activity.partup_id,
+            }).makePartner(upper._id);
+
+            isUpperInPartup = true;
+          } catch (error) {}
+        }
 
         try {
             var newContribution = Partup.transformers.contribution.fromFormContribution(fields);
@@ -30,18 +46,18 @@ Meteor.methods({
                 }
 
                 Contributions.update(contribution._id, {$set: newContribution});
-                
+
                 if (newContribution.motivation) {
                     Meteor.call('updates.comments.insert', activity.update_id, newContribution.motivation);
                 }
-                
+
                 // Post system message
                 var cause = false;
-                
+
                 if (contribution.archived && !newContribution.archived) {
                     cause = 'archived';
                 }
-                
+
                 // When there's a cause, it means that the system_message will be created somewhere else
                 if (!cause) {
                     Partup.server.services.system_messages.send(upper, activity.update_id, 'system_contributions_updated', {update_timestamp: false});
@@ -53,6 +69,7 @@ Meteor.methods({
                 newContribution.upper_id = upper._id;
                 newContribution.partup_id = activity.partup_id;
                 newContribution.verified = isUpperInPartup;
+                newContribution.finalized = false;
 
                 newContribution._id = Contributions.insert(newContribution);
 
@@ -60,6 +77,13 @@ Meteor.methods({
                     Meteor.call('updates.comments.insert', activity.update_id, newContribution.motivation);
                 }
             }
+
+            if (contributionInvite) {
+              Invites.update(contributionInvite._id, {
+                status: Invites.INVITE_STATUS.ACCEPTED,
+              });
+            }
+
             return newContribution;
         } catch (error) {
             Log.error(error);
@@ -161,7 +185,7 @@ Meteor.methods({
         var activity = Activities.findOneOrFail(contribution.activity_id);
 
         if (!upper || contribution.upper_id !== upper._id) {
-            throw new Meteor.Error(401, 'unauthorized');
+          throw new Meteor.Error(401, 'unauthorized');
         }
 
         try {
@@ -179,5 +203,62 @@ Meteor.methods({
             Log.error(error);
             throw new Meteor.Error(500, 'contribution_could_not_be_archived');
         }
+    },
+
+    'contributions.finalize'(contributionId) {
+      check(contributionId, String);
+
+      const caller = Meteor.user();
+      const contribution = Contributions.findOneOrFail(contributionId);
+
+      if (
+        !caller
+        || caller._id !== contribution.upper_id
+      ) {
+        throw new Meteor.Error(401, 'unauthorized', 'You can only finalize your own contributions');
+      }
+
+      try {
+        Contributions.update(contribution._id, {
+          $set: {
+            finalized: true,
+          }
+        });
+
+        return {
+          _id: contribution._id,
+        };
+      } catch  (error) {
+        Log.error(error);
+        throw new Meteor.Error(500, 'contribution_could_not_be_finalized');
+      }
+    },
+    'contributions.unfinalize'(contributionId) {
+      check(contributionId, String);
+
+      const caller = Meteor.user();
+      const contribution = Contributions.findOneOrFail(contributionId);
+
+      if (
+        !caller
+        || caller._id !== contribution.upper_id
+      ) {
+        throw new Meteor.Error(401, 'unauthorized', 'You can only finalize your own contributions');
+      }
+
+      try {
+        Contributions.update(contribution._id, {
+          $set: {
+            finalized: false,
+          }
+        });
+
+        return {
+          _id: contribution._id,
+        };
+      } catch  (error) {
+        Log.error(error);
+        throw new Meteor.Error(500, 'contribution_could_not_be_unfinalized');
+      }
     }
 });

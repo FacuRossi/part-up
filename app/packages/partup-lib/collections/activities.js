@@ -86,6 +86,54 @@ if (Meteor.isServer) {
     Activities._ensureIndex('update_id');
 }
 
+Activities.findForUser = function (userId, selector, options) {
+  const userPartupCursor = Partups.guardedFind(userId, {
+    archived_at: {
+      $exists: false,
+    },
+    uppers: {
+      $elemMatch: {
+        $eq: userId,
+      },
+    },
+  }, {
+    fields: {
+      _id: 1,
+      name: 1,
+      image: 1,
+      uppers: 1,
+      slug: 1,
+    }
+  });
+
+  const userContributionCursor = Contributions.find({
+    partup_id: {
+      $in: userPartupCursor.map(p => p._id),
+    },
+    upper_id: userId,
+    archived: {
+      $ne: true,
+    },
+    finalized: {
+      $ne: true,
+    }
+  });
+
+  const activityCursor = Activities.find({
+    _id: {
+      $in: userContributionCursor.map(c => c.activity_id),
+    },
+    deleted_at: {
+      $exists: false,
+    },
+    archived: {
+      $ne: true,
+    }
+  });
+
+  return activityCursor;
+}
+
 /**
  * Find one document, throw an error if it doesn't exist.
  *

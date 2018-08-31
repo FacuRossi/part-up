@@ -4,34 +4,34 @@
             {{#each items}}
                 <div class="pu-partup-carousel-uploader__item pu-partup-carousel-uploader__item-image pu-partup-carousel-uploader__item-image">
                     {{#if typeIsVideo type }}
-                        <span class="pu-partup-carousel-uploader__remove" data-remove-video="{{url}}">remove</span>
-                        <i class="picon-video"></i>                
+                        <span class="pu-partup-carousel-uploader__remove" data-remove-video="{{url}}">{{_ 'partupsettings-carouseluploader-remove'}}</span>
+                        <i class="picon-video"></i>
                         <img src="{{ thumb }}" alt="">
 
-                        {{> afFieldInput type='hidden' name=(getItemIndex @index 'type') value='video' }} 
-                        {{> afFieldInput type='hidden' name=(getItemIndex @index 'videoId') value=videoId }}                   
-                        {{> afFieldInput type='hidden' name=(getItemIndex @index 'videoType') value=videoType }}                        
-                        {{> afFieldInput type='hidden' name=(getItemIndex @index 'thumb') value=thumb }}                        
-                        {{> afFieldInput type='hidden' name=(getItemIndex @index 'url') value=url }}                        
+                        {{> afFieldInput type='hidden' name=(getItemIndex @index 'type') value='video' }}
+                        {{> afFieldInput type='hidden' name=(getItemIndex @index 'videoId') value=videoId }}
+                        {{> afFieldInput type='hidden' name=(getItemIndex @index 'videoType') value=videoType }}
+                        {{> afFieldInput type='hidden' name=(getItemIndex @index 'thumb') value=thumb }}
+                        {{> afFieldInput type='hidden' name=(getItemIndex @index 'url') value=url }}
                     {{else}}
-                        <span class="pu-partup-carousel-uploader__remove" data-remove-image="{{id}}">remove</span>
-                        <i class="picon-photo"></i>                
+                        <span class="pu-partup-carousel-uploader__remove" data-remove-image="{{id}}">{{_ 'partupsettings-carouseluploader-remove'}}</span>
+                        <i class="picon-photo"></i>
                         <img src="{{ partupImageUrl id=id store='1200x520' }}" alt="">
                         {{> afFieldInput type='hidden' name=(getItemIndex @index 'type') value='image' }}
                         {{> afFieldInput type='hidden' name=(getItemIndex @index 'id') value=id }}
-                        
+
                     {{/if}}
                 </div>
             {{/each}}
             {{#if itemsAreEmpty}}
-                <p class="pu-hint">No images or videos are added.</p>
+                <p class="pu-hint">{{_ 'partupsettings-carouseluploader-no_images_or_videos' }}</p>
             {{/if}}
         </div>
         <div class="pu-partup-carousel-uploader__controls">
             {{#if addingVideoUrl }}
                 {{> afFieldInput name='video_url' placeholder=placeholders.video_url class="pu-input" }}
                 <button type="button" class="pu-button pu-button-secondary" data-add-video-url>
-                    <span>Add</span>
+                    <span>{{_ 'partupsettings-carouseluploader-add'}}</span>
                 </button>
                 <button type="button" class="pu-button pu-button-secondary" data-close-video-url>
                     <span>X</span>
@@ -42,7 +42,7 @@
                         class="pu-button pu-button-secondary
                         {{# if uploadingPhoto }} pu-state-loading{{/ if }}
                         {{# if reachedMaxItems}} pu-state-disabled{{/if}}" data-image-browse>
-                        <span>Add image</span>
+                        <span>{{_ 'partupsettings-carouseluploader-add_image'}}</span>
                         {{> Spinner color='inverted' type='small' }}
                     </button>
                     <input type="file" class="pu-fileinput" data-image-input>
@@ -52,7 +52,7 @@
                     {{#if reachedMaxItems}} pu-state-disabled{{/if}}"
                     data-add-video
                 >
-                    <span>Add video</span>
+                    <span>{{_ 'partupsettings-carouseluploader-add_video'}}</span>
                 </button>
             {{/if }}
         </div>

@@ -42,15 +42,34 @@ Router.route('', {
 /** ***********************************************************/
 
 features.when(FEATURE_FLAGS.FEATURE_FLAG_HOME, () => {
-  Router.route('/home', {
-    name: 'dashboard',
+  // // React dashboard route
+  // Router.route('/home', {
+  //   name: 'dashboard',
+  //   where: 'client',
+  //   yieldRegions: {
+  //     app: { to: 'main' },
+  //     app_dashboard: { to: 'app' },
+  //   },
+  // });
+});
+
+  Router.route('/me/activities', {
+    name: 'myactivities',
     where: 'client',
     yieldRegions: {
       app: { to: 'main' },
-      app_dashboard: { to: 'app' },
+      myActivities: { to: 'app' },
     },
+    onBeforeAction() {
+      const isLoggedIn = Meteor.userId();
+
+      if (isLoggedIn == null) {
+        this.redirect('/');
+      } else {
+        this.next();
+      }
+    }
   });
-});
 
 /** ***********************************************************/
 /* Discover */

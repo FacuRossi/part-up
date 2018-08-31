@@ -3,7 +3,7 @@
     data-toggle-menu="profile">
     <figure class="pu-avatar pu-avatar-small" style="{{#with image }}background-image:url('{{ partupImageUrl id=. store='80x80'}}');{{/with }}"></figure>
   </button>
-  <div class="pu-dropdown {{#if menuOpen}}pu-dropdown-active{{/if}} pu-dropdown-simple" data-clickoutside-close style="left: auto; right: -12px;">
+  <div class="pu-dropdown {{#if menuOpen}}pu-dropdown-active{{/if}} pu-dropdown-simple pu-dropdown__profile" data-clickoutside-close style="left: auto; right: -12px;">
 
     <div class="pu-dropdown__more {{#if moreActive}}pu-dropdown__more-active{{/if}}">
       <ul class="pu-list">
@@ -14,6 +14,12 @@
       </ul>
       {{> DropdownMenu_Content }}
     </div>
+
+    <ul class="pu-list">
+      <li>
+        <a href="{{ pathFor route='myactivities' }}">{{_ 'dropdowns-profile-button-my_activities'}}</a>
+      </li>
+    </ul>
 
     <ul class="pu-list">
       <li>

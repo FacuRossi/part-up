@@ -75,6 +75,7 @@ Partup.client.language = {
                 passwordMismatch:       TAPi18n.__('base-client-language-ss-passwordMismatch'),
                 emailExists:            TAPi18n.__('base-client-language-ss-emailExists'),
                 emailNotFound:          TAPi18n.__('base-client-language-ss-emailNotFound'),
+                accountDeactivated:     TAPi18n.__('base-client-language-ss-accountDeactivated'),
                 passwordIncorrect:      TAPi18n.__('base-client-language-ss-passwordIncorrect'),
                 shouldNotContainHtml:   TAPi18n.__('base-client-language-ss-shouldNotContainHtml'),
                 missingRequiredTags:    TAPi18n.__('base-client-language-ss-missingRequiredTags'),

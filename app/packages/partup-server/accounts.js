@@ -1,4 +1,5 @@
 var d = Debug('accounts');
+import { userProfileVisibilityLevels } from 'meteor/partup-lib';
 
 Accounts.validateLoginAttempt(function(attempt) {
     var user = attempt.user;
@@ -121,7 +122,6 @@ Accounts.onCreateUser(function(options, user) {
 
         profile = {
             firstname: fbData.first_name,
-            gender: fbData.gender,
             lastname: fbData.last_name,
             facebook_url: 'https://facebook.com/' + fbData.id,
             name: fbData.name,
@@ -161,6 +161,8 @@ Accounts.onCreateUser(function(options, user) {
     user.flags = {
         dailyDigestEmailHasBeenSent: false
     };
+
+    user.profileVisibility = userProfileVisibilityLevels.PUBLIC;
 
     // NOTE: replaced heavy and errorprone get_locale call with fallback
     if (!user.profile.settings.locale) {

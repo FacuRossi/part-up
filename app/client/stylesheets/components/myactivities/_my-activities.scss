@@ -1,0 +1,67 @@
+
+$outer-border-radius: 5px;
+
+.my-activities__wrap {
+  margin: 0;
+  height: 100%;
+  overflow-y: scroll;
+
+  > h1 {
+    width: 90%;
+    max-width: 1210px;
+    margin: 0 auto;
+    display:block;
+    margin-top: 1.2rem;
+  }
+
+  .pu-activity-list {
+    background: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: $outer-border-radius;
+
+    @include goingLarge(800) {
+      margin: 1rem auto;
+      width: 90%;
+      max-width: 1210px;
+    }
+
+    &__block {
+      list-style: none;
+      padding: 0;
+
+      &-header {
+        background-color: hsl(0,0,90%);
+        font-weight: 700;
+        color: hsl(0,0,60%);
+        padding: 0.6rem 0 0.6rem .6rem;
+        border-bottom: 1px solid hsl(0,0, 80%);
+      }
+
+      &-item:not(:first-child) {
+        margin: 0.5rem 0.7rem;
+      }
+
+      &:first-child {
+        border-top-left-radius: $outer-border-radius;
+        border-top-right-radius: $outer-border-radius;
+
+        .pu-activity-list {
+          &__block-header {
+            border-top-left-radius: $outer-border-radius;
+            border-top-right-radius: $outer-border-radius;
+          }
+        }
+      }
+
+      &-item__placeholder {
+        border: 1px dashed #999;
+        padding: 1rem 0.7rem;
+        margin: 1rem;
+        border-radius: 5px;
+        font-weight: 700;
+        font-style: italic;
+        color: #999;
+      }
+    }
+  }
+}

@@ -510,6 +510,10 @@
         pointer-events: all;
         display: block;
     }
+
+    &__profile {
+      overflow-y: scroll;
+    }
 }
 
 @media screen and (max-height: 610px) {

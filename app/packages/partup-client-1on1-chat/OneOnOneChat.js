@@ -40,13 +40,14 @@ Template.OneOnOneChat.onCreated(function() {
         template.activeChatSubscriptionReady.set(false);
         template.activeChatSubscription = template.subscribe('chats.by_id.for_web', chatId, chatMessageOptions, {
             onReady: function() {
-                if (person) {
-                    template.chatPerson.set(person);
-                } else {
-                    template.chatPerson.set(Meteor.users.findOne({_id: {$nin: [Meteor.userId()]}, chats: {$in: [chatId]}}));
-                }
-                startMessageCollector(chatId);
-                template.activeChatSubscriptionReady.set(true);
+              if (person) {
+                template.chatPerson.set(person);
+              } else {
+                const otherUser = Meteor.users.findOne({_id: {$nin: [Meteor.userId()]}, chats: {$in: [chatId]}});
+                template.chatPerson.set(otherUser);
+              }
+              startMessageCollector(chatId);
+              template.activeChatSubscriptionReady.set(true);
             }
         });
     };

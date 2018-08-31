@@ -1,5 +1,5 @@
 <template name="Contribution">
-  <div class="pu-contribution {{#if isOwnContribution }}pu-contribution-own{{/if }} {{#if contribution.archived }}pu-contribution-archived{{/if }} {{#unless contribution.verified}}unverified{{/unless}}">
+  <div class="pu-contribution {{#if contribution.archived }}pu-contribution-archived{{/if }} {{#unless contribution.verified}}unverified{{/unless}}">
     {{#if contribution.archived }}
       <p>{{_ 'contribution-removed' }}</p>
     {{ else }}
@@ -31,6 +31,8 @@
         {{/autoForm}}
       {{ else }}
 
+      <div class="pu-contribution--content {{#if isOwnContribution }}pu-contribution-own{{/if }}">
+
         {{#if isOwnContribution }}
           <figure class="pu-avatar pu-avatar-small" style="{{ userBackgroundImage contribution.upper_id '80x80' }}">
             <i class="picon-pencil"></i>
@@ -43,19 +45,19 @@
 
         {{#if filled }}
           <p class="pu-contribution-info">
-          {{#if isNumber contribution.hours }}
-            {{_ 'contribution-hour' count=contribution.hours }}
-          {{/if }}
-          {{#if hoursAndRate }}&mdash; {{/if }}
-          {{#if isNumber contribution.rate }}
-            {{ contribution.rate }} {{_ 'contribution-hourly-rate' currency=contribution.currency }}
-          {{/if }}
+            {{#if isNumber contribution.hours }}
+              {{_ 'contribution-hour' count=contribution.hours }}
+            {{/if }}
+            {{#if hoursAndRate }}&mdash; {{/if }}
+            {{#if isNumber contribution.rate }}
+              {{ contribution.rate }} {{_ 'contribution-hourly-rate' currency=contribution.currency }}
+            {{/if }}
           </p>
         {{ else }}
           {{#if isOwnContribution }}
-            <p class="pu-contribution-none">
+            <span class="pu-contribution-none">
               {{_ 'contribution-none' }}
-            </p>
+            </span>
           {{ else }}
             {{#unless contribution.verified }}
               <span>{{_ 'contribution-unverified' }}</span>
@@ -63,14 +65,22 @@
           {{/if }}
         {{/if }}
 
-        {{#unless contribution.verified }}
-        {{#if mayVerify }}
-          <div class="pu-contribution-verify">
-              <a class="pu-button pu-button-text pu-button-text-subtle" data-reject>{{_ 'contribution-reject'}}</a>
-              <a class="pu-button" data-accept>{{_ 'contribution-accept'}}</a>
-          </div>
-        {{/if }}
-        {{/unless }}
+      </div>
+
+          {{#unless contribution.verified }}
+            {{#if mayVerify }}
+              <div class="pu-contribution-verify">
+                  <a class="pu-button pu-button-text pu-button-text-subtle" data-reject>{{_ 'contribution-reject'}}</a>
+                  <a class="pu-button" data-accept>{{_ 'contribution-accept'}}</a>
+              </div>
+            {{/if }}
+          {{ else }}
+            {{#if finalized }}
+              <a class="pu-button pu-button-text pu-button-text-subtle pu-button-finalize" data-unfinalize-contribution>{{_ 'contribution-unfinalize'}}</a>
+            {{ else }}
+              <a class="pu-button pu-button-text pu-button-finalize" data-finalize-contribution>{{_ 'contribution-finalize'}}</a>
+            {{/if }}
+          {{/unless }}
 
       {{/if }}
     {{/if }}

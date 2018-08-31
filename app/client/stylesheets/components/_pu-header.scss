@@ -82,6 +82,10 @@ $modal-bar-height: 70px;
         .pu-button-header {
             transition: background-color 150ms;
             margin-top: 0;
+
+            &:hover {
+              color: darken(#999, 15%);
+            }
         }
 
         &.pu-header-progress {

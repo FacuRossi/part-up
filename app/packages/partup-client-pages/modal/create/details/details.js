@@ -81,10 +81,12 @@ var createOrUpdatePartup = function createOrUpdatePartup(partupId, insertDoc, ca
             callback(partup);
             Session.set('partials.create-partup.current-partup', partup._id);
 
-            analytics.track('Part-up created', {
-                partupId: partup._id,
-                userId: Meteor.user()._id,
-            });
+            if (analytics) {
+              analytics.track('Part-up created', {
+                  partupId: partup._id,
+                  userId: Meteor.user()._id,
+              });
+            }
         });
 
     }
@@ -104,10 +106,10 @@ afHooks[FORM_ID] = {
         template.submitting.set(submissionType);
 
         var possiblyExistingPartupId = Session.get('partials.create-partup.current-partup');
-        createOrUpdatePartup(possiblyExistingPartupId, insertDoc, function(partup) {
 
-            Router.go('create-activities', {_id: partup._id, slug: template.data.networkSlug});
-            Session.set('createPartupForNetworkById', false);
+        createOrUpdatePartup(possiblyExistingPartupId, insertDoc, function(partup) {
+          Router.go('create-activities', {_id: partup._id, slug: template.data.networkSlug});
+          Session.set('createPartupForNetworkById', false);
         }, self);
 
         this.event.preventDefault();

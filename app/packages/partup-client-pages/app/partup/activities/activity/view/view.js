@@ -5,9 +5,19 @@ const isContributing = (activity) => {
   return Contributions.find({ upper_id: Meteor.userId(), activity_id: activity._id, archived: { $ne: true } }).count();
 };
 
+const pendingInvite = (activity) => {
+  return Invites.findOne({
+    invitee_id: Meteor.userId(),
+    status: Invites.INVITE_STATUS.PENDING,
+    activity_id: activity._id,
+  });
+}
+
 const contribute = (activity, callback = noop, contribution) => {
   new Promise((resolve, reject) => {
-    if (User(Meteor.user()).isPartnerInPartup(activity.partup_id)) {
+    const isInvited = pendingInvite(activity) != null;
+
+    if (User(Meteor.user()).isPartnerInPartup(activity.partup_id) || isInvited) {
       if (contribution) {
         resolve(contribution);
       } else {
@@ -52,14 +62,45 @@ Template.ActivityView.onCreated(function() {
 });
 
 Template.ActivityView.helpers({
+  contributionCount() {
+    return !!Contributions.find({ activity_id: this.activity._id, archived: { $ne: true } }).count();
+  },
   contributions() {
     if (this.activity) {
-      return Contributions.find({ activity_id: this.activity._id, archived: { $ne: true } });
+      const cursor = Contributions.find({ activity_id: this.activity._id, archived: { $ne: true } });
+      let contributions;
+
+      if (this.type === 'me') {
+
+        const amountToShow = 3;
+        contributions = cursor.fetch();
+
+        if (contributions.length > amountToShow) {
+          const rest = contributions.length - amountToShow;
+          contributions.splice(amountToShow, rest);
+          contributions.push({
+            rest,
+          });
+        }
+      } else {
+        contributions = cursor;
+      }
+
+      return contributions;
     }
     return false;
   },
+  partupName() {
+    return get(Partups.findOne(get(this.activity, 'partup_id')), 'name');
+  },
+  hasPendingInvite() {
+    return pendingInvite(this.activity) != null;
+  },
   dropdownData() {
     const self = this;
+
+    // hack to make reactive?
+    Template.instance().dropdownToggle.get();
 
     return {
       activity() {
@@ -67,6 +108,9 @@ Template.ActivityView.helpers({
       },
       isCreate() {
         return self.type === 'create';
+      },
+      isMyActivities() {
+        return self.type === 'me';
       },
       isContributing() {
         return isContributing(self.activity);
@@ -81,6 +125,9 @@ Template.ActivityView.helpers({
       },
       mayEditActivity() {
         return User(Meteor.user()).isPartnerInPartup(get(self.activity, 'partup_id'));
+      },
+      activityMayBeStarred() {
+        return self.type !== 'me';
       }
     }
   },
@@ -128,6 +175,20 @@ Template.ActivityView.helpers({
   update() {
     return Updates.findOne(get(this.activity, 'update_id'));
   },
+  dateClasses() {
+    const endDate = get(this.activity, 'end_date');
+    const today = moment().startOf('day');
+
+    if (moment(endDate).diff(today) === 0) {
+      return 'pu-date--due-today';
+    } else if (moment(endDate).diff(today) < 0) {
+      return 'pu-date--overdue';
+    }
+    return undefined;
+  },
+  // mayInviteOthers() {
+  //   return User(Meteor.user()).isPartnerInPartup(get(this.activity, 'partup_id'));
+  // }
 });
 
 Template.ActivityView.events({
@@ -233,5 +294,41 @@ Template.ActivityView.events({
     if (template.data.type !== 'boardview') {
       template.filesToggle.set(!template.filesToggle.curValue);
     }
-  }
+  },
+  'click [data-finalize-contribution]'(event, template) {
+    const contribution = Contributions.findOne({
+      upper_id: Meteor.userId(),
+      activity_id: get(template.data, 'activity._id'),
+      finalized: {
+        $ne: true
+      },
+    });
+
+    if (contribution) {
+      Meteor.call('contributions.finalize', contribution._id, (error, result) => {
+        if (error) {
+          Partup.client.notify.error(TAPi18n.__(error));
+        } else if (result._id) {
+          Partup.client.notify.info(TAPi18n.__('contribution-finalize-success'));
+        }
+      });
+    }
+  },
+  'click [data-unfinalize-contribution]'(event, template) {
+    const contribution = Contributions.findOne({
+      upper_id: Meteor.userId(),
+      activity_id: get(template.data, 'activity._id'),
+      finalized: true,
+    });
+
+    if (contribution) {
+      Meteor.call('contributions.unfinalize', contribution._id, (error, result) => {
+        if (error) {
+          Partup.client.notify.error(TAPi18n.__(error));
+        } else if (result._id) {
+          Partup.client.notify.info(TAPi18n.__('contribution-unfinalize-success'));
+        }
+      });
+    }
+  },
 });

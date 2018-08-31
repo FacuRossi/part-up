@@ -38,9 +38,15 @@
                                     <button data-reactivate-user>reactivate</button>
                                 </li>
                             {{/if}}
-                            <li class="pu-dropdownitem pu-dropdownitem-small">
-                                <button data-impersonate-user>impersonate</button>
-                            </li>
+                            {{# if isActiveImpersonationRequest impersonationRequest }}
+                              <li class="pu-dropdownitem pu-dropdownitem-small">
+                                  <button data-impersonate-user>impersonate</button>
+                              </li>
+                            {{ else }}
+                              <li class="pu-dropdownitem pu-dropdownitem-small">
+                                <button data-request-impersonation>request impersonation</button>
+                              </li>
+                            {{/if }}
                         </ul>
                     </div>
                 </li>

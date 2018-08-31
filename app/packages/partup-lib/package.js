@@ -36,14 +36,16 @@ Package.onUse(function(api) {
         'version.js',
         'globals.js',
         'routes.js',
+        'authorization.js',
         'services/location.js',
         'services/placeholder.js',
         'services/tags.js',
         'services/validators.js',
         'services/website.js',
         'collections/activities.js',
-        'collections/invites.js',
         'collections/contributions.js',
+        'collections/impersonationrequests.js',
+        'collections/invites.js',
         'collections/updates.js',
         'collections/notifications.js',
         'collections/partup_user_settings.js',
@@ -143,6 +145,7 @@ Package.onUse(function(api) {
     api.export('Invites');
     api.export('Contributions');
     api.export('Images');
+    api.export('ImpersonationRequests');
     api.export('Temp');
     api.export('Networks');
     api.export('Notifications');
@@ -175,12 +178,16 @@ Package.onUse(function(api) {
     api.export('FEATURE_FLAGS');
     api.export('features');
     api.export('subManager', 'client');
+
+    api.export('userProfileVisibilityLevels');
+    api.export('authorization');
 });
 
 Package.onTest(function(api) {
-  api.use(['ecmascript', 'underscore', 'tinytest', 'practicalmeteor:chai']);
-
-//   api.addFiles('helpers/fileUploader.tests.js', 'client');
+  api.use(['ecmascript', 'underscore', 'tinytest', 'practicalmeteor:chai', 'stevezhu:lodash', 'momentjs:moment']);
+  // api.addFiles('helpers/fileUploader.tests.js', 'client');
   api.addFiles('helpers/files/files.test.js', 'client');
+  api.addFiles('helpers/impersonation.test.js', 'client');
+  api.addFiles('authorization.test.js');
 
 });

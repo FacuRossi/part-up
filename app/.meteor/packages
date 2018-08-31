@@ -19,7 +19,7 @@ cwaring:modernizr
 deepwell:bootstrap-datepicker2
 djedi:sanitize-html
 dsyko:meteor-node-csv
-ecmascript@0.11.0              # Enable ECMAScript2015+ syntax in app code
+ecmascript@0.11.1              # Enable ECMAScript2015+ syntax in app code
 ejson@1.1.0
 es5-shim@4.8.0                # ECMAScript 5 compatibility for older browsers.
 francocatena:status
@@ -42,7 +42,6 @@ momentjs:moment
 mongo@1.5.0
 mrt:jquery-mousewheel
 #msavin:mongol
-okgrow:analytics
 partup-client-1on1-chat
 partup-client-admin
 partup-client-admin-createswarm
@@ -132,4 +131,5 @@ partup-client-forms
 yogiben:autoform-tags@=0.1.3
 verso:intercom
 pauli:accounts-linkedin@3.1.0
-underscore
+underscore@1.0.10
+okgrow:analytics@1.0.9

@@ -22,10 +22,13 @@ export class PartupInviteHeader extends React.Component<Props, State> {
 
     public componentWillMount() {
         const { invite } = this.props;
-        this.inviter = Users.findOneStatic({ _id: invite.inviter_id }) as UserDocument;
+        this.inviter = Users.findOneAny({ _id: invite.inviter_id }) as UserDocument;
     }
 
     public render() {
+        if (!this.inviter) {
+            return '';
+        }
         return (
             <div className={this.getClassNames()} dangerouslySetInnerHTML={{ __html: this.getHeaderText() }}/>
         );

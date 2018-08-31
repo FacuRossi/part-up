@@ -1,4 +1,7 @@
-import _ from 'lodash'
+import _ from 'lodash';
+import { userProfileVisibilityLevels } from 'meteor/partup-lib';
+
+const { impersonation } = Partup.helpers;
 
 Meteor.methods({
     /**
@@ -53,15 +56,17 @@ Meteor.methods({
         var user = Meteor.user();
         if (!user) throw new Meteor.Error(401, 'unauthorized');
 
+        const userId = user._id;
+
         try {
             // Remove accents that might have been added to the query
             searchString = mout.string.replaceAccents(searchString.toLowerCase());
             var selector = {'profile.normalized_name': new RegExp('.*' + searchString + '.*', 'i')};
             if (options.chatSearch) selector._id = {$ne: user._id};
-            var suggestions = Meteor.users.findActiveUsers(selector, {limit: 30}).fetch();
+            var suggestions = Meteor.users.findActiveUsers(userId, selector, {limit: 30}).fetch();
             switch (group) {
                 case 'partners':
-                    var partners = Meteor.users.findActiveUsers({upperOf: {$in: [partupId]}}).fetch();
+                    var partners = Meteor.users.findActiveUsers(userId, {upperOf: {$in: [partupId]}}).fetch();
                     suggestions.unshift({
                         type: 'partners',
                         name: 'Partners',
@@ -70,7 +75,7 @@ Meteor.methods({
 
                     break;
                 case 'supporters':
-                    var supporters = Meteor.users.findActiveUsers({supporterOf: {$in: [partupId]}}).fetch();
+                    var supporters = Meteor.users.findActiveUsers(userId, {supporterOf: {$in: [partupId]}}).fetch();
                     suggestions.unshift({
                         type: 'supporters',
                         name: 'Supporters',
@@ -103,10 +108,11 @@ Meteor.methods({
         var user = Meteor.user();
         if (!user) throw new Meteor.Error(401, 'unauthorized');
 
+        const userId = user._id;
         try {
             // Remove accents that might have been added to the query
             searchString = mout.string.replaceAccents(searchString.toLowerCase());
-            return Meteor.users.findActiveUsers({'profile.normalized_name': new RegExp('.*' + searchString + '.*', 'i')}, {limit: 30}).fetch();
+            return Meteor.users.findActiveUsers(userId, {'profile.normalized_name': new RegExp('.*' + searchString + '.*', 'i')}, {limit: 30}).fetch();
         } catch (error) {
             Log.error(error);
             throw new Meteor.Error(400, 'users_could_not_be_autocompleted');
@@ -203,6 +209,41 @@ Meteor.methods({
         return Meteor.users.findStatsForAdmin();
     },
 
+    'users.admin_get_accepted_impersonation_requests'() {
+      const admin = Meteor.users.findOne(this.userId);
+
+      if (User(admin).isAdmin()) {
+        return ImpersonationRequests.findAcceptedRequests();
+      }
+
+      return undefined;
+    },
+
+    'users.admin_request_impersonation'(userId) {
+      const admin = Meteor.users.findOne(this.userId);
+
+      if (User(admin).isAdmin()) {
+        const impersonateUser = Meteor.users.findOne(userId);
+
+        if (impersonateUser) {
+          const existingImpersonationRequest = ImpersonationRequests.findOneActiveRequest(impersonateUser._id, impersonation.IMPERSONATION_REQUEST_STATUS.PENDING);
+          if (existingImpersonationRequest) {
+            throw new Meteor.Error(0, `admin-error-impersonation-request-existing-request`, 'The user already has a pending impersonation request, please both refresh the page.');
+          }
+
+          if (impersonateUser) {
+            ImpersonationRequests.insert({
+              adminId: admin._id,
+              userId: impersonateUser._id,
+              status: impersonation.IMPERSONATION_REQUEST_STATUS.PENDING,
+            });
+            return 1;
+          }
+        }
+      }
+      return -1;
+    },
+
     /**
     * Returns user stats to superadmins only
     */
@@ -215,11 +256,10 @@ Meteor.methods({
           const impersonateUser = Meteor.users.findOne(userId);
 
           if (impersonateUser) {
-            const { impersonation } = Partup.helpers;
+            const request = ImpersonationRequests.findOneActiveRequest(impersonateUser._id, impersonation.IMPERSONATION_REQUEST_STATUS.ACCEPTED);
 
-            const date = impersonation.getLastDate(impersonateUser);
-            if (date) {
-              const timeLeft = impersonation.timeLeft(date);
+            if (request) {
+              const timeLeft = impersonation.timeLeft(request);
 
               if (timeLeft > 0) {
                 Meteor.setTimeout(() => {
@@ -239,10 +279,26 @@ Meteor.methods({
     },
 
     'users.allow_impersonation'() {
-      const user = Meteor.users.findOne(this.userId);
-      if (user) {
-        Meteor.users.update(user._id, { $push: { impersonation: new Date() } });
+      const impersonationRequest = ImpersonationRequests.findOneActiveRequest(this.userId);
+
+      if (!impersonationRequest) {
+        return -1;
       }
+      if (impersonation.isActive(impersonationRequest)) {
+        throw new Meteor.Error(0, 'impersonation-still-active', 'The last ImpersonationRequest is still active');
+      }
+
+      const changes =  {
+        status: impersonation.IMPERSONATION_REQUEST_STATUS.ACCEPTED,
+        accepted_at: new Date(),
+      };
+
+      ImpersonationRequests.update(impersonationRequest._id, { $set: changes });
+      return Object.assign(impersonationRequest, changes);
+    },
+
+    'users.get_non_expired_impersonation_request'() {
+      return ImpersonationRequests.findOneActiveRequest(this.userId);
     },
 
     /**
@@ -455,18 +511,44 @@ Meteor.methods({
         }
 
         try {
-            
+
             // Remove all partnerships & and become a supporter
             _.get(user, 'upperOf', []).forEach((partupId) => {
                 partup = Partups.findOne({_id: partupId})
+
                 // If the user is the only partner, archive first
-                if (_.isEqual(partup.uppers, [user.id])) {
+                if (_.isEqual(partup.uppers, [user._id])) {
                     Meteor.call('partups.archive', partupId)
                 }
+
                 Meteor.call('partups.unpartner', partupId, function (err, res) {
                     Meteor.call('partups.supporters.remove', partupId)
                 })
             })
+
+            // Remove the user as a creator from partups
+            Partups.find({ creator_id: user._id })
+              .forEach((partup) => {
+                if (Array.isArray(partup.uppers)) {
+                  let newCreatorId;
+
+                  while (partup.uppers.length > 0) {
+                    const id = partup.uppers.shift();
+                    if (id !== user._id) {
+                      newCreatorId = id;
+                      break;
+                    }
+                  }
+
+                  // If there's no upper other than the user that get's deleted set it to partup admin
+                  // this is so there will always be a creator_id;
+                  if (!newCreatorId) {
+                    newCreatorId = 'EBnHxX2WYy6LicBPg'; // Partup admin user
+                  }
+
+                  Partups.update(partup._id, { $set: { 'creator_id': newCreatorId }});
+                }
+              });
 
             // Remove supporter from partup
             _.get(user, 'supporterOf', []).forEach((partupId) => {
@@ -507,9 +589,9 @@ Meteor.methods({
 
             // Find any tiles associated with a user and delete them
             // But keep a record for images that need to deleted
-            Tiles.find({upper_id: user.id}).forEach((tile) => {
-                if (tile.image_id) {
-                    imagesForDeletion.push(tile.image_id)
+            Tiles.find({upper_id: user._id}).forEach((tile) => {
+                if (tile.image_id && tile.upper_id === user._id) {
+                  imagesForDeletion.push(tile.image_id)
                 }
                 Meteor.call('tiles.remove', tile._id)
             })
@@ -577,6 +659,36 @@ Meteor.methods({
       if (intercomSecret) {
         return Npm.require('crypto').createHmac('sha256', new Buffer(intercomSecret, 'utf8')).update(userId).digest('hex');
       }
+    },
+
+    'users.getProfileVisibility'(userId) {
+      check(userId, String);
+
+      if (userId !== this.userId) {
+        throw new Meteor.Error(401, 'unauthorized', 'users.getProfileVisibility userId mismatch. Can only be called by for the viewer by the viewer');
+      }
+
+      const user = Meteor.users.findOne(userId);
+      return _.get(user, 'profileVisibility', 'public');
+    },
+
+    'users.setProfileVisibility'(userId, visibility) {
+      check(userId, String);
+      check(visibility, String);
+
+      const visibilityLevels = Array.from(userProfileVisibilityLevels);
+
+      const r = new RegExp(visibilityLevels.join('|'), 'gi');
+      if (!r.test(visibility)) {
+        throw new Meteor.Error(0, 'invalid visibility level', `visibility given is ${visibility} but must be one of '${visibilityLevels.join(', ')}'`);
+      }
+
+      if (userId !== Meteor.userId()) {
+        throw new Meteor.Error(401, 'unauthorized', 'users.setProfileVisibility userId mismatch. Can only be used for the user requesting the change');
+      }
+
+      Meteor.users.update(userId, { $set: { profileVisibility: visibility } });
+      return true;
     },
 
 });

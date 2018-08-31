@@ -1,8 +1,15 @@
 'use strict';
-
+import _ from 'lodash';
 import NotificationModel from '../js-models/NotificationModel';
 
 var d = Debug('services:notifications');
+
+const canReceiveNotifications = (user) => {
+  const deactivated = _.get(user, 'deactivatedAt');
+  const deleted = _.get(user, 'deletedAt');
+
+  return !deactivated && !deleted;
+}
 
 /**
  @namespace Partup server notifications service
@@ -15,16 +22,18 @@ Partup.server.services.notifications = {
      *
      * @param  {object} options
      */
-    send: function(options) {
-        options = options || {};
-        var notification = {};
+    send(options = {}) {
+        let notification = {};
 
-        if (!options.userId) throw new Meteor.Error('Required argument [options.userId] is missing for method [Partup.server.services.notifications::send]');
+        if (!options.userId) {
+          throw new Meteor.Error('Required argument [options.userId] is missing for method [Partup.server.services.notifications::send]');
+        }
 
-        // check if user is deactivated, if so, don't send an email (failsafe)
+        // Do not send notifications when one of the following is true;
         const user = Meteor.users.findOne({_id: options.userId});
-        const deactivatedAt = lodash.get(user, 'deactivatedAt');
-        if (deactivatedAt) return; // user is deactivated, bailing out
+        if (!canReceiveNotifications(user)) {
+          return;
+        }
 
         if (!options.type) throw new Meteor.Error('Required argument [options.type] is missing for method [Partup.server.services.notifications::send]');
         if (!options.typeData) throw new Meteor.Error('Required argument [options.typeData] is missing for method [Partup.server.services.notifications::send]');

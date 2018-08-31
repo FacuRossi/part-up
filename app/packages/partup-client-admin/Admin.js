@@ -1,3 +1,6 @@
+import _ from 'lodash';
+import impersonation from "../partup-lib/helpers/impersonation";
+
 Template.Admin.onCreated(function() {
     var template = this;
 
@@ -20,13 +23,33 @@ Template.Admin.onCreated(function() {
     Meteor.call('partups.admin_stats', function(error, results) {
         template.partupstats.set(results);
     });
+    Meteor.call('users.admin_get_accepted_impersonation_requests', (error, result) => {
+      if (result) {
+        template.acceptedImpersonationRequests = result;
+      }
+    });
 
 });
 
 Template.Admin.helpers({
     users: function() {
         var users = Template.instance().users.get();
+        const impersonationRequests = Template.instance().acceptedImpersonationRequests;
+        const withImpersonationRequest = _.reduce(users, (total, user) => {
+          const impersonationRequest = _.find(impersonationRequests, ({ userId }) => userId === user._id);
+
+          if (impersonationRequest) {
+            user.impersonationRequest = impersonationRequest;
+          }
+
+          total.push(user);
+          return total;
+        }, []);
         return users;
+    },
+    isActiveImpersonationRequest(request) {
+      const { impersonation } = Partup.helpers;
+      return impersonation.isActive(request);
     },
     userStats: function() {
         return Template.instance().userstats.get();
@@ -99,6 +122,28 @@ Template.Admin.events({
             }
         });
     },
+    'click [data-request-impersonation]'(event) {
+      event.preventDefault();
+      const userId = this._id;
+
+      Meteor.call('users.admin_get_accepted_impersonation_requests', (error, result) => {
+        for (let req of result) {
+          if (req.userId === userId) {
+            Partup.client.notify.info('There is an accepted request for this user, please refresh the page');
+            return;
+          }
+        }
+        Meteor.call('users.admin_request_impersonation', userId, (error, result) => {
+          if (error) {
+            Partup.client.notify.error(error.details);
+          } else if (result === 1) {
+            Partup.client.notify.info('Impersonation request successful, please ask the user to refresh their advanced profile tab');
+          } else {
+            Partup.client.notify.info('something went wrong with the impersonation request');
+          }
+        });
+      });
+    },
     'click [data-impersonate-user]': function(event, template) {
       event.preventDefault();
       var userId = this._id;
@@ -107,10 +152,11 @@ Template.Admin.events({
           Partup.client.notify.error(TAPi18n.__(error.reason));
           return;
         }
+
         if (timeLeft > 0) {
           Meteor.setTimeout(() => {
             Meteor.connection.setUserId(Meteor.userId());
-          }, timeLeft);
+          }, impersonation.durationMS);
 
           Meteor.connection.setUserId(userId);
           Intent.go({route: 'home'});
