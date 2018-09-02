@@ -218,6 +218,7 @@
       </li>
       {{/if }}
       {{#if isUpper }}
+      {{#unless isMyActivities }}
       <li class="pu-dropdown-item">
         {{#if activity.archived }}
           <a data-unarchive>{{_ 'unarchive' }}</a>
@@ -225,6 +226,7 @@
           <a data-archive>{{_ 'archive' }}</a>
         {{/if }}
       </li>
+      {{/unless}}
       {{/if }}
       <li class="pu-dropdown-item">
         <a data-invite>

@@ -75,10 +75,12 @@
               </div>
             {{/if }}
           {{ else }}
-            {{#if finalized }}
-              <a class="pu-button pu-button-text pu-button-text-subtle pu-button-finalize" data-unfinalize-contribution>{{_ 'contribution-unfinalize'}}</a>
-            {{ else }}
-              <a class="pu-button pu-button-text pu-button-finalize" data-finalize-contribution>{{_ 'contribution-finalize'}}</a>
+            {{#if isOwnContribution }}
+              {{#if finalized }}
+                <a class="pu-button pu-button-text pu-button-text-subtle pu-button-finalize" data-unfinalize-contribution>{{_ 'contribution-unfinalize'}}</a>
+              {{ else }}
+                <a class="pu-button pu-button-text pu-button-finalize" data-finalize-contribution>{{_ 'contribution-finalize'}}</a>
+              {{/if }}
             {{/if }}
           {{/unless }}
 
