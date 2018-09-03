@@ -1,3 +1,13 @@
+<a name="4.8.3"></a>
+## [4.8.3](https://github.com/part-up/part-up/compare/4.8.2...4.8.3) (2018-08-28)
+
+
+### Bug Fixes
+
+* **activities:** Fix finalized query back-end ([f80f432](https://github.com/part-up/part-up/commit/f80f432))
+
+
+
 <a name="4.8.2"></a>
 ## [4.8.2](https://github.com/part-up/part-up/compare/4.8.1...4.8.2) (2018-08-27)
 
@@ -19,12 +29,18 @@
 
 ### Bug Fixes
 
+* **chats:** Fix chat search ([1d6b276](https://github.com/part-up/part-up/commit/1d6b276))
 * **user:** Fix typo for removing user tiles ([290e8db](https://github.com/part-up/part-up/commit/290e8db))
 
 
 ### Features
 
+* **auth:** Add guardedFind for users ([c73ae40](https://github.com/part-up/part-up/commit/c73ae40))
+* **auth:** Add user authorization module ([cc16e9a](https://github.com/part-up/part-up/commit/cc16e9a))
+* **authorization:** Guard user profile page ([287b333](https://github.com/part-up/part-up/commit/287b333))
+* **authorization:** Set default user visibility to public when create account ([ecddf90](https://github.com/part-up/part-up/commit/ecddf90))
 * **contribution:** You can now finalize contributions ([5858ee9](https://github.com/part-up/part-up/commit/5858ee9))
+* **profile:** Add visibility option to advanced profile tab ([ef27a7a](https://github.com/part-up/part-up/commit/ef27a7a))
 
 
 
