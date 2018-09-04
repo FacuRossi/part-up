@@ -1,3 +1,13 @@
+<a name="4.9.0"></a>
+# [4.9.0](https://github.com/part-up/part-up/compare/4.8.3...4.9.0) (2018-09-03)
+
+
+### Bug Fixes
+
+* **contribution:** Allow only finalizing of own contributions ([7e2444a](https://github.com/part-up/part-up/commit/7e2444a))
+
+
+
 <a name="4.8.3"></a>
 ## [4.8.3](https://github.com/part-up/part-up/compare/4.8.2...4.8.3) (2018-08-28)
 
