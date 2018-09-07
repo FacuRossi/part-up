@@ -1,3 +1,13 @@
+<a name="4.9.1"></a>
+## [4.9.1](https://github.com/part-up/part-up/compare/4.9.0...4.9.1) (2018-09-04)
+
+
+### Bug Fixes
+
+* **search:** Show users without profileVisibility in invite search ([35d9329](https://github.com/part-up/part-up/commit/35d9329))
+
+
+
 <a name="4.9.0"></a>
 # [4.9.0](https://github.com/part-up/part-up/compare/4.8.3...4.9.0) (2018-09-03)
 
