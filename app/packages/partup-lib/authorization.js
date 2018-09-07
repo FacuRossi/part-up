@@ -90,7 +90,7 @@ authorization = {
       // undefined is explicitly mentioned in the switch statement,
       // when this feater was implemented no migration is ran and many users do not set their visibility;
       case undefined:
-        cansSee = true; // By default all profiles are public;
+        canSee = true; // By default all profiles are public;
         break;
       default:
         break;
