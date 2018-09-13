@@ -1,3 +1,8 @@
+<a name="4.9.2"></a>
+## [4.9.2](https://github.com/part-up/part-up/compare/4.9.1...4.9.2) (2018-09-07)
+
+
+
 <a name="4.9.1"></a>
 ## [4.9.1](https://github.com/part-up/part-up/compare/4.9.0...4.9.1) (2018-09-04)
 
