@@ -124,13 +124,13 @@
           <ul>
               {{#unless CREATE }}
               <li>
-                  <button class="pu-button pu-button-text pu-button-text-subtle" data-dismiss>
+                  <button type="button" class="pu-button pu-button-text pu-button-text-subtle" data-dismiss>
                       {{_ 'activity-form-close' }}
                   </button>
               </li>
               {{/unless }}
               <li>
-                  <button class="pu-button {{#if isSubmitting}}pu-state-loading{{/if}} {{#if fileController.uploading.get }}disabled{{/if}}" data-submit>
+                  <button type="submit" class="pu-button {{#if isSubmitting}}pu-state-loading{{/if}} {{#if fileController.uploading.get }}disabled{{/if}}" data-submit>
                       <span>
                           {{#if isExistingActivity }}
                               {{_ 'activity-form-save' }}
