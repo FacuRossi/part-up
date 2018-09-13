@@ -37,13 +37,13 @@ Template.DatePicker.onRendered(function() {
     if (template.data.collapsable) {
         const $inlineDatePickerTrigger = $('.pu-input-datepicker-inline');
         const $inlineDatePicker = $('.datepicker-inline');
-    
+
         if ($inlineDatePicker && $inlineDatePickerTrigger) {
             if (prefillValue) {
                 $(`[${input}]`).find('.pu-input-datepicker-inline').val(moment(prefillValue.toISOString()).format('L'));
             }
 
-            $inlineDatePicker.addClass('collapsed');        
+            $inlineDatePicker.addClass('collapsed');
             $inlineDatePickerTrigger.on('click', function () {
                 if ($inlineDatePicker.hasClass('collapsed')) {
                     $inlineDatePicker.removeClass('collapsed');
@@ -71,6 +71,7 @@ Template.DatePicker.events({
         const $inlineDatePickerTrigger = $('.pu-input-datepicker-inline');
         if ($inlineDatePickerTrigger) {
             $(`[${template.data.inputSettings.input}]`).find('.pu-input-datepicker-inline').val('');
+            $('[data-autoform-input]').val('');
         }
     },
     'click .disabled': function(event, template) {

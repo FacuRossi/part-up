@@ -81,11 +81,26 @@ Meteor.methods({
         }
 
         try {
-            var updatedActivity = Partup.transformers.activity.fromForm(fields, activity.creator_id, activity.partup_id);
+            var updatedActivity = {
+              ...activity,
+              ...Partup.transformers.activity.fromForm(fields, activity.creator_id, activity.partup_id)
+            }
 
             updatedActivity.updated_at = new Date();
 
-            Activities.update(activityId, {$set: {...activity, ...updatedActivity}});
+            if (fields.end_date == null) {
+              delete updatedActivity['end_date'];
+              Activities.update(activityId, {
+                $set: {
+                  updatedActivity,
+                },
+                $unset: {
+                  end_date: '',
+                }
+              });
+            } else {
+              Activities.update(activityId, {$set: updatedActivity });
+            }
 
             // Post system message
             Partup.server.services.system_messages.send(upper, activity.update_id, 'system_activities_updated');
