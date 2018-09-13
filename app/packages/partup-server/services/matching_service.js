@@ -22,9 +22,8 @@ Partup.server.services.matching = {
         var activity = Activities.findOneOrFail(activityId);
         var partup = Partups.findOneOrFail(activity.partup_id);
         var tags = partup.tags || [];
-        var uppers = partup.uppers || [];
 
-        return this.findMatchingUppers(searchOptions, tags, uppers);
+        return this.findMatchingUppers(searchOptions, tags);
     },
 
     /**
