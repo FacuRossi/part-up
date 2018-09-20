@@ -1,3 +1,15 @@
+<a name="4.9.3"></a>
+## [4.9.3](https://github.com/part-up/part-up/compare/4.9.2...4.9.3) (2018-09-13)
+
+
+### Bug Fixes
+
+* **activity:** Unset end_date when not present on update ([8b19f36](https://github.com/part-up/part-up/commit/8b19f36))
+* **form:** Set button types for submit ([ecff710](https://github.com/part-up/part-up/commit/ecff710))
+* **invite:** Don't exclude uppers on activity invite ([9a3f8d3](https://github.com/part-up/part-up/commit/9a3f8d3))
+
+
+
 <a name="4.9.2"></a>
 ## [4.9.2](https://github.com/part-up/part-up/compare/4.9.1...4.9.2) (2018-09-07)
 
