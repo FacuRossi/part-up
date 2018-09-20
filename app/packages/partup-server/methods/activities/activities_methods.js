@@ -62,6 +62,7 @@ Meteor.methods({
      * @param {mixed[]} fields
      */
     'activities.update': function(activityId, fields) {
+      // console.log('activities.update: ', activityId, fields);
 
         if (fields && fields.end_date && typeof fields.end_date === "string") {
            fields.end_date = moment(fields.end_date).toDate()
@@ -81,25 +82,23 @@ Meteor.methods({
         }
 
         try {
-            var updatedActivity = {
-              ...activity,
-              ...Partup.transformers.activity.fromForm(fields, activity.creator_id, activity.partup_id)
-            }
-
-            updatedActivity.updated_at = new Date();
+            const updatedActivity = Object.assign(
+              activity,
+              Partup.transformers.activity.fromForm(fields, activity.creator_id, activity.partup_id)
+            );
 
             if (fields.end_date == null) {
               delete updatedActivity['end_date'];
               Activities.update(activityId, {
-                $set: {
-                  updatedActivity,
-                },
+                $set: updatedActivity,
                 $unset: {
                   end_date: '',
                 }
               });
             } else {
-              Activities.update(activityId, {$set: updatedActivity });
+              Activities.update(activityId, {
+                $set: updatedActivity,
+              });
             }
 
             // Post system message

@@ -14,15 +14,11 @@ Partup.transformers.activity = {
      */
     'fromForm': function(fields, upperId, partupId) {
         return {
-            // name: fields.name,
-            // description: fields.description,
-            // end_date: fields.end_date,
-            created_at: new Date(),
+            // created_at: new Date(),
             updated_at: new Date(),
             creator_id: upperId,
             partup_id: partupId,
             archived: false,
-            // lane_id: fields.lane_id,
             ...fields,
         };
     }
