@@ -486,7 +486,7 @@ const sortLaneHandle = (template) => ({ from, to, item, oldIndex, newIndex }) =>
   debug.log('sortLaneHandle invoked');
 
   try {
-    const fromLaneId = $(from).data('sortable-lane');
+    // const fromLaneId = $(from).data('sortable-lane');
     const toLaneId = $(to).data('sortable-lane');
     const activityId = $(item).data('activity');
 
