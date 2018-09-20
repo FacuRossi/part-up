@@ -115,15 +115,15 @@ Meteor.methods({
     },
 
     'activities.move_lane': function(activityId, opts) {
-      const {
-        toLaneId,
-        newIndex,
-      } = opts;
       check(activityId, String);
       check(opts, {
         toLaneId: String,
         newIndex: Number,
       });
+      const {
+        toLaneId,
+        newIndex,
+      } = opts;
 
       const user = Meteor.user();
       const activity = Activities.findOneOrFail(activityId);
@@ -139,11 +139,12 @@ Meteor.methods({
       try {
         const toLane = Lanes.findOneOrFail(toLaneId);
         const activityIds = _.uniq(toLane.activities);
-        _.remove(activityIds, activityId);
+
+        _.pull(activityIds, activityId);
         activityIds.splice(newIndex, 0, activityId);
 
         Activities.update(activityId, { $set: { lane_id: toLaneId, updated_at: new Date() } });
-        Lanes.update(toLane._id, { $set: { activities: activityIds, update_at: new Date() } });
+        Lanes.update(toLane._id, { $set: { activities: activityIds, updated_at: new Date() } });
 
         // Remove activity from other lanes;
         Lanes.find({ _id: { $ne: toLaneId }, activities: activityId }).forEach((lane) => {
