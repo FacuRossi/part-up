@@ -14,7 +14,7 @@ Partup.transformers.activity = {
      */
     'fromForm': function(fields, upperId, partupId) {
         return {
-            // created_at: new Date(),
+            created_at: new Date(),
             updated_at: new Date(),
             creator_id: upperId,
             partup_id: partupId,

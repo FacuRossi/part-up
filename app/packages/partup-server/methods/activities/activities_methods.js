@@ -62,7 +62,6 @@ Meteor.methods({
      * @param {mixed[]} fields
      */
     'activities.update': function(activityId, fields) {
-      // console.log('activities.update: ', activityId, fields);
 
         if (fields && fields.end_date && typeof fields.end_date === "string") {
            fields.end_date = moment(fields.end_date).toDate()
@@ -82,24 +81,25 @@ Meteor.methods({
         }
 
         try {
-            const updatedActivity = Object.assign(
+          const updatedActivity =
+            Object.assign(
               activity,
-              Partup.transformers.activity.fromForm(fields, activity.creator_id, activity.partup_id)
-            );
+              {
+                archived: false,
+                description: null,
+                end_date: null,
+                files: {
+                  documents: [],
+                  images: [],
+                },
+                updated_at: new Date(),
+              },
+              fields
+            )
 
-            if (fields.end_date == null) {
-              delete updatedActivity['end_date'];
-              Activities.update(activityId, {
-                $set: updatedActivity,
-                $unset: {
-                  end_date: '',
-                }
-              });
-            } else {
-              Activities.update(activityId, {
-                $set: updatedActivity,
-              });
-            }
+            Activities.update(activityId, {
+              $set: updatedActivity,
+            });
 
             // Post system message
             Partup.server.services.system_messages.send(upper, activity.update_id, 'system_activities_updated');
