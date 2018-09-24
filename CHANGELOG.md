@@ -1,3 +1,14 @@
+<a name="4.9.4"></a>
+## [4.9.4](https://github.com/part-up/part-up/compare/4.9.3...4.9.4) (2018-09-20)
+
+
+### Bug Fixes
+
+* **activity:** Update activity properly transformed and set in query ([df510db](https://github.com/part-up/part-up/commit/df510db))
+* **board:** ordering activities in lane are now persistent ([e6c6d5e](https://github.com/part-up/part-up/commit/e6c6d5e))
+
+
+
 <a name="4.9.3"></a>
 ## [4.9.3](https://github.com/part-up/part-up/compare/4.9.2...4.9.3) (2018-09-13)
 
