@@ -175,15 +175,24 @@ Accounts.onCreateUser(function(options, user) {
 Accounts.validateNewUser(function(user) {
     var emailAddress = User(user).getEmail();
 
-    var socialUser = Meteor.users.findOne({'emails.address': emailAddress});
-    var passwordUser = Meteor.users.findOne({'registered_emails.address': emailAddress});
 
-    if (socialUser) {
-        if (socialUser.services.facebook) throw new Meteor.Error(409, 'user-registered-with-facebook');
-        if (socialUser.services.linkedin) throw new Meteor.Error(409, 'user-registered-with-linkedin');
+    var existingUser = Meteor.users.findOne({
+      $or: [
+        { 'emails.address': emailAddress },
+        { 'registered_emails.address': emailAddress }
+      ]
+    });
+
+    if (existingUser) {
+        if (existingUser.services.facebook) {
+          throw new Meteor.Error(409, 'user-registered-with-facebook');
+        } else if (existingUser.services.linkedin) {
+          throw new Meteor.Error(409, 'user-registered-with-linkedin');
+        } else {
+          throw new Meteor.Error(409, 'user-registered-with-username-and-password');
+        }
     }
 
-    if (passwordUser) throw new Meteor.Error(409, 'user-registered-with-username-and-password');
 
     var liData = mout.object.get(user, 'services.linkedin');
     var fbData = mout.object.get(user, 'services.facebook');
