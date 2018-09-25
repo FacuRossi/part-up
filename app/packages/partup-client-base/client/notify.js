@@ -4,6 +4,9 @@
  * @class notify
  * @memberof Partup.client
  */
+
+const toastrTimeout = 3500;
+
 if (toastr && jQuery) {
     Partup.client.notify = {};
 
@@ -13,8 +16,8 @@ if (toastr && jQuery) {
      * @memberof Partup.client.notify
      * @param {String} msg message to display in notification
      */
-    Partup.client.notify.info = function notifyInfo(msg) {
-        toastr.info(msg);
+    Partup.client.notify.info = function notifyInfo(msg, options = {}) {
+        toastr.info(msg, null, options);
     };
 
     /**
@@ -23,8 +26,8 @@ if (toastr && jQuery) {
      * @memberof Partup.client.notify
      * @param {String} msg message to display in notification
      */
-    Partup.client.notify.warning = function notifyWarning(msg) {
-        toastr.warning(msg);
+    Partup.client.notify.warning = function notifyWarning(msg, options = {}) {
+        toastr.warning(msg, null, options);
     };
 
     /**
@@ -33,8 +36,8 @@ if (toastr && jQuery) {
      * @memberof Partup.client.notify
      * @param {String} msg message to display in notification
      */
-    Partup.client.notify.success = function notifySuccess(msg) {
-        toastr.success(msg);
+    Partup.client.notify.success = function notifySuccess(msg, options = {}) {
+        toastr.success(msg, null, options);
     };
 
     /**
@@ -43,8 +46,8 @@ if (toastr && jQuery) {
      * @memberof Partup.client.notify
      * @param {String} msg message to display in notification
      */
-    Partup.client.notify.error = function notifyError(msg) {
-        toastr.error(msg);
+    Partup.client.notify.error = function notifyError(msg, options = {}) {
+        toastr.error(msg, null, options);
     };
 
     /**
@@ -58,7 +61,7 @@ if (toastr && jQuery) {
 
     // Toastr configuration
     toastr.options.tapToDismiss = false;
-    toastr.options.timeOut = 3500;
+    toastr.options.timeOut = toastrTimeout;
     toastr.options.containerId = 'pu-notifycontainer';
     toastr.options.toastClass = 'pu-toast';
     toastr.options.iconClasses = {

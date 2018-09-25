@@ -115,7 +115,7 @@ Template.modal_register_signup.events({
             facebookLoading.set(false);
 
             if (error) {
-                Partup.client.notify.error(TAPi18n.__('pages-modal-register-signup-error_' + Partup.client.strings.slugify(error.reason)));
+                Partup.client.notify.error(TAPi18n.__('pages-modal-register-signup-error_' + Partup.client.strings.slugify(error.reason)), { timeOut: 6000 });
                 return;
             }
 
@@ -154,7 +154,7 @@ Template.modal_register_signup.events({
             linkedinLoading.set(false);
 
             if (error) {
-                Partup.client.notify.error(TAPi18n.__('pages-modal-register-signup-error_' + Partup.client.strings.slugify(error.reason)));
+                Partup.client.notify.error(TAPi18n.__('pages-modal-register-signup-error_' + Partup.client.strings.slugify(error.reason)), { timeOut: 6000 });
                 return false;
             }
 
