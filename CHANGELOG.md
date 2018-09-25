@@ -1,3 +1,14 @@
+<a name="4.9.5"></a>
+## [4.9.5](https://github.com/part-up/part-up/compare/4.9.4...4.9.5) (2018-09-24)
+
+
+### Bug Fixes
+
+* **activity:** You can now remove an activity description ([6afafd0](https://github.com/part-up/part-up/commit/6afafd0))
+* **register:** Add check for existing account via Part-up ([fedabdc](https://github.com/part-up/part-up/commit/fedabdc))
+
+
+
 <a name="4.9.4"></a>
 ## [4.9.4](https://github.com/part-up/part-up/compare/4.9.3...4.9.4) (2018-09-20)
 
