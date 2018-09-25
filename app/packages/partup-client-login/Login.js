@@ -87,7 +87,7 @@ Template.Login.events({
             facebookLoading.set(false);
 
             if (error) {
-                Partup.client.notify.error(TAPi18n.__('login-error_' + Partup.client.strings.slugify(error.reason)));
+                Partup.client.notify.error(TAPi18n.__('login-error_' + Partup.client.strings.slugify(error.reason)), { timeOut: 6000 });
                 return;
             }
 
@@ -106,7 +106,7 @@ Template.Login.events({
             linkedinLoading.set(false);
 
             if (error) {
-                Partup.client.notify.error(TAPi18n.__('login-error_' + Partup.client.strings.slugify(error.reason)));
+                Partup.client.notify.error(TAPi18n.__('login-error_' + Partup.client.strings.slugify(error.reason)), { timeOut: 6000 });
                 return false;
             }
 
@@ -175,7 +175,7 @@ AutoForm.hooks({
                             Partup.client.forms.addStickyFieldError(self, 'email', 'accountDeactivated');
                             break;
                         default:
-                            Partup.client.notify.error(TAPi18n.__('login-error_' + Partup.client.strings.slugify(error.reason)));
+                            Partup.client.notify.error(TAPi18n.__('login-error_' + Partup.client.strings.slugify(error.reason)), { timeOut: 6000 });
                     }
                     AutoForm.validateForm(self.formId);
                     self.done(new Error(error.message));
