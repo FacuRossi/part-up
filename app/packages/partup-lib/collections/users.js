@@ -106,6 +106,7 @@ var getPublicNetworkAdminFields = function() {
 // Add indices
 if (Meteor.isServer) {
     Meteor.users._ensureIndex('participation_score');
+    Meteor.users._ensureIndex('profileVisibility');
 }
 
 /**
