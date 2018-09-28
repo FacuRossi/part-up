@@ -1,3 +1,13 @@
+<a name="4.9.6"></a>
+## [4.9.6](https://github.com/part-up/part-up/compare/4.9.5...4.9.6) (2018-09-25)
+
+
+### Bug Fixes
+
+* **toastr:** add options to toastr for increased timeout duration ([93a4235](https://github.com/part-up/part-up/commit/93a4235))
+
+
+
 <a name="4.9.5"></a>
 ## [4.9.5](https://github.com/part-up/part-up/compare/4.9.4...4.9.5) (2018-09-24)
 
